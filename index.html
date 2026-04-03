@@ -936,70 +936,20 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // Add event listeners for all elements with the class "pin-key"
   document.addEventListener('DOMContentLoaded', () => {
-    // Replace onclick for pin keys
-    document.querySelectorAll('.pin-key').forEach(key => {
-      key.addEventListener('pointerdown', (event) => {
-        const keyValue = event.target.textContent.trim();
-        pinKey(keyValue);
+    // Add touch event support to all interactive elements
+    const clickableElements = document.querySelectorAll('[onclick], button, .pin-key, .quick-action, .routine-item, .subject-tag, .nav-item');
+    
+    clickableElements.forEach(element => {
+      element.addEventListener('touchstart', function(e) {
+        // Let the click event fire normally for touch
+        this.style.opacity = '0.7';
       });
-    });
-
-    // Replace onclick for delete key
-    const deleteKey = document.querySelector('.pin-key.del');
-    if (deleteKey) {
-      deleteKey.addEventListener('pointerdown', () => {
-        pinDel();
+      
+      element.addEventListener('touchend', function(e) {
+        this.style.opacity = '1';
+        // The onclick will handle the action
       });
-    }
-
-    // Replace onclick for quick actions
-    document.querySelectorAll('.quick-action').forEach(action => {
-      action.addEventListener('pointerdown', () => {
-        const screen = action.getAttribute('onclick').match(/showScreen\('(\w+)'\)/)[1];
-        showScreen(screen);
-      });
-    });
-
-    // Replace onclick for timer buttons
-    document.querySelectorAll('.timer-btn').forEach(btn => {
-      btn.addEventListener('pointerdown', () => {
-        const timerType = btn.id.replace('TimerBtn', '');
-        toggleTimer(timerType.toLowerCase());
-      });
-    });
-
-    // Replace onclick for routine items
-    document.querySelectorAll('.routine-item').forEach(item => {
-      item.addEventListener('pointerdown', () => {
-        const routineKey = item.getAttribute('onclick').match(/toggleRoutine\(this,'(\w+)'\)/)[1];
-        toggleRoutine(item, routineKey);
-      });
-    });
-
-    // Replace onclick for subject tags
-    document.querySelectorAll('.subject-tag').forEach(tag => {
-      tag.addEventListener('pointerdown', () => {
-        const subject = tag.getAttribute('onclick').match(/selectSubject\(this,'([\w\s]+)'\)/)[1];
-        selectSubject(tag, subject);
-      });
-    });
-
-    // Replace onclick for settings and export buttons
-    document.querySelectorAll('[onclick]').forEach(element => {
-      const onclickValue = element.getAttribute('onclick');
-      if (onclickValue.includes('changePinPrompt')) {
-        element.addEventListener('pointerdown', changePinPrompt);
-      } else if (onclickValue.includes('exportCSV')) {
-        element.addEventListener('pointerdown', exportCSV);
-      } else if (onclickValue.includes('exportJSON')) {
-        element.addEventListener('pointerdown', exportJSON);
-      } else if (onclickValue.includes('exportText')) {
-        element.addEventListener('pointerdown', exportText);
-      } else if (onclickValue.includes('clearData')) {
-        element.addEventListener('pointerdown', clearData);
-      }
     });
   });
 </script>
