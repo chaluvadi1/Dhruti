@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dhruti's Days</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2535;
+    --card: #1a2030;
+    --card2: #222840;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8eaf6;
+    --text2: #8892b0;
+    --text3: #4a5568;
+    --sleep: #6c63ff;
+    --sleep-soft: rgba(108,99,255,0.15);
+    --morning: #f7c948;
+    --morning-soft: rgba(247,201,72,0.15);
+    --study: #43e97b;
+    --study-soft: rgba(67,233,123,0.12);
+    --tv: #f093fb;
+    --tv-soft: rgba(240,147,251,0.12);
+    --play: #4facfe;
+    --play-soft: rgba(79,172,254,0.12);
+    --tuition: #fa8231;
+    --tuition-soft: rgba(250,130,49,0.12);
+    --friends: #fd79a8;
+    --friends-soft: rgba(253,121,168,0.12);
+    --food: #fdcb6e;
+    --food-soft: rgba(253,203,110,0.12);
+    --mood: #a29bfe;
+    --mood-soft: rgba(162,155,254,0.12);
+    --oops: #ff7675;
+    --oops-soft: rgba(255,118,117,0.12);
+    --tomorrow: #55efc4;
+    --tomorrow-soft: rgba(85,239,196,0.12);
+    --learn: #ffeaa7;
+    --learn-soft: rgba(255,234,167,0.12);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --money: #2ecc71;
+    --money-soft: rgba(46,204,113,0.12);
+    --spend: #e17055;
+    --spend-soft: rgba(225,112,85,0.12);
+    --save: #fdcb6e;
+    --save-soft: rgba(253,203,110,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 10%, rgba(108,99,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(253,121,168,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app { position: relative; z-index: 1; max-width: 420px; margin: 0 auto; padding: 0 0 80px; }
+
+  .screen { display: none; padding: 20px 16px; }
+  .screen.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 16px 0;
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(to bottom, var(--bg) 80%, transparent);
+  }
+
+  .topbar-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(135deg, #a29bfe, #fd79a8);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .topbar-date { font-size: 12px; color: var(--text2); font-weight: 600; }
+  .topbar-right { display: flex; gap: 8px; }
+
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer; transition: all 0.2s;
+  }
+
+  .icon-btn:active { transform: scale(0.92); }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 420px;
+    background: rgba(22, 27, 39, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex; z-index: 200; padding: 8px 0 12px;
+  }
+
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 3px; cursor: pointer; padding: 4px 0; transition: all 0.2s;
+  }
+
+  .nav-item .nav-icon { font-size: 22px; transition: transform 0.2s; }
+  .nav-item .nav-label { font-size: 10px; font-weight: 700; color: var(--text3); transition: color 0.2s; }
+  .nav-item.active .nav-label { color: #a29bfe; }
+  .nav-item.active .nav-icon { transform: scale(1.15); }
+  .nav-item:active .nav-icon { transform: scale(0.9); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .card.active-card { border-color: rgba(162,155,254,0.3); }
+
+  .card-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+  }
+
+  .card-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+
+  .card-title { font-size: 16px; font-weight: 800; }
+  .card-subtitle { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  .section-head {
+    font-size: 11px; font-weight: 800; color: var(--text3);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin: 20px 0 10px;
+  }
+
+  .timer-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 14px;
+    transition: all 0.2s;
+  }
+
+  .timer-card.running {
+    border-color: rgba(67,233,123,0.4);
+    background: linear-gradient(135deg, var(--card), rgba(67,233,123,0.05));
+  }
+
+  .timer-icon-wrap {
+    width: 46px; height: 46px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+
+  .timer-info { flex: 1; }
+  .timer-name { font-size: 15px; font-weight: 800; }
+
+  .timer-time {
+    font-size: 22px; font-weight: 900;
+    font-family: 'Baloo 2', cursive;
+    color: var(--text2);
+    transition: color 0.3s;
+    letter-spacing: 1px;
+  }
+
+  .timer-card.running .timer-time { color: var(--study); }
+  .timer-card.sleep-running .timer-time { color: var(--sleep); }
+
+  .timer-btn {
+    width: 46px; height: 46px; border-radius: 50%;
+    border: none; cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+
+  .timer-btn.start { background: var(--study-soft); color: var(--study); }
+  .timer-btn.stop { background: rgba(255,118,117,0.15); color: #ff7675; }
+  .timer-btn:active { transform: scale(0.88); }
+
+  .subject-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+  }
+
+  .subject-tag {
+    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    background: var(--card2); border: 1px solid var(--border);
+    cursor: pointer; transition: all 0.2s; color: var(--text2);
+  }
+
+  .subject-tag.selected { background: var(--study-soft); color: var(--study); border-color: rgba(67,233,123,0.3); }
+
+  .options-grid {
+    display: grid; gap: 8px;
+  }
+
+  .options-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .options-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .opt-btn {
+    padding: 12px 8px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--card2);
+    color: var(--text2); font-size: 13px; font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+    text-align: center; display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+  }
+
+  .opt-btn .opt-emoji { font-size: 22px; }
+  .opt-btn:active { transform: scale(0.95); }
+  .opt-btn.selected { border-color: var(--accent, #a29bfe); background: var(--accent-soft, rgba(162,155,254,0.12)); color: var(--text); }
+
+  .mood-row { display: flex; justify-content: space-between; gap: 6px; }
+
+  .mood-btn {
+    flex: 1; padding: 12px 4px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--card2);
+    cursor: pointer; text-align: center; font-size: 26px;
+    transition: all 0.2s;
+  }
+
+  .mood-btn:active { transform: scale(0.9); }
+  .mood-btn.selected { border-color: var(--mood); background: var(--mood-soft); transform: scale(1.08); }
+
+  .text-input {
+    width: 100%; padding: 12px 14px; border-radius: var(--radius-sm);
+    background: var(--card2); border: 1.5px solid var(--border);
+    color: var(--text); font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 600;
+    outline: none; resize: none; transition: border-color 0.2s;
+  }
+
+  .text-input:focus { border-color: rgba(162,155,254,0.4); }
+  .text-input::placeholder { color: var(--text3); }
+
+  .routine-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: var(--radius-sm);
+    background: var(--card2); border: 1.5px solid var(--border);
+    cursor: pointer; margin-bottom: 8px; transition: all 0.2s;
+  }
+
+  .routine-item.done { border-color: rgba(67,233,123,0.3); background: rgba(67,233,123,0.05); }
+
+  .routine-check {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--text3); display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: all 0.2s; flex-shrink: 0;
+  }
+
+  .routine-item.done .routine-check { border-color: var(--study); background: var(--study); color: #000; }
+  .routine-label { font-size: 14px; font-weight: 700; flex: 1; }
+  .routine-item.done .routine-label { color: var(--text2); text-decoration: line-through; }
+  .routine-emoji { font-size: 20px; }
+
+  .ready-bar { margin-top: 14px; }
+  .ready-bar-bg { height: 8px; background: var(--card2); border-radius: 4px; overflow: hidden; }
+  .ready-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--study), var(--tomorrow)); transition: width 0.4s ease; }
+  .ready-label { font-size: 12px; color: var(--text2); font-weight: 700; margin-top: 6px; display: flex; justify-content: space-between; }
+
+  .insight-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px; margin-bottom: 12px;
+    position: relative; overflow: hidden;
+  }
+
+  .insight-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent-grad, linear-gradient(90deg, #a29bfe, #fd79a8));
+  }
+
+  .insight-title { font-size: 13px; font-weight: 800; color: var(--text2); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .insight-big { font-size: 36px; font-weight: 900; font-family: 'Baloo 2', cursive; line-height: 1; margin-bottom: 4px; }
+  .insight-label { font-size: 13px; color: var(--text2); font-weight: 600; }
+  .insight-story { font-size: 14px; line-height: 1.6; color: var(--text); font-weight: 600; }
+  .insight-story span { font-weight: 800; }
+
+  .streak-flame { font-size: 48px; text-align: center; display: block; margin-bottom: 4px; }
+
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; margin: 12px 0 6px; }
+  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+  .bar { width: 100%; border-radius: 6px 6px 0 0; transition: height 0.5s ease; min-height: 4px; }
+  .bar-day { font-size: 10px; font-weight: 700; color: var(--text3); }
+
+  .sleep-dots { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .sleep-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; }
+
+  .history-day {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 10px;
+  }
+
+  .history-date { font-size: 13px; font-weight: 800; color: var(--text2); margin-bottom: 10px; }
+  .history-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .history-chip {
+    padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    background: var(--card2); color: var(--text2);
+  }
+
+  .export-btn {
+    width: 100%; padding: 14px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--card2);
+    color: var(--text); font-family: 'Nunito', sans-serif;
+    font-size: 14px; font-weight: 800; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.2s; margin-bottom: 10px;
+  }
+
+  .export-btn:active { transform: scale(0.97); }
+  .export-btn.primary { background: linear-gradient(135deg, rgba(108,99,255,0.3), rgba(253,121,168,0.3)); border-color: rgba(162,155,254,0.4); }
+
+  .save-btn {
+    width: 100%; padding: 16px; border-radius: var(--radius);
+    background: linear-gradient(135deg, #6c63ff, #fd79a8);
+    border: none; color: white; font-family: 'Baloo 2', cursive;
+    font-size: 18px; font-weight: 800; cursor: pointer;
+    transition: all 0.2s; margin-top: 16px;
+    box-shadow: 0 8px 24px rgba(108,99,255,0.3);
+  }
+
+  .save-btn:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(108,99,255,0.2); }
+
+  .toast {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--card2); border: 1px solid rgba(67,233,123,0.3);
+    color: var(--text); padding: 12px 20px; border-radius: 30px;
+    font-size: 14px; font-weight: 700; opacity: 0;
+    transition: all 0.3s; z-index: 999; white-space: nowrap;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .home-hero {
+    background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(253,121,168,0.15));
+    border: 1px solid rgba(162,155,254,0.2);
+    border-radius: 24px; padding: 22px; margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+
+  .home-hero::after {
+    content: '✨';
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-size: 48px; opacity: 0.3;
+  }
+
+  .home-greeting { font-size: 13px; color: var(--text2); font-weight: 700; margin-bottom: 4px; }
+
+  .home-name { font-family: 'Baloo 2', cursive; font-size: 28px; font-weight: 800; line-height: 1.1; }
+  .home-name span { background: linear-gradient(135deg, #a29bfe, #fd79a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  .home-streak { margin-top: 10px; display: flex; align-items: center; gap: 6px; }
+
+  .home-streak-badge {
+    background: rgba(247,201,72,0.15); border: 1px solid rgba(247,201,72,0.3);
+    padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 800; color: var(--morning);
+  }
+
+  .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+
+  .quick-action {
+    padding: 16px; border-radius: var(--radius); border: 1.5px solid var(--border);
+    background: var(--card); cursor: pointer; transition: all 0.2s;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+
+  .quick-action:active { transform: scale(0.96); }
+  .quick-action .qa-icon { font-size: 28px; }
+  .quick-action .qa-label { font-size: 13px; font-weight: 800; }
+  .quick-action .qa-sub { font-size: 11px; color: var(--text2); font-weight: 600; }
+
+  .live-timers { margin-bottom: 16px; }
+
+  .live-timer-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--card), rgba(67,233,123,0.08));
+    border: 1px solid rgba(67,233,123,0.3);
+    border-radius: 30px; padding: 10px 16px; margin-bottom: 8px;
+    animation: pulse-border 2s infinite;
+  }
+
+  .live-timer-pill.sleep-pill {
+    background: linear-gradient(135deg, var(--card), rgba(108,99,255,0.08));
+    border-color: rgba(108,99,255,0.3);
+    animation: pulse-border-sleep 2s infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { border-color: rgba(67,233,123,0.3); }
+    50% { border-color: rgba(67,233,123,0.6); }
+  }
+
+  @keyframes pulse-border-sleep {
+    0%, 100% { border-color: rgba(108,99,255,0.3); }
+    50% { border-color: rgba(108,99,255,0.6); }
+  }
+
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--study); animation: blink 1.5s infinite; }
+  .live-dot.sleep-dot-live { background: var(--sleep); }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .live-info { flex: 1; }
+  .live-name { font-size: 13px; font-weight: 800; }
+  .live-elapsed { font-size: 18px; font-weight: 900; font-family: 'Baloo 2', cursive; color: var(--study); }
+  .live-timer-pill.sleep-pill .live-elapsed { color: var(--sleep); }
+
+  .stop-live-btn {
+    padding: 6px 14px; border-radius: 20px; border: none;
+    background: rgba(255,118,117,0.15); color: #ff7675;
+    font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 800; cursor: pointer;
+  }
+
+  .understand-row { display: flex; gap: 8px; margin-top: 10px; }
+
+  .understand-btn {
+    flex: 1; padding: 14px 8px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--card2);
+    cursor: pointer; text-align: center; transition: all 0.2s;
+  }
+
+  .understand-btn .u-emoji { font-size: 24px; display: block; margin-bottom: 4px; }
+  .understand-btn .u-label { font-size: 12px; font-weight: 800; color: var(--text2); }
+  .understand-btn.got-it.selected { border-color: rgba(67,233,123,0.5); background: rgba(67,233,123,0.1); }
+  .understand-btn.sort-of.selected { border-color: rgba(253,203,110,0.5); background: rgba(253,203,110,0.1); }
+  .understand-btn.confused.selected { border-color: rgba(255,118,117,0.5); background: rgba(255,118,117,0.1); }
+  .understand-btn:active { transform: scale(0.95); }
+
+  .pin-screen {
+    position: fixed; inset: 0; background: var(--bg); z-index: 500;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .pin-screen.hidden { display: none; }
+
+  .pin-logo { font-family: 'Baloo 2', cursive; font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 8px; }
+  .pin-logo span { background: linear-gradient(135deg, #a29bfe, #fd79a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  .pin-subtitle { font-size: 14px; color: var(--text2); font-weight: 600; text-align: center; margin-bottom: 32px; }
+  .pin-dots { display: flex; gap: 12px; justify-content: center; margin-bottom: 32px; }
+
+  .pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--text3); transition: all 0.2s; }
+  .pin-dot.filled { background: var(--mood); border-color: var(--mood); transform: scale(1.1); }
+
+  .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 280px; }
+
+  .pin-key {
+    padding: 18px; border-radius: var(--radius-sm); background: var(--card2);
+    border: 1px solid var(--border); font-size: 22px; font-weight: 800;
+    font-family: 'Baloo 2', cursive; cursor: pointer; text-align: center;
+    transition: all 0.15s; color: var(--text);
+  }
+
+  .pin-key:active { transform: scale(0.9); background: var(--card); }
+  .pin-key.del { font-size: 16px; }
+
+  .pin-error { color: #ff7675; font-size: 13px; font-weight: 700; text-align: center; margin-top: 12px; opacity: 0; transition: opacity 0.3s; }
+  .pin-error.show { opacity: 1; }
+
+  .sick-detail { margin-top: 10px; display: none; }
+  .sick-detail.show { display: block; }
+
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  .label { font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 8px; }
+
+  .optional-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    background: var(--card2); font-size: 10px; font-weight: 700; color: var(--text3);
+    margin-left: 6px; vertical-align: middle;
+  }
+
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
+  .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+  .empty-state .es-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .empty-state .es-sub { font-size: 13px; }
+
+  .tag-input-wrap { display: flex; gap: 8px; margin-top: 8px; }
+  .tag-input-wrap input { flex: 1; }
+
+  .add-tag-btn {
+    padding: 0 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--card2); color: var(--text2); font-size: 18px; cursor: pointer;
+  }
+
+  .friend-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  .friend-tag {
+    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    background: var(--friends-soft); color: var(--friends); border: 1px solid rgba(253,121,168,0.2);
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .friend-tag button { background: none; border: none; color: var(--friends); cursor: pointer; font-size: 14px; padding: 0; }
+
+  .settings-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); margin-bottom: 8px; cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .settings-item:active { background: var(--card2); }
+  .settings-item-left { display: flex; align-items: center; gap: 12px; }
+  .settings-item-icon { font-size: 20px; }
+  .settings-item-label { font-size: 14px; font-weight: 700; }
+  .settings-item-sub { font-size: 12px; color: var(--text2); }
+  .settings-arrow { color: var(--text3); font-size: 16px; }
+
+  .balance-hero {
+    background: linear-gradient(135deg, rgba(46,204,113,0.2), rgba(253,203,110,0.15));
+    border: 1px solid rgba(46,204,113,0.25);
+    border-radius: 24px; padding: 22px; margin-bottom: 16px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+
+  .balance-hero::before {
+    content: '🐷'; position: absolute; right: 16px; top: 50%;
+    transform: translateY(-50%); font-size: 52px; opacity: 0.25;
+  }
+
+  .balance-label { font-size: 12px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .balance-amount { font-family: 'Baloo 2', cursive; font-size: 48px; font-weight: 900; color: var(--money); line-height: 1; }
+  .balance-amount.negative { color: var(--spend); }
+  .balance-sub { font-size: 12px; color: var(--text2); font-weight: 700; margin-top: 6px; }
+
+  .balance-stats { display: flex; gap: 10px; margin-top: 14px; }
+  .balance-stat { flex: 1; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; text-align: center; }
+  .balance-stat-val { font-size: 18px; font-weight: 900; font-family: 'Baloo 2', cursive; }
+  .balance-stat-lbl { font-size: 10px; font-weight: 700; color: var(--text2); margin-top: 2px; }
+
+  .goal-bar-wrap { margin-top: 14px; }
+  .goal-bar-bg { height: 10px; background: rgba(0,0,0,0.3); border-radius: 5px; overflow: hidden; }
+  .goal-bar-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--money), var(--save)); transition: width 0.5s ease; }
+  .goal-label { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text2); margin-top: 5px; }
+
+  .txn-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+  }
+
+  .txn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .txn-info { flex: 1; }
+  .txn-desc { font-size: 14px; font-weight: 700; }
+  .txn-meta { font-size: 11px; color: var(--text2); font-weight: 600; margin-top: 2px; }
+
+  .txn-amount { font-size: 16px; font-weight: 900; font-family: 'Baloo 2', cursive; }
+  .txn-amount.in { color: var(--money); }
+  .txn-amount.out { color: var(--spend); }
+  .txn-amount.save { color: var(--save); }
+
+  .txn-del { background: none; border: none; color: var(--text3); font-size: 16px; cursor: pointer; padding: 4px; }
+
+  .add-money-form { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+
+  .money-type-tabs { display: flex; gap: 6px; margin-bottom: 14px; }
+
+  .money-tab {
+    flex: 1; padding: 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--card2); font-size: 12px; font-weight: 800; cursor: pointer;
+    text-align: center; transition: all 0.2s; color: var(--text2); font-family: 'Nunito', sans-serif;
+  }
+
+  .money-tab.active-in { border-color: var(--money); background: var(--money-soft); color: var(--money); }
+  .money-tab.active-out { border-color: var(--spend); background: var(--spend-soft); color: var(--spend); }
+  .money-tab.active-save { border-color: var(--save); background: var(--save-soft); color: var(--save); }
+
+  .amount-input-wrap { position: relative; margin-bottom: 12px; }
+  .rupee-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 800; color: var(--text2); }
+
+  .amount-input { width: 100%; padding: 13px 14px 13px 30px; border-radius: var(--radius-sm); background: var(--card2); border: 1.5px solid var(--border); color: var(--text); font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; outline: none; transition: border-color 0.2s; }
+  .amount-input:focus { border-color: rgba(46,204,113,0.4); }
+
+  .spend-cats { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+  .spend-cat {
+    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    background: var(--card2); border: 1.5px solid var(--border); cursor: pointer;
+    transition: all 0.2s; color: var(--text2);
+  }
+
+  .spend-cat.selected { background: var(--spend-soft); color: var(--spend); border-color: rgba(225,112,85,0.4); }
+
+  .add-txn-btn {
+    width: 100%; padding: 13px; border-radius: var(--radius-sm); border: none;
+    background: linear-gradient(135deg, var(--money), #27ae60);
+    color: #fff; font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 800;
+    cursor: pointer; transition: all 0.2s;
+  }
+
+  .add-txn-btn:active { transform: scale(0.97); }
+  .add-txn-btn.spend-btn { background: linear-gradient(135deg, var(--spend), #c0392b); }
+  .add-txn-btn.save-btn-style { background: linear-gradient(135deg, var(--save), #e67e22); }
+
+  .goal-setup { background: var(--card); border: 1px solid rgba(253,203,110,0.2); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+  .goal-setup-title { font-size: 14px; font-weight: 800; color: var(--save); margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="pin-screen" id="pinScreen">
+  <div class="pin-logo">🌸 <span>Dhruti's Days</span></div>
+  <div class="pin-subtitle" id="pinSubtitle">Enter your PIN to continue</div>
+  <div class="pin-dots">
+    <div class="pin-dot" id="pd0"></div>
+    <div class="pin-dot" id="pd1"></div>
+    <div class="pin-dot" id="pd2"></div>
+    <div class="pin-dot" id="pd3"></div>
+  </div>
+  <div class="pin-pad">
+    <div class="pin-key" onclick="pinKey('1')">1</div>
+    <div class="pin-key" onclick="pinKey('2')">2</div>
+    <div class="pin-key" onclick="pinKey('3')">3</div>
+    <div class="pin-key" onclick="pinKey('4')">4</div>
+    <div class="pin-key" onclick="pinKey('5')">5</div>
+    <div class="pin-key" onclick="pinKey('6')">6</div>
+    <div class="pin-key" onclick="pinKey('7')">7</div>
+    <div class="pin-key" onclick="pinKey('8')">8</div>
+    <div class="pin-key" onclick="pinKey('9')">9</div>
+    <div class="pin-key" style="opacity:0;pointer-events:none"></div>
+    <div class="pin-key" onclick="pinKey('0')">0</div>
+    <div class="pin-key del" onclick="pinDel()">⌫</div>
+  </div>
+  <div class="pin-error" id="pinError">Wrong PIN — try again</div>
+  <div style="margin-top:20px;font-size:12px;color:var(--text3);text-align:center">Default PIN: <strong style="color:var(--text2)">1234</strong></div>
+</div>
+
+<div class="app" id="mainApp" style="display:none">
+
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">🌸 Dhruti's Days</div>
+      <div class="topbar-date" id="topbarDate"></div>
+    </div>
+    <div class="topbar-right">
+      <div class="icon-btn" onclick="showScreen('settings')" title="Settings">⚙️</div>
+    </div>
+  </div>
+
+  <div class="screen active" id="screen-home">
+    <div class="home-hero">
+      <div class="home-greeting" id="homeGreeting">Good morning,</div>
+      <div class="home-name">How's your day, <span>Dhruti</span>? ✨</div>
+      <div class="home-streak">
+        <div class="home-streak-badge" id="homeStreakBadge">🔥 0 day streak</div>
+      </div>
+    </div>
+
+    <div class="live-timers" id="liveTimersHome"></div>
+
+    <div class="quick-actions">
+      <div class="quick-action" onclick="showScreen('log')" style="border-color:rgba(162,155,254,0.3)">
+        <div class="qa-icon">📝</div>
+        <div class="qa-label">Log My Day</div>
+        <div class="qa-sub">Fill today's entry</div>
+      </div>
+      <div class="quick-action" onclick="showScreen('timers')" style="border-color:rgba(67,233,123,0.3)">
+        <div class="qa-icon">⏱️</div>
+        <div class="qa-label">Timers</div>
+        <div class="qa-sub">Track activities</div>
+      </div>
+      <div class="quick-action" onclick="showScreen('insights')" style="border-color:rgba(253,203,110,0.3)">
+        <div class="qa-icon">💡</div>
+        <div class="qa-label">Insights</div>
+        <div class="qa-sub">See your patterns</div>
+      </div>
+      <div class="quick-action" onclick="showScreen('history')" style="border-color:rgba(253,121,168,0.3)">
+        <div class="qa-icon">📅</div>
+        <div class="qa-label">My History</div>
+        <div class="qa-sub">Past entries</div>
+      </div>
+    </div>
+
+    <div class="section-head">Today's Reminders</div>
+    <div id="tomorrowReminder" style="display:none">
+      <div class="card" style="border-color:rgba(85,239,196,0.3)">
+        <div class="card-header">
+          <div class="card-icon" style="background:var(--tomorrow-soft)">🔮</div>
+          <div>
+            <div class="card-title" style="color:var(--tomorrow)">You wrote this yesterday</div>
+          </div>
+        </div>
+        <div id="tomorrowReminderText" style="font-size:14px;font-weight:700;line-height:1.5"></div>
+      </div>
+    </div>
+    <div id="noReminder" class="empty-state" style="padding:20px">
+      <span style="font-size:13px;color:var(--text3)">No reminder from yesterday ✨</span>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-timers">
+    <div class="section-head">Sleep Timer</div>
+    <div class="timer-card" id="sleepTimerCard">
+      <div class="timer-icon-wrap" style="background:var(--sleep-soft)">🌙</div>
+      <div class="timer-info">
+        <div class="timer-name">Sleep</div>
+        <div class="timer-time" id="sleepTimerDisplay">00:00:00</div>
+      </div>
+      <button class="timer-btn start" id="sleepTimerBtn" onclick="toggleSleepTimer()">▶</button>
+    </div>
+    <div id="sleepTimerNote" style="font-size:12px;color:var(--text2);margin:-4px 0 12px 14px;display:none">
+      😴 Tap ⏹ when you wake up!
+    </div>
+
+    <div class="section-head">Activity Timers</div>
+
+    <div class="timer-card" id="studyTimerCard">
+      <div class="timer-icon-wrap" style="background:var(--study-soft)">📚</div>
+      <div class="timer-info">
+        <div class="timer-name">Study</div>
+        <div class="timer-time" id="studyTimerDisplay">00:00:00</div>
+        <div id="studySubjectDisplay" style="font-size:11px;color:var(--text2);margin-top:3px;font-weight:700"></div>
+      </div>
+      <button class="timer-btn start" id="studyTimerBtn" onclick="toggleTimer('study')">▶</button>
+    </div>
+    <div id="studySubjectPicker" style="padding:0 4px 10px">
+      <div class="subject-tags">
+        <div class="subject-tag" onclick="selectSubject(this,'Maths')">➕ Maths</div>
+        <div class="subject-tag" onclick="selectSubject(this,'Science')">🔬 Science</div>
+        <div class="subject-tag" onclick="selectSubject(this,'English')">📖 English</div>
+        <div class="subject-tag" onclick="selectSubject(this,'Telugu')">🏡 Telugu</div>
+        <div class="subject-tag" onclick="selectSubject(this,'Hindi')">🇮🇳 Hindi</div>
+        <div class="subject-tag" onclick="selectSubject(this,'Social')">🌍 Social</div>
+      </div>
+    </div>
+
+    <div class="timer-card" id="tvTimerCard">
+      <div class="timer-icon-wrap" style="background:var(--tv-soft)">📺</div>
+      <div class="timer-info">
+        <div class="timer-name">TV / Screen</div>
+        <div class="timer-time" id="tvTimerDisplay">00:00:00</div>
+      </div>
+      <button class="timer-btn start" id="tvTimerBtn" onclick="toggleTimer('tv')">▶</button>
+    </div>
+
+    <div class="timer-card" id="playTimerCard">
+      <div class="timer-icon-wrap" style="background:var(--play-soft)">🎮</div>
+      <div class="timer-info">
+        <div class="timer-name">Play / Games</div>
+        <div class="timer-time" id="playTimerDisplay">00:00:00</div>
+      </div>
+      <button class="timer-btn start" id="playTimerBtn" onclick="toggleTimer('play')">▶</button>
+    </div>
+
+    <div class="timer-card" id="tuitionTimerCard">
+      <div class="timer-icon-wrap" style="background:var(--tuition-soft)">🏫</div>
+      <div class="timer-info">
+        <div class="timer-name">Tuition</div>
+        <div class="timer-time" id="tuitionTimerDisplay">00:00:00</div>
+      </div>
+      <button class="timer-btn start" id="tuitionTimerBtn" onclick="toggleTimer('tuition')">▶</button>
+    </div>
+
+    <div style="font-size:12px;color:var(--text3);text-align:center;padding:8px 0">Timers save automatically to today's log ✨</div>
+  </div>
+
+  <div class="screen" id="screen-log">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--morning-soft)" id="routineIcon">☀️</div>
+        <div>
+          <div class="card-title" style="color:var(--morning)" id="routineTitle">Morning Routine</div>
+          <div class="card-subtitle" id="routineSubtitle">Get ready for school!</div>
+        </div>
+      </div>
+      <div id="routineItems">
+        <div class="routine-item" onclick="toggleRoutine(this,'brush')">
+          <div class="routine-check">✓</div>
+          <div class="routine-label">Brushed teeth</div>
+          <div class="routine-emoji">🪥</div>
+        </div>
+        <div class="routine-item" onclick="toggleRoutine(this,'bath')">
+          <div class="routine-check">✓</div>
+          <div class="routine-label">Had a bath</div>
+          <div class="routine-emoji">🚿</div>
+        </div>
+        <div class="routine-item routine-school-only" onclick="toggleRoutine(this,'uniform')">
+          <div class="routine-check">✓</div>
+          <div class="routine-label">Uniform on</div>
+          <div class="routine-emoji">👗</div>
+        </div>
+        <div class="routine-item routine-school-only" onclick="toggleRoutine(this,'bag')">
+          <div class="routine-check">✓</div>
+          <div class="routine-label">Bag packed</div>
+          <div class="routine-emoji">🎒</div>
+        </div>
+        <div class="routine-item" onclick="toggleRoutine(this,'breakfast')">
+          <div class="routine-check">✓</div>
+          <div class="routine-label">Ate breakfast</div>
+          <div class="routine-emoji">🍱</div>
+        </div>
+      </div>
+      <div class="ready-bar">
+        <div class="ready-bar-bg">
+          <div class="ready-bar-fill" id="routineBar" style="width:0%"></div>
+        </div>
+        <div class="ready-label">
+          <span id="routineDoneCount">0 of 5 done</span>
+          <span id="routineTime"></span>
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" onclick="saveLog()">✨ Save My Day</button>
+    <div style="height:20px"></div>
+  </div>
+
+  <div class="screen" id="screen-insights">
+    <div class="insight-card" style="--accent-grad:linear-gradient(90deg,var(--morning),var(--oops))">
+      <div class="insight-title">🔥 Current Streak</div>
+      <span class="streak-flame" id="streakFlame">🔥</span>
+      <div class="insight-big" id="streakDays" style="text-align:center;color:var(--morning)">0</div>
+      <div class="insight-label" style="text-align:center">days logged in a row</div>
+      <div style="margin-top:10px;font-size:13px;color:var(--text2);text-align:center" id="streakMsg"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-history">
+    <div id="historyList"></div>
+  </div>
+
+  <div class="screen" id="screen-settings">
+    <div class="section-head">Account</div>
+    <div class="settings-item" onclick="changePinPrompt()">
+      <div class="settings-item-left">
+        <div class="settings-item-icon">🔐</div>
+        <div>
+          <div class="settings-item-label">Change PIN</div>
+          <div class="settings-item-sub">Update your secret PIN</div>
+        </div>
+      </div>
+      <div class="settings-arrow">›</div>
+    </div>
+
+    <div class="section-head">Export Data</div>
+    <button class="export-btn primary" onclick="exportCSV()">📊 Export as CSV (Excel)</button>
+    <button class="export-btn" onclick="exportJSON()">💾 Export as JSON (Backup)</button>
+    <button class="export-btn" onclick="exportText()">📄 Export as Text Report</button>
+
+    <div class="section-head">Danger Zone</div>
+    <button class="export-btn" style="border-color:rgba(255,118,117,0.3);color:var(--oops)" onclick="clearData()">🗑️ Clear All Data</button>
+
+    <div style="text-align:center;margin-top:24px;font-size:12px;color:var(--text3)">
+      Dhruti's Days · Made with ❤️ by Papa<br>
+      <span id="totalEntries" style="margin-top:4px;display:block"></span>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-money">
+    <div class="balance-hero">
+      <div class="balance-label">My Pocket Money</div>
+      <div class="balance-amount" id="moneyBalance">₹0</div>
+      <div class="balance-sub" id="moneyBalanceSub">Start adding your money!</div>
+      <div class="balance-stats">
+        <div class="balance-stat">
+          <div class="balance-stat-val" style="color:var(--money)" id="moneyTotalIn">₹0</div>
+          <div class="balance-stat-lbl">💰 Received</div>
+        </div>
+        <div class="balance-stat">
+          <div class="balance-stat-val" style="color:var(--spend)" id="moneyTotalOut">₹0</div>
+          <div class="balance-stat-lbl">🛍️ Spent</div>
+        </div>
+        <div class="balance-stat">
+          <div class="balance-stat-val" style="color:var(--save)" id="moneyTotalSave">₹0</div>
+          <div class="balance-stat-lbl">🐷 Saved</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">Recent Transactions</div>
+    <div id="txnList">
+      <div class="empty-state">
+        <span class="es-icon">💰</span>
+        <div class="es-title">No transactions yet</div>
+        <div class="es-sub">Add your first money entry above!</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom-nav" id="bottomNav" style="display:none">
+  <div class="nav-item active" id="nav-home" onclick="showScreen('home')">
+    <div class="nav-icon">🏠</div>
+    <div class="nav-label">Home</div>
+  </div>
+  <div class="nav-item" id="nav-timers" onclick="showScreen('timers')">
+    <div class="nav-icon">⏱️</div>
+    <div class="nav-label">Timers</div>
+  </div>
+  <div class="nav-item" id="nav-log" onclick="showScreen('log')">
+    <div class="nav-icon">📝</div>
+    <div class="nav-label">Log</div>
+  </div>
+  <div class="nav-item" id="nav-money" onclick="showScreen('money')">
+    <div class="nav-icon">💰</div>
+    <div class="nav-label">Money</div>
+  </div>
+  <div class="nav-item" id="nav-insights" onclick="showScreen('insights')">
+    <div class="nav-icon">💡</div>
+    <div class="nav-label">Insights</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Placeholder JavaScript - Original app logic would go here
+function pinKey(k) { }
+function pinDel() { }
+function showScreen(name) { }
+function toggleTimer(k) { }
+function saveLog() { }
+function changePinPrompt() { }
+function exportCSV() { }
+function exportJSON() { }
+function exportText() { }
+function clearData() { }
+function toggleSleepTimer() { }
+function selectSchool(el, val) { }
+function selectOpt(el, group, val) { }
+function selectSubject(el, subj) { }
+function toggleRoutine(el, key) { }
+</script>
+
+</body>
+</html>
