@@ -937,18 +937,43 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Add touch event support to all interactive elements
-    const clickableElements = document.querySelectorAll('[onclick], button, .pin-key, .quick-action, .routine-item, .subject-tag, .nav-item');
+    // Get all clickable elements and add proper touch support
+    const clickableElements = document.querySelectorAll('[onclick]');
     
     clickableElements.forEach(element => {
       element.addEventListener('touchstart', function(e) {
-        // Let the click event fire normally for touch
+        e.preventDefault();
         this.style.opacity = '0.7';
-      });
+      }, false);
       
       element.addEventListener('touchend', function(e) {
+        e.preventDefault();
         this.style.opacity = '1';
-        // The onclick will handle the action
+        
+        // Get the onclick handler and execute it
+        const onclickAttr = this.getAttribute('onclick');
+        if (onclickAttr) {
+          try {
+            eval(onclickAttr);
+          } catch(err) {
+            console.error('Error executing onclick:', err);
+          }
+        }
+      }, false);
+    });
+
+    // Also add click support for buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        const onclickAttr = this.getAttribute('onclick');
+        if (onclickAttr) {
+          try {
+            eval(onclickAttr);
+          } catch(err) {
+            console.error('Error executing onclick:', err);
+          }
+        }
       });
     });
   });
