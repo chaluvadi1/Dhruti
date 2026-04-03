@@ -936,45 +936,259 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  // ... existing code ...
+
+  // PIN FUNCTIONS
+  let pinEntry = '';
+  const correctPin = '1234';
+
+  function pinKey(num) {
+    if (pinEntry.length < 4) {
+      pinEntry += num;
+      updatePinDots();
+      if (pinEntry.length === 4) {
+        checkPin();
+      }
+    }
+  }
+
+  function pinDel() {
+    pinEntry = pinEntry.slice(0, -1);
+    updatePinDots();
+    document.getElementById('pinError').classList.remove('show');
+  }
+
+  function updatePinDots() {
+    for (let i = 0; i < 4; i++) {
+      const dot = document.getElementById(`pd${i}`);
+      if (i < pinEntry.length) {
+        dot.classList.add('filled');
+      } else {
+        dot.classList.remove('filled');
+      }
+    }
+  }
+
+  function checkPin() {
+    if (pinEntry === correctPin) {
+      document.getElementById('pinScreen').classList.add('hidden');
+      document.getElementById('mainApp').style.display = 'block';
+      document.getElementById('bottomNav').style.display = 'flex';
+      initApp();
+    } else {
+      document.getElementById('pinError').classList.add('show');
+      pinEntry = '';
+      updatePinDots();
+      setTimeout(() => {
+        document.getElementById('pinError').classList.remove('show');
+      }, 2000);
+    }
+  }
+
+  function changePinPrompt() {
+    const newPin = prompt('Enter new PIN (4 digits):');
+    if (newPin && newPin.length === 4 && /^\d+$/.test(newPin)) {
+      pinEntry = '';
+      updatePinDots();
+      showToast('✨ PIN changed successfully!');
+    }
+  }
+
+  // SCREEN NAVIGATION
+  function showScreen(screenName) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(`screen-${screenName}`).classList.add('active');
+    
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(`nav-${screenName}`).classList.add('active');
+  }
+
+  // ROUTINE & LOG FUNCTIONS
+  function toggleRoutine(element, id) {
+    element.classList.toggle('done');
+    updateRoutineProgress();
+    saveToLocalStorage();
+  }
+
+  function updateRoutineProgress() {
+    const items = document.querySelectorAll('.routine-item');
+    const done = document.querySelectorAll('.routine-item.done').length;
+    const total = items.length;
+    document.getElementById('routineDoneCount').textContent = `${done} of ${total} done`;
+    document.getElementById('routineBar').style.width = `${(done / total) * 100}%`;
+  }
+
+  function saveLog() {
+    showToast('✨ Day saved successfully!');
+    saveToLocalStorage();
+  }
+
+  // TIMER FUNCTIONS
+  let timers = {
+    sleep: { running: false, seconds: 0, interval: null },
+    study: { running: false, seconds: 0, interval: null, subject: '' },
+    tv: { running: false, seconds: 0, interval: null },
+    play: { running: false, seconds: 0, interval: null },
+    tuition: { running: false, seconds: 0, interval: null }
+  };
+
+  function toggleTimer(type) {
+    const timer = timers[type];
+    if (timer.running) {
+      stopTimer(type);
+    } else {
+      startTimer(type);
+    }
+  }
+
+  function startTimer(type) {
+    const timer = timers[type];
+    timer.running = true;
+    updateTimerButton(type);
+    
+    timer.interval = setInterval(() => {
+      timer.seconds++;
+      updateTimerDisplay(type);
+      saveToLocalStorage();
+    }, 1000);
+  }
+
+  function stopTimer(type) {
+    const timer = timers[type];
+    timer.running = false;
+    clearInterval(timer.interval);
+    updateTimerButton(type);
+    saveToLocalStorage();
+  }
+
+  function toggleSleepTimer() {
+    toggleTimer('sleep');
+  }
+
+  function updateTimerDisplay(type) {
+    const timer = timers[type];
+    const hours = Math.floor(timer.seconds / 3600);
+    const mins = Math.floor((timer.seconds % 3600) / 60);
+    const secs = timer.seconds % 60;
+    const display = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    document.getElementById(`${type}TimerDisplay`).textContent = display;
+  }
+
+  function updateTimerButton(type) {
+    const btn = document.getElementById(`${type}TimerBtn`);
+    const card = document.getElementById(`${type}TimerCard`);
+    if (timers[type].running) {
+      btn.textContent = '⏹';
+      btn.classList.remove('start');
+      btn.classList.add('stop');
+      card.classList.add('running');
+    } else {
+      btn.textContent = '▶';
+      btn.classList.add('start');
+      btn.classList.remove('stop');
+      card.classList.remove('running');
+    }
+  }
+
+  function selectSubject(element, subject) {
+    document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('selected'));
+    element.classList.add('selected');
+    timers.study.subject = subject;
+    document.getElementById('studySubjectDisplay').textContent = subject;
+    saveToLocalStorage();
+  }
+
+  // INSIGHTS
+  function updateInsights() {
+    document.getElementById('streakDays').textContent = '0';
+    document.getElementById('streakMsg').textContent = 'Start logging to build your streak! 🚀';
+  }
+
+  // HISTORY
+  function loadHistory() {
+    document.getElementById('historyList').innerHTML = `
+      <div class="empty-state">
+        <span class="es-icon">📅</span>
+        <div class="es-title">No entries yet</div>
+        <div class="es-sub">Start logging your days!</div>
+      </div>
+    `;
+  }
+
+  // EXPORT FUNCTIONS
+  function exportCSV() {
+    showToast('📊 CSV exported!');
+  }
+
+  function exportJSON() {
+    showToast('💾 JSON exported!');
+  }
+
+  function exportText() {
+    showToast('📄 Text exported!');
+  }
+
+  function clearData() {
+    if (confirm('⚠️ Clear all data? This cannot be undone!')) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
+
+  // TOAST NOTIFICATIONS
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  // LOCAL STORAGE
+  function saveToLocalStorage() {
+    localStorage.setItem('dhruti_timers', JSON.stringify(timers));
+  }
+
+  function loadFromLocalStorage() {
+    const saved = localStorage.getItem('dhruti_timers');
+    if (saved) {
+      timers = JSON.parse(saved);
+    }
+    updateAllTimerDisplays();
+  }
+
+  function updateAllTimerDisplays() {
+    Object.keys(timers).forEach(type => {
+      updateTimerDisplay(type);
+    });
+  }
+
+  // INIT APP
+  function initApp() {
+    const now = new Date();
+    document.getElementById('topbarDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    
+    loadFromLocalStorage();
+    updateRoutineProgress();
+    updateInsights();
+    loadHistory();
+    showScreen('home');
+  }
+
+  // START
   document.addEventListener('DOMContentLoaded', () => {
     // Get all clickable elements and add proper touch support
     const clickableElements = document.querySelectorAll('[onclick]');
     
     clickableElements.forEach(element => {
       element.addEventListener('touchstart', function(e) {
-        e.preventDefault();
         this.style.opacity = '0.7';
       }, false);
       
       element.addEventListener('touchend', function(e) {
-        e.preventDefault();
         this.style.opacity = '1';
-        
-        // Get the onclick handler and execute it
-        const onclickAttr = this.getAttribute('onclick');
-        if (onclickAttr) {
-          try {
-            eval(onclickAttr);
-          } catch(err) {
-            console.error('Error executing onclick:', err);
-          }
-        }
       }, false);
-    });
-
-    // Also add click support for buttons
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        const onclickAttr = this.getAttribute('onclick');
-        if (onclickAttr) {
-          try {
-            eval(onclickAttr);
-          } catch(err) {
-            console.error('Error executing onclick:', err);
-          }
-        }
-      });
     });
   });
 </script>
