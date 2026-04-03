@@ -1,1197 +1,2364 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Dhruti's Days</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dhruti's Days 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f1117;
-    --bg2: #161b27;
-    --bg3: #1e2535;
-    --card: #1a2030;
-    --card2: #222840;
-    --border: rgba(255,255,255,0.07);
-    --text: #e8eaf6;
-    --text2: #8892b0;
-    --text3: #4a5568;
-    --sleep: #6c63ff;
-    --sleep-soft: rgba(108,99,255,0.15);
-    --morning: #f7c948;
-    --morning-soft: rgba(247,201,72,0.15);
-    --study: #43e97b;
-    --study-soft: rgba(67,233,123,0.12);
-    --tv: #f093fb;
-    --tv-soft: rgba(240,147,251,0.12);
-    --play: #4facfe;
-    --play-soft: rgba(79,172,254,0.12);
-    --tuition: #fa8231;
-    --tuition-soft: rgba(250,130,49,0.12);
-    --friends: #fd79a8;
-    --friends-soft: rgba(253,121,168,0.12);
-    --food: #fdcb6e;
-    --food-soft: rgba(253,203,110,0.12);
-    --mood: #a29bfe;
-    --mood-soft: rgba(162,155,254,0.12);
-    --oops: #ff7675;
-    --oops-soft: rgba(255,118,117,0.12);
-    --tomorrow: #55efc4;
-    --tomorrow-soft: rgba(85,239,196,0.12);
-    --learn: #ffeaa7;
-    --learn-soft: rgba(255,234,167,0.12);
-    --radius: 18px;
-    --radius-sm: 12px;
-    --money: #2ecc71;
-    --money-soft: rgba(46,204,113,0.12);
-    --spend: #e17055;
-    --spend-soft: rgba(225,112,85,0.12);
-    --save: #fdcb6e;
-    --save-soft: rgba(253,203,110,0.12);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at 20% 10%, rgba(108,99,255,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 90%, rgba(253,121,168,0.06) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .app { position: relative; z-index: 1; max-width: 420px; margin: 0 auto; padding: 0 0 80px; }
-
-  .screen { display: none; padding: 20px 16px; }
-  .screen.active { display: block; animation: fadeUp 0.3s ease; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 16px 0;
-    position: sticky; top: 0; z-index: 100;
-    background: linear-gradient(to bottom, var(--bg) 80%, transparent);
-  }
-
-  .topbar-title {
-    font-family: 'Baloo 2', cursive;
-    font-size: 22px; font-weight: 800;
-    background: linear-gradient(135deg, #a29bfe, #fd79a8);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-
-  .topbar-date { font-size: 12px; color: var(--text2); font-weight: 600; }
-  .topbar-right { display: flex; gap: 8px; }
-
-  .icon-btn {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--card); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; cursor: pointer; transition: all 0.2s;
-  }
-
-  .icon-btn:active { transform: scale(0.92); }
-
-  .bottom-nav {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 100%; max-width: 420px;
-    background: rgba(22, 27, 39, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    display: flex; z-index: 200; padding: 8px 0 12px;
-  }
-
-  .nav-item {
-    flex: 1; display: flex; flex-direction: column; align-items: center;
-    gap: 3px; cursor: pointer; padding: 4px 0; transition: all 0.2s;
-  }
-
-  .nav-item .nav-icon { font-size: 22px; transition: transform 0.2s; }
-  .nav-item .nav-label { font-size: 10px; font-weight: 700; color: var(--text3); transition: color 0.2s; }
-  .nav-item.active .nav-label { color: #a29bfe; }
-  .nav-item.active .nav-icon { transform: scale(1.15); }
-  .nav-item:active .nav-icon { transform: scale(0.9); }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-
-  .card.active-card { border-color: rgba(162,155,254,0.3); }
-
-  .card-header {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
-  }
-
-  .card-icon {
-    width: 40px; height: 40px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-  }
-
-  .card-title { font-size: 16px; font-weight: 800; }
-  .card-subtitle { font-size: 12px; color: var(--text2); margin-top: 2px; }
-
-  .section-head {
-    font-size: 11px; font-weight: 800; color: var(--text3);
-    text-transform: uppercase; letter-spacing: 1.5px;
-    margin: 20px 0 10px;
-  }
-
-  .timer-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    margin-bottom: 10px;
-    display: flex; align-items: center; gap: 14px;
-    transition: all 0.2s;
-  }
-
-  .timer-card.running {
-    border-color: rgba(67,233,123,0.4);
-    background: linear-gradient(135deg, var(--card), rgba(67,233,123,0.05));
-  }
-
-  .timer-icon-wrap {
-    width: 46px; height: 46px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
-
-  .timer-info { flex: 1; }
-  .timer-name { font-size: 15px; font-weight: 800; }
-
-  .timer-time {
-    font-size: 22px; font-weight: 900;
-    font-family: 'Baloo 2', cursive;
-    color: var(--text2);
-    transition: color 0.3s;
-    letter-spacing: 1px;
-  }
-
-  .timer-card.running .timer-time { color: var(--study); }
-  .timer-card.sleep-running .timer-time { color: var(--sleep); }
-
-  .timer-btn {
-    width: 46px; height: 46px; border-radius: 50%;
-    border: none; cursor: pointer; font-size: 18px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; flex-shrink: 0;
-  }
-
-  .timer-btn.start { background: var(--study-soft); color: var(--study); }
-  .timer-btn.stop { background: rgba(255,118,117,0.15); color: #ff7675; }
-  .timer-btn:active { transform: scale(0.88); }
-
-  .subject-tags {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
-  }
-
-  .subject-tag {
-    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
-    background: var(--card2); border: 1px solid var(--border);
-    cursor: pointer; transition: all 0.2s; color: var(--text2);
-  }
-
-  .subject-tag.selected { background: var(--study-soft); color: var(--study); border-color: rgba(67,233,123,0.3); }
-
-  .options-grid {
-    display: grid; gap: 8px;
-  }
-
-  .options-grid.cols-2 { grid-template-columns: 1fr 1fr; }
-  .options-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-
-  .opt-btn {
-    padding: 12px 8px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border);
-    background: var(--card2);
-    color: var(--text2); font-size: 13px; font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    cursor: pointer; transition: all 0.2s;
-    text-align: center; display: flex; flex-direction: column;
-    align-items: center; gap: 4px;
-  }
-
-  .opt-btn .opt-emoji { font-size: 22px; }
-  .opt-btn:active { transform: scale(0.95); }
-  .opt-btn.selected { border-color: var(--accent, #a29bfe); background: var(--accent-soft, rgba(162,155,254,0.12)); color: var(--text); }
-
-  .mood-row { display: flex; justify-content: space-between; gap: 6px; }
-
-  .mood-btn {
-    flex: 1; padding: 12px 4px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); background: var(--card2);
-    cursor: pointer; text-align: center; font-size: 26px;
-    transition: all 0.2s;
-  }
-
-  .mood-btn:active { transform: scale(0.9); }
-  .mood-btn.selected { border-color: var(--mood); background: var(--mood-soft); transform: scale(1.08); }
-
-  .text-input {
-    width: 100%; padding: 12px 14px; border-radius: var(--radius-sm);
-    background: var(--card2); border: 1.5px solid var(--border);
-    color: var(--text); font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 600;
-    outline: none; resize: none; transition: border-color 0.2s;
-  }
-
-  .text-input:focus { border-color: rgba(162,155,254,0.4); }
-  .text-input::placeholder { color: var(--text3); }
-
-  .routine-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 14px; border-radius: var(--radius-sm);
-    background: var(--card2); border: 1.5px solid var(--border);
-    cursor: pointer; margin-bottom: 8px; transition: all 0.2s;
-  }
-
-  .routine-item.done { border-color: rgba(67,233,123,0.3); background: rgba(67,233,123,0.05); }
-
-  .routine-check {
-    width: 26px; height: 26px; border-radius: 50%;
-    border: 2px solid var(--text3); display: flex; align-items: center; justify-content: center;
-    font-size: 14px; transition: all 0.2s; flex-shrink: 0;
-  }
-
-  .routine-item.done .routine-check { border-color: var(--study); background: var(--study); color: #000; }
-  .routine-label { font-size: 14px; font-weight: 700; flex: 1; }
-  .routine-item.done .routine-label { color: var(--text2); text-decoration: line-through; }
-  .routine-emoji { font-size: 20px; }
-
-  .ready-bar { margin-top: 14px; }
-  .ready-bar-bg { height: 8px; background: var(--card2); border-radius: 4px; overflow: hidden; }
-  .ready-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--study), var(--tomorrow)); transition: width 0.4s ease; }
-  .ready-label { font-size: 12px; color: var(--text2); font-weight: 700; margin-top: 6px; display: flex; justify-content: space-between; }
-
-  .insight-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px; margin-bottom: 12px;
-    position: relative; overflow: hidden;
-  }
-
-  .insight-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: var(--accent-grad, linear-gradient(90deg, #a29bfe, #fd79a8));
-  }
-
-  .insight-title { font-size: 13px; font-weight: 800; color: var(--text2); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px; }
-  .insight-big { font-size: 36px; font-weight: 900; font-family: 'Baloo 2', cursive; line-height: 1; margin-bottom: 4px; }
-  .insight-label { font-size: 13px; color: var(--text2); font-weight: 600; }
-  .insight-story { font-size: 14px; line-height: 1.6; color: var(--text); font-weight: 600; }
-  .insight-story span { font-weight: 800; }
-
-  .streak-flame { font-size: 48px; text-align: center; display: block; margin-bottom: 4px; }
-
-  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; margin: 12px 0 6px; }
-  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
-  .bar { width: 100%; border-radius: 6px 6px 0 0; transition: height 0.5s ease; min-height: 4px; }
-  .bar-day { font-size: 10px; font-weight: 700; color: var(--text3); }
-
-  .sleep-dots { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-  .sleep-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; }
-
-  .history-day {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px; margin-bottom: 10px;
-  }
-
-  .history-date { font-size: 13px; font-weight: 800; color: var(--text2); margin-bottom: 10px; }
-  .history-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-
-  .history-chip {
-    padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
-    background: var(--card2); color: var(--text2);
-  }
-
-  .export-btn {
-    width: 100%; padding: 14px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); background: var(--card2);
-    color: var(--text); font-family: 'Nunito', sans-serif;
-    font-size: 14px; font-weight: 800; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: all 0.2s; margin-bottom: 10px;
-  }
-
-  .export-btn:active { transform: scale(0.97); }
-  .export-btn.primary { background: linear-gradient(135deg, rgba(108,99,255,0.3), rgba(253,121,168,0.3)); border-color: rgba(162,155,254,0.4); }
-
-  .save-btn {
-    width: 100%; padding: 16px; border-radius: var(--radius);
-    background: linear-gradient(135deg, #6c63ff, #fd79a8);
-    border: none; color: white; font-family: 'Baloo 2', cursive;
-    font-size: 18px; font-weight: 800; cursor: pointer;
-    transition: all 0.2s; margin-top: 16px;
-    box-shadow: 0 8px 24px rgba(108,99,255,0.3);
-  }
-
-  .save-btn:active { transform: scale(0.97); box-shadow: 0 4px 12px rgba(108,99,255,0.2); }
-
-  .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--card2); border: 1px solid rgba(67,233,123,0.3);
-    color: var(--text); padding: 12px 20px; border-radius: 30px;
-    font-size: 14px; font-weight: 700; opacity: 0;
-    transition: all 0.3s; z-index: 999; white-space: nowrap;
-  }
-
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  .home-hero {
-    background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(253,121,168,0.15));
-    border: 1px solid rgba(162,155,254,0.2);
-    border-radius: 24px; padding: 22px; margin-bottom: 16px;
-    position: relative; overflow: hidden;
-  }
-
-  .home-hero::after {
-    content: '✨';
-    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-    font-size: 48px; opacity: 0.3;
-  }
-
-  .home-greeting { font-size: 13px; color: var(--text2); font-weight: 700; margin-bottom: 4px; }
-
-  .home-name { font-family: 'Baloo 2', cursive; font-size: 28px; font-weight: 800; line-height: 1.1; }
-  .home-name span { background: linear-gradient(135deg, #a29bfe, #fd79a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-  .home-streak { margin-top: 10px; display: flex; align-items: center; gap: 6px; }
-
-  .home-streak-badge {
-    background: rgba(247,201,72,0.15); border: 1px solid rgba(247,201,72,0.3);
-    padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 800; color: var(--morning);
-  }
-
-  .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-
-  .quick-action {
-    padding: 16px; border-radius: var(--radius); border: 1.5px solid var(--border);
-    background: var(--card); cursor: pointer; transition: all 0.2s;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-
-  .quick-action:active { transform: scale(0.96); }
-  .quick-action .qa-icon { font-size: 28px; }
-  .quick-action .qa-label { font-size: 13px; font-weight: 800; }
-  .quick-action .qa-sub { font-size: 11px; color: var(--text2); font-weight: 600; }
-
-  .live-timers { margin-bottom: 16px; }
-
-  .live-timer-pill {
-    display: flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, var(--card), rgba(67,233,123,0.08));
-    border: 1px solid rgba(67,233,123,0.3);
-    border-radius: 30px; padding: 10px 16px; margin-bottom: 8px;
-    animation: pulse-border 2s infinite;
-  }
-
-  .live-timer-pill.sleep-pill {
-    background: linear-gradient(135deg, var(--card), rgba(108,99,255,0.08));
-    border-color: rgba(108,99,255,0.3);
-    animation: pulse-border-sleep 2s infinite;
-  }
-
-  @keyframes pulse-border {
-    0%, 100% { border-color: rgba(67,233,123,0.3); }
-    50% { border-color: rgba(67,233,123,0.6); }
-  }
-
-  @keyframes pulse-border-sleep {
-    0%, 100% { border-color: rgba(108,99,255,0.3); }
-    50% { border-color: rgba(108,99,255,0.6); }
-  }
-
-  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--study); animation: blink 1.5s infinite; }
-  .live-dot.sleep-dot-live { background: var(--sleep); }
-
-  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-  .live-info { flex: 1; }
-  .live-name { font-size: 13px; font-weight: 800; }
-  .live-elapsed { font-size: 18px; font-weight: 900; font-family: 'Baloo 2', cursive; color: var(--study); }
-  .live-timer-pill.sleep-pill .live-elapsed { color: var(--sleep); }
-
-  .stop-live-btn {
-    padding: 6px 14px; border-radius: 20px; border: none;
-    background: rgba(255,118,117,0.15); color: #ff7675;
-    font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 800; cursor: pointer;
-  }
-
-  .understand-row { display: flex; gap: 8px; margin-top: 10px; }
-
-  .understand-btn {
-    flex: 1; padding: 14px 8px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); background: var(--card2);
-    cursor: pointer; text-align: center; transition: all 0.2s;
-  }
-
-  .understand-btn .u-emoji { font-size: 24px; display: block; margin-bottom: 4px; }
-  .understand-btn .u-label { font-size: 12px; font-weight: 800; color: var(--text2); }
-  .understand-btn.got-it.selected { border-color: rgba(67,233,123,0.5); background: rgba(67,233,123,0.1); }
-  .understand-btn.sort-of.selected { border-color: rgba(253,203,110,0.5); background: rgba(253,203,110,0.1); }
-  .understand-btn.confused.selected { border-color: rgba(255,118,117,0.5); background: rgba(255,118,117,0.1); }
-  .understand-btn:active { transform: scale(0.95); }
-
-  .pin-screen {
-    position: fixed; inset: 0; background: var(--bg); z-index: 500;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 40px 24px;
-  }
-
-  .pin-screen.hidden { display: none; }
-
-  .pin-logo { font-family: 'Baloo 2', cursive; font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 8px; }
-  .pin-logo span { background: linear-gradient(135deg, #a29bfe, #fd79a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-  .pin-subtitle { font-size: 14px; color: var(--text2); font-weight: 600; text-align: center; margin-bottom: 32px; }
-  .pin-dots { display: flex; gap: 12px; justify-content: center; margin-bottom: 32px; }
-
-  .pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--text3); transition: all 0.2s; }
-  .pin-dot.filled { background: var(--mood); border-color: var(--mood); transform: scale(1.1); }
-
-  .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 280px; }
-
-  .pin-key {
-    padding: 18px; border-radius: var(--radius-sm); background: var(--card2);
-    border: 1px solid var(--border); font-size: 22px; font-weight: 800;
-    font-family: 'Baloo 2', cursive; cursor: pointer; text-align: center;
-    transition: all 0.15s; color: var(--text);
-  }
-
-  .pin-key:active { transform: scale(0.9); background: var(--card); }
-  .pin-key.del { font-size: 16px; }
-
-  .pin-error { color: #ff7675; font-size: 13px; font-weight: 700; text-align: center; margin-top: 12px; opacity: 0; transition: opacity 0.3s; }
-  .pin-error.show { opacity: 1; }
-
-  .sick-detail { margin-top: 10px; display: none; }
-  .sick-detail.show { display: block; }
-
-  .divider { height: 1px; background: var(--border); margin: 16px 0; }
-  .label { font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 8px; }
-
-  .optional-badge {
-    display: inline-block; padding: 2px 8px; border-radius: 10px;
-    background: var(--card2); font-size: 10px; font-weight: 700; color: var(--text3);
-    margin-left: 6px; vertical-align: middle;
-  }
-
-  .empty-state { text-align: center; padding: 40px 20px; color: var(--text2); }
-  .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; display: block; }
-  .empty-state .es-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
-  .empty-state .es-sub { font-size: 13px; }
-
-  .tag-input-wrap { display: flex; gap: 8px; margin-top: 8px; }
-  .tag-input-wrap input { flex: 1; }
-
-  .add-tag-btn {
-    padding: 0 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
-    background: var(--card2); color: var(--text2); font-size: 18px; cursor: pointer;
-  }
-
-  .friend-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-
-  .friend-tag {
-    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
-    background: var(--friends-soft); color: var(--friends); border: 1px solid rgba(253,121,168,0.2);
-    display: flex; align-items: center; gap: 6px;
-  }
-
-  .friend-tag button { background: none; border: none; color: var(--friends); cursor: pointer; font-size: 14px; padding: 0; }
-
-  .settings-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 16px; background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); margin-bottom: 8px; cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .settings-item:active { background: var(--card2); }
-  .settings-item-left { display: flex; align-items: center; gap: 12px; }
-  .settings-item-icon { font-size: 20px; }
-  .settings-item-label { font-size: 14px; font-weight: 700; }
-  .settings-item-sub { font-size: 12px; color: var(--text2); }
-  .settings-arrow { color: var(--text3); font-size: 16px; }
-
-  .balance-hero {
-    background: linear-gradient(135deg, rgba(46,204,113,0.2), rgba(253,203,110,0.15));
-    border: 1px solid rgba(46,204,113,0.25);
-    border-radius: 24px; padding: 22px; margin-bottom: 16px;
-    text-align: center; position: relative; overflow: hidden;
-  }
-
-  .balance-hero::before {
-    content: '🐷'; position: absolute; right: 16px; top: 50%;
-    transform: translateY(-50%); font-size: 52px; opacity: 0.25;
-  }
-
-  .balance-label { font-size: 12px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .balance-amount { font-family: 'Baloo 2', cursive; font-size: 48px; font-weight: 900; color: var(--money); line-height: 1; }
-  .balance-amount.negative { color: var(--spend); }
-  .balance-sub { font-size: 12px; color: var(--text2); font-weight: 700; margin-top: 6px; }
-
-  .balance-stats { display: flex; gap: 10px; margin-top: 14px; }
-  .balance-stat { flex: 1; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; text-align: center; }
-  .balance-stat-val { font-size: 18px; font-weight: 900; font-family: 'Baloo 2', cursive; }
-  .balance-stat-lbl { font-size: 10px; font-weight: 700; color: var(--text2); margin-top: 2px; }
-
-  .goal-bar-wrap { margin-top: 14px; }
-  .goal-bar-bg { height: 10px; background: rgba(0,0,0,0.3); border-radius: 5px; overflow: hidden; }
-  .goal-bar-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--money), var(--save)); transition: width 0.5s ease; }
-  .goal-label { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text2); margin-top: 5px; }
-
-  .txn-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 13px 16px; background: var(--card);
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    margin-bottom: 8px;
-  }
-
-  .txn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .txn-info { flex: 1; }
-  .txn-desc { font-size: 14px; font-weight: 700; }
-  .txn-meta { font-size: 11px; color: var(--text2); font-weight: 600; margin-top: 2px; }
-
-  .txn-amount { font-size: 16px; font-weight: 900; font-family: 'Baloo 2', cursive; }
-  .txn-amount.in { color: var(--money); }
-  .txn-amount.out { color: var(--spend); }
-  .txn-amount.save { color: var(--save); }
-
-  .txn-del { background: none; border: none; color: var(--text3); font-size: 16px; cursor: pointer; padding: 4px; }
-
-  .add-money-form { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
-
-  .money-type-tabs { display: flex; gap: 6px; margin-bottom: 14px; }
-
-  .money-tab {
-    flex: 1; padding: 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
-    background: var(--card2); font-size: 12px; font-weight: 800; cursor: pointer;
-    text-align: center; transition: all 0.2s; color: var(--text2); font-family: 'Nunito', sans-serif;
-  }
-
-  .money-tab.active-in { border-color: var(--money); background: var(--money-soft); color: var(--money); }
-  .money-tab.active-out { border-color: var(--spend); background: var(--spend-soft); color: var(--spend); }
-  .money-tab.active-save { border-color: var(--save); background: var(--save-soft); color: var(--save); }
-
-  .amount-input-wrap { position: relative; margin-bottom: 12px; }
-  .rupee-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 800; color: var(--text2); }
-
-  .amount-input { width: 100%; padding: 13px 14px 13px 30px; border-radius: var(--radius-sm); background: var(--card2); border: 1.5px solid var(--border); color: var(--text); font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; outline: none; transition: border-color 0.2s; }
-  .amount-input:focus { border-color: rgba(46,204,113,0.4); }
-
-  .spend-cats { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-
-  .spend-cat {
-    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
-    background: var(--card2); border: 1.5px solid var(--border); cursor: pointer;
-    transition: all 0.2s; color: var(--text2);
-  }
-
-  .spend-cat.selected { background: var(--spend-soft); color: var(--spend); border-color: rgba(225,112,85,0.4); }
-
-  .add-txn-btn {
-    width: 100%; padding: 13px; border-radius: var(--radius-sm); border: none;
-    background: linear-gradient(135deg, var(--money), #27ae60);
-    color: #fff; font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 800;
-    cursor: pointer; transition: all 0.2s;
-  }
-
-  .add-txn-btn:active { transform: scale(0.97); }
-  .add-txn-btn.spend-btn { background: linear-gradient(135deg, var(--spend), #c0392b); }
-  .add-txn-btn.save-btn-style { background: linear-gradient(135deg, var(--save), #e67e22); }
-
-  .goal-setup { background: var(--card); border: 1px solid rgba(253,203,110,0.2); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
-  .goal-setup-title { font-size: 14px; font-weight: 800; color: var(--save); margin-bottom: 10px; }
+:root {
+  --bg: #0f1117;
+  --bg2: #161822;
+  --bg3: #1e2030;
+  --bg4: #252840;
+  --card: #1a1d2e;
+  --border: #2a2d45;
+  --text: #e8eaf6;
+  --text2: #9fa3c8;
+  --text3: #6b6f94;
+  --accent: #f4a261;
+  --accent2: #e76f51;
+
+  --sleep: #6366f1;
+  --sleep-bg: #1e1f3d;
+  --study: #22c55e;
+  --study-bg: #0f2d1a;
+  --tv: #ec4899;
+  --tv-bg: #2d1127;
+  --play: #38bdf8;
+  --play-bg: #0d2533;
+  --tuition: #f97316;
+  --tuition-bg: #2d1a08;
+  --friends: #f472b6;
+  --friends-bg: #2d1127;
+  --food: #eab308;
+  --food-bg: #2a2100;
+  --mood: #a855f7;
+  --mood-bg: #1f1035;
+  --oops: #ef4444;
+  --oops-bg: #2d0f0f;
+  --money: #10b981;
+  --money-bg: #0a2d1e;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+/* ---- PIN LOCK ---- */
+#pin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.pin-box {
+  text-align: center;
+  padding: 32px 24px;
+  max-width: 340px;
+  width: 90%;
+}
+.pin-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.pin-sub { color: var(--text2); font-size: 0.95rem; margin-bottom: 32px; }
+.pin-dots {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.pin-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  transition: all 0.2s;
+}
+.pin-dot.filled { background: var(--accent); border-color: var(--accent); }
+.pin-dot.error { background: var(--oops); border-color: var(--oops); }
+.pin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 260px;
+  margin: 0 auto;
+}
+.pin-btn {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.pin-btn:active { transform: scale(0.9); background: var(--accent); color: #fff; }
+.pin-err { color: var(--oops); font-size: 0.85rem; margin-top: 12px; min-height: 20px; }
+
+/* ---- TOP BAR ---- */
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.app-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #f4c261);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gear-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg3);
+  color: var(--text2);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.gear-btn:hover { background: var(--bg4); color: var(--text); }
+
+/* ---- BOTTOM NAV ---- */
+#bottomnav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px 8px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--text3);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  gap: 3px;
+}
+.nav-btn .nav-icon { font-size: 1.3rem; line-height: 1; }
+.nav-btn.active { color: var(--accent); }
+.nav-btn.active .nav-icon { transform: translateY(-2px); }
+
+/* ---- SCREENS ---- */
+#screens {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 90px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.screen { display: none; padding: 16px; }
+.screen.active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---- CARDS ---- */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+.card-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ---- BUTTONS ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-ghost { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg4); }
+.btn-full { width: 100%; }
+.btn-danger { background: var(--oops-bg); color: var(--oops); border: 1px solid var(--oops); }
+
+/* ---- HOME SCREEN ---- */
+.greeting-hero {
+  background: linear-gradient(135deg, #1e2040 0%, #1a1535 100%);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.greeting-hero::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(244,162,97,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.greeting-time { font-size: 0.8rem; color: var(--text3); font-weight: 600; }
+.greeting-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 4px 0;
+}
+.greeting-sub { color: var(--text2); font-size: 0.9rem; }
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #2d1a08, #3d2010);
+  border: 1px solid var(--tuition);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tuition);
+  margin-top: 12px;
+}
+
+.live-timers { display: flex; flex-direction: column; gap: 8px; }
+.live-timer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+}
+.live-timer-label { font-weight: 700; font-size: 0.9rem; }
+.live-timer-val { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700; }
+.stop-btn {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--oops-bg);
+  color: var(--oops);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.stop-btn:active { transform: scale(0.9); }
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.quick-btn {
+  padding: 14px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.quick-btn:active { transform: scale(0.97); }
+.quick-icon { font-size: 1.3rem; }
+
+/* ---- TIMERS SCREEN ---- */
+.timer-card {
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.timer-card.running { animation: pulse 2s infinite; }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  50% { box-shadow: 0 0 0 6px rgba(255,255,255,0.06); }
+}
+.timer-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.timer-display {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.timer-status { font-size: 0.78rem; font-weight: 700; margin-top: 4px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+.timer-action {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.18s;
+  font-family: 'Nunito', sans-serif;
+}
+.timer-action:active { transform: translateY(-50%) scale(0.9); }
+
+.subject-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.subject-tag {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.subject-tag.active { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.4); }
+
+/* ---- LOG SCREEN ---- */
+.log-section {
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.section-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.checkbox-row:last-child { border-bottom: none; }
+.check-box {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  border: 2px solid var(--border);
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.check-box.checked { background: var(--study); border-color: var(--study); }
+.check-label { font-size: 0.9rem; font-weight: 600; }
+.check-label.greyed { opacity: 0.35; }
+
+.progress-bar-wrap {
+  height: 8px;
+  background: var(--bg3);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--study), #86efac);
+  transition: width 0.4s ease;
+}
+
+.option-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 2px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.pill:active { transform: scale(0.95); }
+.pill.selected { border-color: var(--accent); background: rgba(244,162,97,0.15); color: var(--accent); }
+
+.mood-row { display: flex; justify-content: space-between; gap: 6px; }
+.mood-btn {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--bg3);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.mood-btn:active { transform: scale(0.9); }
+.mood-btn.selected { border-color: var(--mood); background: var(--mood-bg); transform: scale(1.08); }
+
+.log-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-top: 10px;
+}
+.log-input:focus { border-color: var(--accent); }
+.log-textarea { resize: vertical; min-height: 80px; }
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.toggle-label { font-size: 0.9rem; font-weight: 600; }
+.toggle {
+  width: 48px; height: 26px;
+  border-radius: 20px;
+  background: var(--border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggle.on { background: var(--mood); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px; left: 3px;
+  transition: left 0.2s;
+}
+.toggle.on::after { left: 25px; }
+
+.symptom-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--oops);
+  background: transparent;
+  color: var(--oops);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.chip.active { background: var(--oops); color: #fff; }
+
+.save-day-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: var(--radius);
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(244,162,97,0.3);
+  margin-top: 6px;
+}
+.save-day-btn:active { transform: scale(0.98); box-shadow: none; }
+
+/* ---- MONEY SCREEN ---- */
+.balance-hero {
+  background: linear-gradient(135deg, var(--money-bg), #0d3525);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  border: 1px solid rgba(16,185,129,0.3);
+  margin-bottom: 14px;
+}
+.balance-label { font-size: 0.8rem; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.balance-amount {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--money);
+  line-height: 1;
+  margin: 6px 0;
+}
+.balance-stats { display: flex; justify-content: space-around; margin-top: 14px; }
+.stat-item { text-align: center; }
+.stat-val { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700; }
+.stat-lbl { font-size: 0.72rem; color: var(--text3); font-weight: 600; }
+
+.goal-bar-wrap {
+  margin-top: 10px;
+  height: 10px;
+  background: var(--bg3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.goal-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--money), #6ee7b7);
+  transition: width 0.5s ease;
+}
+
+.money-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+.money-tab {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text3);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.money-tab.active { background: var(--card); color: var(--money); }
+
+.tx-list { display: flex; flex-direction: column; gap: 8px; }
+.tx-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.tx-info { flex: 1; }
+.tx-desc { font-weight: 700; font-size: 0.9rem; }
+.tx-meta { font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
+.tx-amount { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; }
+.tx-amount.got { color: var(--money); }
+.tx-amount.spent { color: var(--oops); }
+.tx-amount.saved { color: var(--sleep); }
+.tx-del { background: none; border: none; color: var(--text3); font-size: 1rem; cursor: pointer; padding: 4px 8px; }
+
+/* ---- INSIGHTS SCREEN ---- */
+.insight-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.insight-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.insight-text { font-size: 0.88rem; color: var(--text2); line-height: 1.6; }
+.insight-highlight { color: var(--accent); font-weight: 700; }
+
+.bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 80px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar-fill {
+  width: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: height 0.4s ease;
+}
+.bar-fill.empty { background: var(--bg4); }
+.bar-lbl { font-size: 0.65rem; color: var(--text3); font-weight: 700; }
+
+/* ---- HISTORY SCREEN ---- */
+.history-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.history-date {
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--accent);
+}
+.history-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.hchip {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* ---- SETTINGS SCREEN ---- */
+.settings-section { margin-bottom: 20px; }
+.settings-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.settings-item:hover { background: var(--bg3); }
+.settings-item-label { font-weight: 700; font-size: 0.9rem; }
+.settings-item-icon { font-size: 1.2rem; }
+
+/* ---- REMINDER CARD ---- */
+.reminder-card {
+  background: linear-gradient(135deg, #1a1535, #1e1040);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(168,85,247,0.3);
+}
+.reminder-label { font-size: 0.75rem; color: var(--mood); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.reminder-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; }
+
+/* ---- MODAL ---- */
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  display: none;
+}
+#modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--bg2);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 24px 20px 32px;
+  width: 100%;
+  max-width: 420px;
+  border-top: 1px solid var(--border);
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-title { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; }
+
+/* ---- TOAST ---- */
+#toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg4);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  z-index: 9000;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* scroll fix */
+::-webkit-scrollbar { width: 0; }
+
+/* number input for money */
+.money-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.money-input input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+}
+.money-input input:focus { border-color: var(--money); }
+
+.cat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.cat-chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text2);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.cat-chip.active { border-color: var(--money); color: var(--money); background: var(--money-bg); }
+
+/* Divider */
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
 </style>
 </head>
 <body>
+<div id="app">
 
-<div class="pin-screen" id="pinScreen">
-  <div class="pin-logo">🌸 <span>Dhruti's Days</span></div>
-  <div class="pin-subtitle" id="pinSubtitle">Enter your PIN to continue</div>
-  <div class="pin-dots">
-    <div class="pin-dot" id="pd0"></div>
-    <div class="pin-dot" id="pd1"></div>
-    <div class="pin-dot" id="pd2"></div>
-    <div class="pin-dot" id="pd3"></div>
-  </div>
-  <div class="pin-pad">
-    <div class="pin-key" onclick="pinKey('1')">1</div>
-    <div class="pin-key" onclick="pinKey('2')">2</div>
-    <div class="pin-key" onclick="pinKey('3')">3</div>
-    <div class="pin-key" onclick="pinKey('4')">4</div>
-    <div class="pin-key" onclick="pinKey('5')">5</div>
-    <div class="pin-key" onclick="pinKey('6')">6</div>
-    <div class="pin-key" onclick="pinKey('7')">7</div>
-    <div class="pin-key" onclick="pinKey('8')">8</div>
-    <div class="pin-key" onclick="pinKey('9')">9</div>
-    <div class="pin-key" style="opacity:0;pointer-events:none"></div>
-    <div class="pin-key" onclick="pinKey('0')">0</div>
-    <div class="pin-key del" onclick="pinDel()">⌫</div>
-  </div>
-  <div class="pin-error" id="pinError">Wrong PIN — try again</div>
-  <div style="margin-top:20px;font-size:12px;color:var(--text3);text-align:center">Default PIN: <strong style="color:var(--text2)">1234</strong></div>
-</div>
-
-<div class="app" id="mainApp" style="display:none">
-
-  <div class="topbar">
-    <div>
-      <div class="topbar-title">🌸 Dhruti's Days</div>
-      <div class="topbar-date" id="topbarDate"></div>
-    </div>
-    <div class="topbar-right">
-      <div class="icon-btn" onclick="showScreen('settings')" title="Settings">⚙️</div>
+  <!-- PIN OVERLAY -->
+  <div id="pin-overlay">
+    <div class="pin-box">
+      <div class="pin-title">🌟 Dhruti's Days</div>
+      <div class="pin-sub">Enter your secret PIN to get in!</div>
+      <div class="pin-dots">
+        <div class="pin-dot" id="pd0"></div>
+        <div class="pin-dot" id="pd1"></div>
+        <div class="pin-dot" id="pd2"></div>
+        <div class="pin-dot" id="pd3"></div>
+      </div>
+      <div class="pin-grid">
+        <button class="pin-btn" onclick="pinPress('1')">1</button>
+        <button class="pin-btn" onclick="pinPress('2')">2</button>
+        <button class="pin-btn" onclick="pinPress('3')">3</button>
+        <button class="pin-btn" onclick="pinPress('4')">4</button>
+        <button class="pin-btn" onclick="pinPress('5')">5</button>
+        <button class="pin-btn" onclick="pinPress('6')">6</button>
+        <button class="pin-btn" onclick="pinPress('7')">7</button>
+        <button class="pin-btn" onclick="pinPress('8')">8</button>
+        <button class="pin-btn" onclick="pinPress('9')">9</button>
+        <button class="pin-btn" onclick="pinPress('del')" style="font-size:1.1rem">⌫</button>
+        <button class="pin-btn" onclick="pinPress('0')">0</button>
+        <button class="pin-btn" onclick="pinPress('del')" style="font-size:0.9rem;opacity:0.5">clr</button>
+      </div>
+      <div class="pin-err" id="pin-err"></div>
     </div>
   </div>
 
-  <div class="screen active" id="screen-home">
-    <div class="home-hero">
-      <div class="home-greeting" id="homeGreeting">Good morning,</div>
-      <div class="home-name">How's your day, <span>Dhruti</span>? ✨</div>
-      <div class="home-streak">
-        <div class="home-streak-badge" id="homeStreakBadge">🔥 0 day streak</div>
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="app-title">🌟 Dhruti's Days</div>
+    <button class="gear-btn" onclick="gotoScreen('settings')">⚙️</button>
+  </div>
+
+  <!-- SCREENS -->
+  <div id="screens">
+
+    <!-- HOME -->
+    <div class="screen active" id="screen-home">
+      <div class="greeting-hero">
+        <div class="greeting-time" id="greeting-time"></div>
+        <div class="greeting-name" id="greeting-name">Hey Dhruti! 🌸</div>
+        <div class="greeting-sub" id="greeting-sub">Ready to have an amazing day?</div>
+        <div class="streak-badge" id="streak-badge">🔥 <span id="streak-num">0</span> day streak!</div>
+      </div>
+
+      <!-- Yesterday's reminder -->
+      <div id="reminder-card-home" style="display:none">
+        <div class="reminder-card">
+          <div class="reminder-label">📌 From Yesterday — Remember!</div>
+          <div class="reminder-text" id="reminder-text-home"></div>
+        </div>
+      </div>
+
+      <!-- Live timers -->
+      <div class="card" id="home-live-timers" style="display:none">
+        <div class="card-title">⏱️ Running Now</div>
+        <div class="live-timers" id="live-timers-list"></div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="card">
+        <div class="card-title">⚡ Quick Actions</div>
+        <div class="quick-grid">
+          <button class="quick-btn" onclick="gotoScreen('log')"><span class="quick-icon">📝</span> Log Today</button>
+          <button class="quick-btn" onclick="gotoScreen('timers')"><span class="quick-icon">⏱️</span> Timers</button>
+          <button class="quick-btn" onclick="gotoScreen('money')"><span class="quick-icon">💰</span> Money</button>
+          <button class="quick-btn" onclick="gotoScreen('insights')"><span class="quick-icon">📊</span> Insights</button>
+        </div>
+      </div>
+
+      <!-- Today status -->
+      <div class="card" id="today-status-card">
+        <div class="card-title">📅 Today's Status</div>
+        <div id="today-status-content" style="color:var(--text3);font-size:0.88rem;">Nothing logged yet today. Tap 'Log Today' to get started!</div>
       </div>
     </div>
 
-    <div class="live-timers" id="liveTimersHome"></div>
+    <!-- TIMERS -->
+    <div class="screen" id="screen-timers">
+      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">⏱️ My Timers</h2>
 
-    <div class="quick-actions">
-      <div class="quick-action" onclick="showScreen('log')" style="border-color:rgba(162,155,254,0.3)">
-        <div class="qa-icon">📝</div>
-        <div class="qa-label">Log My Day</div>
-        <div class="qa-sub">Fill today's entry</div>
+      <!-- Sleep -->
+      <div class="timer-card" id="timer-sleep" style="background:var(--sleep-bg);border-color:var(--sleep)" onclick="toggleTimer('sleep')">
+        <div class="timer-label" style="color:var(--sleep)">😴 Sleep</div>
+        <div class="timer-display" style="color:var(--sleep)" id="td-sleep">00:00:00</div>
+        <div class="timer-status" id="ts-sleep" style="color:var(--sleep)">Tap to start at bedtime</div>
+        <button class="timer-action" id="ta-sleep" style="background:var(--sleep);color:#fff">▶</button>
       </div>
-      <div class="quick-action" onclick="showScreen('timers')" style="border-color:rgba(67,233,123,0.3)">
-        <div class="qa-icon">⏱️</div>
-        <div class="qa-label">Timers</div>
-        <div class="qa-sub">Track activities</div>
+
+      <!-- Study with subjects -->
+      <div class="timer-card" id="timer-study" style="background:var(--study-bg);border-color:var(--study)" onclick="toggleTimer('study')">
+        <div class="timer-label" style="color:var(--study)">📚 Study</div>
+        <div class="timer-display" style="color:var(--study)" id="td-study">00:00:00</div>
+        <div class="timer-status" id="ts-study" style="color:var(--study)">Tap to start studying</div>
+        <button class="timer-action" id="ta-study" style="background:var(--study);color:#fff">▶</button>
+        <div class="subject-tags" onclick="event.stopPropagation()">
+          <span class="subject-tag" style="color:var(--study)" data-sub="Maths" onclick="pickSubject('Maths',this)">🔢 Maths</span>
+          <span class="subject-tag" style="color:var(--study)" data-sub="Science" onclick="pickSubject('Science',this)">🔬 Science</span>
+          <span class="subject-tag" style="color:var(--study)" data-sub="English" onclick="pickSubject('English',this)">📖 English</span>
+          <span class="subject-tag" style="color:var(--study)" data-sub="Telugu" onclick="pickSubject('Telugu',this)">🌺 Telugu</span>
+          <span class="subject-tag" style="color:var(--study)" data-sub="Hindi" onclick="pickSubject('Hindi',this)">🇮🇳 Hindi</span>
+          <span class="subject-tag" style="color:var(--study)" data-sub="Social" onclick="pickSubject('Social',this)">🌍 Social</span>
+        </div>
       </div>
-      <div class="quick-action" onclick="showScreen('insights')" style="border-color:rgba(253,203,110,0.3)">
-        <div class="qa-icon">💡</div>
-        <div class="qa-label">Insights</div>
-        <div class="qa-sub">See your patterns</div>
+
+      <!-- TV -->
+      <div class="timer-card" id="timer-tv" style="background:var(--tv-bg);border-color:var(--tv)" onclick="toggleTimer('tv')">
+        <div class="timer-label" style="color:var(--tv)">📺 TV</div>
+        <div class="timer-display" style="color:var(--tv)" id="td-tv">00:00:00</div>
+        <div class="timer-status" id="ts-tv" style="color:var(--tv)">Tap to start watching</div>
+        <button class="timer-action" id="ta-tv" style="background:var(--tv);color:#fff">▶</button>
       </div>
-      <div class="quick-action" onclick="showScreen('history')" style="border-color:rgba(253,121,168,0.3)">
-        <div class="qa-icon">📅</div>
-        <div class="qa-label">My History</div>
-        <div class="qa-sub">Past entries</div>
+
+      <!-- Play -->
+      <div class="timer-card" id="timer-play" style="background:var(--play-bg);border-color:var(--play)" onclick="toggleTimer('play')">
+        <div class="timer-label" style="color:var(--play)">🏃 Play</div>
+        <div class="timer-display" style="color:var(--play)" id="td-play">00:00:00</div>
+        <div class="timer-status" id="ts-play" style="color:var(--play)">Tap to start playing</div>
+        <button class="timer-action" id="ta-play" style="background:var(--play);color:#fff">▶</button>
+      </div>
+
+      <!-- Tuition -->
+      <div class="timer-card" id="timer-tuition" style="background:var(--tuition-bg);border-color:var(--tuition)" onclick="toggleTimer('tuition')">
+        <div class="timer-label" style="color:var(--tuition)">🏫 Tuition</div>
+        <div class="timer-display" style="color:var(--tuition)" id="td-tuition">00:00:00</div>
+        <div class="timer-status" id="ts-tuition" style="color:var(--tuition)">Tap when tuition starts</div>
+        <button class="timer-action" id="ta-tuition" style="background:var(--tuition);color:#fff">▶</button>
+      </div>
+
+      <div style="margin-top:6px;padding:12px 14px;background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border)">
+        <div style="font-size:0.8rem;color:var(--text3);font-weight:600;">ℹ️ Timers keep running even when you switch screens or reload the page!</div>
       </div>
     </div>
 
-    <div class="section-head">Today's Reminders</div>
-    <div id="tomorrowReminder" style="display:none">
-      <div class="card" style="border-color:rgba(85,239,196,0.3)">
-        <div class="card-header">
-          <div class="card-icon" style="background:var(--tomorrow-soft)">🔮</div>
-          <div>
-            <div class="card-title" style="color:var(--tomorrow)">You wrote this yesterday</div>
+    <!-- LOG -->
+    <div class="screen" id="screen-log">
+      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">📝 Log My Day</h2>
+      <div style="font-size:0.85rem;color:var(--text3);margin-bottom:16px;" id="log-date-label"></div>
+
+      <!-- Morning Routine -->
+      <div class="log-section" id="morning-section" style="background:var(--bg3);border-color:rgba(34,197,94,0.3)">
+        <div class="section-title" style="color:var(--study)">
+          <span id="morning-title">☀️ Morning Routine</span>
+        </div>
+        <div id="routine-checks">
+          <div class="checkbox-row" onclick="toggleCheck('brush')">
+            <div class="check-box" id="chk-brush"></div>
+            <span class="check-label">🪥 Brush teeth</span>
+          </div>
+          <div class="checkbox-row" onclick="toggleCheck('bath')">
+            <div class="check-box" id="chk-bath"></div>
+            <span class="check-label">🚿 Bath</span>
+          </div>
+          <div class="checkbox-row" id="row-uniform" onclick="toggleCheck('uniform')">
+            <div class="check-box" id="chk-uniform"></div>
+            <span class="check-label" id="lbl-uniform">👔 School uniform</span>
+          </div>
+          <div class="checkbox-row" id="row-bag" onclick="toggleCheck('bag')">
+            <div class="check-box" id="chk-bag"></div>
+            <span class="check-label" id="lbl-bag">🎒 School bag</span>
+          </div>
+          <div class="checkbox-row" onclick="toggleCheck('breakfast')">
+            <div class="check-box" id="chk-breakfast"></div>
+            <span class="check-label">🥞 Breakfast</span>
           </div>
         </div>
-        <div id="tomorrowReminderText" style="font-size:14px;font-weight:700;line-height:1.5"></div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="routine-progress" style="width:0%"></div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--text3);margin-top:6px;font-weight:600;" id="routine-pct">0% done</div>
+      </div>
+
+      <!-- School -->
+      <div class="log-section" style="background:var(--bg3);border-color:rgba(56,189,248,0.3)">
+        <div class="section-title" style="color:var(--play)">🏫 School Today</div>
+        <div class="option-pills" id="school-pills">
+          <button class="pill" onclick="pickSchool('yes',this)">✅ Yes I went</button>
+          <button class="pill" onclick="pickSchool('home',this)">🏠 Stayed home</button>
+          <button class="pill" onclick="pickSchool('holiday',this)">🎉 Holiday</button>
+        </div>
+        <div id="tuition-q" style="margin-top:14px;display:none">
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;" id="tuition-q-label">Did you go to tuition?</div>
+          <div class="option-pills">
+            <button class="pill" onclick="pickTuition('yes',this)">✅ Yes I went</button>
+            <button class="pill" onclick="pickTuition('no',this)">❌ Skipped</button>
+            <button class="pill" id="tuition-holiday-pill" style="display:none" onclick="pickTuition('holiday',this)">🎉 Holiday too</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- What I Learned -->
+      <div class="log-section" style="background:var(--study-bg);border-color:rgba(34,197,94,0.3)">
+        <div class="section-title" style="color:var(--study)">📖 What I Learned</div>
+        <div class="option-pills" id="learn-subject-pills">
+          <button class="pill" onclick="pickLearnSub('Maths',this)">🔢 Maths</button>
+          <button class="pill" onclick="pickLearnSub('Science',this)">🔬 Science</button>
+          <button class="pill" onclick="pickLearnSub('English',this)">📖 English</button>
+          <button class="pill" onclick="pickLearnSub('Telugu',this)">🌺 Telugu</button>
+          <button class="pill" onclick="pickLearnSub('Hindi',this)">🇮🇳 Hindi</button>
+          <button class="pill" onclick="pickLearnSub('Social',this)">🌍 Social</button>
+        </div>
+        <textarea class="log-input log-textarea" id="learn-topic" placeholder="What did you learn today? Anything interesting?" style="margin-top:10px"></textarea>
+        <div style="margin-top:10px;font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;">How was it?</div>
+        <div class="option-pills">
+          <button class="pill" onclick="pickLearnStatus('got',this)">💡 Got it!</button>
+          <button class="pill" onclick="pickLearnStatus('sortof',this)">🤔 Sort of</button>
+          <button class="pill" onclick="pickLearnStatus('confused',this)">😵 Confused</button>
+        </div>
+      </div>
+
+      <!-- Friends -->
+      <div class="log-section" style="background:var(--friends-bg);border-color:rgba(244,114,182,0.3)">
+        <div class="section-title" style="color:var(--friends)">👫 Friends</div>
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;">Friend vibe today?</div>
+        <div class="mood-row" id="friend-mood-row">
+          <button class="mood-btn" onclick="pickFriendMood(1,this)" title="Lonely">😔</button>
+          <button class="mood-btn" onclick="pickFriendMood(2,this)" title="Okay">😐</button>
+          <button class="mood-btn" onclick="pickFriendMood(3,this)" title="Good">🙂</button>
+          <button class="mood-btn" onclick="pickFriendMood(4,this)" title="Happy">😄</button>
+          <button class="mood-btn" onclick="pickFriendMood(5,this)" title="Amazing">🤩</button>
+        </div>
+        <input class="log-input" id="new-friend" placeholder="👋 New friend's name (if any)" style="margin-top:10px">
+        <input class="log-input" id="new-game" placeholder="🎮 Fun game you played" style="margin-top:8px">
+      </div>
+
+      <!-- Food -->
+      <div class="log-section" style="background:var(--food-bg);border-color:rgba(234,179,8,0.3)">
+        <div class="section-title" style="color:var(--food)">🍟 Junk Food?</div>
+        <div class="option-pills" id="junk-pills">
+          <button class="pill" onclick="pickJunk('none',this)">🥗 None</button>
+          <button class="pill" onclick="pickJunk('little',this)">🍪 A little</button>
+          <button class="pill" onclick="pickJunk('yes',this)">🍟 Yes!</button>
+        </div>
+        <input class="log-input" id="food-detail" placeholder="What did you eat today?" style="margin-top:10px">
+      </div>
+
+      <!-- Mood & Health -->
+      <div class="log-section" style="background:var(--mood-bg);border-color:rgba(168,85,247,0.3)">
+        <div class="section-title" style="color:var(--mood)">😊 Mood & Health</div>
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;">How are you feeling today?</div>
+        <div class="mood-row" id="mood-row">
+          <button class="mood-btn" onclick="pickMood(1,this)" title="Terrible">😭</button>
+          <button class="mood-btn" onclick="pickMood(2,this)" title="Sad">😔</button>
+          <button class="mood-btn" onclick="pickMood(3,this)" title="Okay">😐</button>
+          <button class="mood-btn" onclick="pickMood(4,this)" title="Happy">😄</button>
+          <button class="mood-btn" onclick="pickMood(5,this)" title="Amazing">🤩</button>
+        </div>
+        <div class="toggle-row" style="margin-top:12px">
+          <span class="toggle-label">😷 Feeling sick today?</span>
+          <div class="toggle" id="sick-toggle" onclick="toggleSick()"></div>
+        </div>
+        <div id="symptom-area" style="display:none">
+          <div class="symptom-chips">
+            <button class="chip" onclick="toggleSymptom('headache',this)">🤕 Headache</button>
+            <button class="chip" onclick="toggleSymptom('tummy',this)">🤢 Tummy</button>
+            <button class="chip" onclick="toggleSymptom('cold',this)">🤧 Cold</button>
+            <button class="chip" onclick="toggleSymptom('fever',this)">🌡️ Fever</button>
+            <button class="chip" onclick="toggleSymptom('tired',this)">😴 Tired</button>
+            <button class="chip" onclick="toggleSymptom('other',this)">💊 Other</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Oops Moments -->
+      <div class="log-section" style="background:var(--oops-bg);border-color:rgba(239,68,68,0.3)">
+        <div class="section-title" style="color:var(--oops)">😬 Oops Moments</div>
+        <div style="font-size:0.82rem;color:var(--text3);margin-bottom:10px;">Be honest, no one is judging! 💙</div>
+        <div class="option-pills" id="oops-pills" style="gap:8px">
+          <button class="pill" onclick="toggleOops('good',this)" style="border-color:var(--study);color:var(--study)">😇 I was good</button>
+          <button class="pill" onclick="toggleOops('tv',this)">📺 TV too long</button>
+          <button class="pill" onclick="toggleOops('phone',this)">📱 Phone too long</button>
+          <button class="pill" onclick="toggleOops('food',this)">🍕 Didn't eat well</button>
+          <button class="pill" onclick="toggleOops('sister',this)">😤 Teased sister</button>
+          <button class="pill" onclick="toggleOops('listen',this)">🙉 Didn't listen</button>
+          <button class="pill" onclick="toggleOops('hw',this)">📚 HW trouble</button>
+          <button class="pill" onclick="toggleOops('other',this)">🤷 Other</button>
+        </div>
+      </div>
+
+      <!-- Remember Tomorrow -->
+      <div class="log-section" style="background:var(--mood-bg);border-color:rgba(168,85,247,0.3)">
+        <div class="section-title" style="color:var(--mood)">🔮 Remember Tomorrow</div>
+        <textarea class="log-input log-textarea" id="remember-tmr" placeholder="Anything to remember for tomorrow? It'll show up on your home screen!"></textarea>
+      </div>
+
+      <button class="save-day-btn" onclick="saveDay()">✨ Save My Day!</button>
+    </div>
+
+    <!-- MONEY -->
+    <div class="screen" id="screen-money">
+      <!-- Balance Hero -->
+      <div class="balance-hero">
+        <div class="balance-label">Money in Pocket</div>
+        <div class="balance-amount">₹<span id="balance-amt">0</span></div>
+        <div class="balance-stats">
+          <div class="stat-item">
+            <div class="stat-val" style="color:var(--money)">₹<span id="money-got-total">0</span></div>
+            <div class="stat-lbl">Received</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-val" style="color:var(--oops)">₹<span id="money-spent-total">0</span></div>
+            <div class="stat-lbl">Spent</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-val" style="color:var(--sleep)">₹<span id="money-saved-total">0</span></div>
+            <div class="stat-lbl">Saved</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saving Goal -->
+      <div class="card">
+        <div class="card-title" style="color:var(--money)">🎯 Saving Goal</div>
+        <div id="goal-display">
+          <div id="no-goal-msg" style="color:var(--text3);font-size:0.88rem;">No goal set yet. Add one below!</div>
+          <div id="goal-info" style="display:none">
+            <div style="font-weight:700;font-size:0.95rem;" id="goal-name-display"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.82rem;color:var(--text3)">
+              <span>₹<span id="goal-saved-amt">0</span> saved</span>
+              <span>Target: ₹<span id="goal-target-amt">0</span></span>
+            </div>
+            <div class="goal-bar-wrap">
+              <div class="goal-bar-fill" id="goal-progress-bar" style="width:0%"></div>
+            </div>
+            <div style="font-size:0.75rem;color:var(--money);font-weight:700;margin-top:6px;" id="goal-pct-text"></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:0.82rem;font-weight:600;color:var(--text3);margin-bottom:8px;">Set a new goal:</div>
+        <input class="log-input" id="goal-name-input" placeholder="What are you saving for? (e.g. New toy)" style="margin-top:0">
+        <div class="money-input" style="margin-top:8px">
+          <input type="number" id="goal-target-input" placeholder="Target ₹ amount">
+          <button class="btn btn-primary" onclick="setGoal()" style="flex-shrink:0">Set Goal</button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="money-tabs">
+        <button class="money-tab active" id="mtab-got" onclick="switchMoneyTab('got')">💰 Got Money</button>
+        <button class="money-tab" id="mtab-spent" onclick="switchMoneyTab('spent')">💸 Spent</button>
+        <button class="money-tab" id="mtab-saved" onclick="switchMoneyTab('saved')">🐷 Saved</button>
+      </div>
+
+      <!-- Got Money Form -->
+      <div id="money-form-got" class="card">
+        <div class="card-title" style="color:var(--money)">💰 Got Money</div>
+        <input class="log-input" id="got-who" placeholder="Who gave it? (e.g. Amma, Nanna, Paati)" style="margin-top:0">
+        <div class="money-input">
+          <input type="number" id="got-amount" placeholder="Amount ₹">
+          <button class="btn btn-primary" onclick="addMoney('got')" style="flex-shrink:0;background:var(--money)">Add ✓</button>
+        </div>
+      </div>
+
+      <!-- Spent Form -->
+      <div id="money-form-spent" class="card" style="display:none">
+        <div class="card-title" style="color:var(--oops)">💸 Spent Money</div>
+        <div class="cat-chips" id="spend-cat-chips">
+          <button class="cat-chip" onclick="pickSpendCat('Snacks',this)">🍕 Snacks</button>
+          <button class="cat-chip" onclick="pickSpendCat('School stuff',this)">✏️ School</button>
+          <button class="cat-chip" onclick="pickSpendCat('Games/Toys',this)">🎮 Games/Toys</button>
+          <button class="cat-chip" onclick="pickSpendCat('Books',this)">📚 Books</button>
+          <button class="cat-chip" onclick="pickSpendCat('Gift',this)">🎁 Gift</button>
+          <button class="cat-chip" onclick="pickSpendCat('Gave away',this)">🤲 Gave away</button>
+          <button class="cat-chip" onclick="pickSpendCat('Other',this)">🛍️ Other</button>
+        </div>
+        <input class="log-input" id="spent-desc" placeholder="What did you buy?" style="margin-top:8px">
+        <div class="money-input">
+          <input type="number" id="spent-amount" placeholder="Amount ₹">
+          <button class="btn" onclick="addMoney('spent')" style="flex-shrink:0;background:var(--oops);color:#fff">Add ✓</button>
+        </div>
+      </div>
+
+      <!-- Saved Form -->
+      <div id="money-form-saved" class="card" style="display:none">
+        <div class="card-title" style="color:var(--sleep)">🐷 Saved Money</div>
+        <input class="log-input" id="saved-reason" placeholder="Why are you saving this?" style="margin-top:0">
+        <div class="money-input">
+          <input type="number" id="saved-amount" placeholder="Amount ₹">
+          <button class="btn" onclick="addMoney('saved')" style="flex-shrink:0;background:var(--sleep);color:#fff">Add ✓</button>
+        </div>
+      </div>
+
+      <!-- Transaction List -->
+      <div class="card">
+        <div class="card-title">📋 Transactions <span style="font-size:0.75rem;color:var(--text3);font-weight:600;">(last 30)</span></div>
+        <div class="tx-list" id="tx-list">
+          <div style="color:var(--text3);font-size:0.88rem;">No transactions yet!</div>
+        </div>
       </div>
     </div>
-    <div id="noReminder" class="empty-state" style="padding:20px">
-      <span style="font-size:13px;color:var(--text3)">No reminder from yesterday ✨</span>
+
+    <!-- INSIGHTS -->
+    <div class="screen" id="screen-insights">
+      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">📊 My Insights</h2>
+
+      <!-- Streak -->
+      <div class="insight-card" style="background:linear-gradient(135deg,#2d1a08,#3d2010);border-color:var(--tuition)">
+        <div class="insight-title" style="color:var(--tuition)">🔥 Streak</div>
+        <div style="font-family:'Baloo 2',cursive;font-size:3rem;font-weight:800;color:var(--tuition);line-height:1"><span id="ins-streak">0</span></div>
+        <div class="insight-text" id="ins-streak-text">Start logging every day to build your streak!</div>
+      </div>
+
+      <!-- 7-day activity -->
+      <div class="insight-card">
+        <div class="insight-title">📅 Last 7 Days Activity</div>
+        <div class="bar-chart" id="activity-chart"></div>
+        <div class="insight-text" id="activity-text" style="margin-top:12px;"></div>
+      </div>
+
+      <!-- Learning patterns -->
+      <div class="insight-card" style="background:var(--study-bg);border-color:rgba(34,197,94,0.3)">
+        <div class="insight-title" style="color:var(--study)">📚 Learning Patterns</div>
+        <div class="insight-text" id="learn-insight"></div>
+      </div>
+
+      <!-- Sleep vs Mood -->
+      <div class="insight-card" style="background:var(--sleep-bg);border-color:rgba(99,102,241,0.3)">
+        <div class="insight-title" style="color:var(--sleep)">😴 Sleep & Mood</div>
+        <div class="insight-text" id="sleep-mood-insight"></div>
+      </div>
+
+      <!-- Oops patterns -->
+      <div class="insight-card" style="background:var(--oops-bg);border-color:rgba(239,68,68,0.3)">
+        <div class="insight-title" style="color:var(--oops)">😬 Oops Patterns</div>
+        <div class="insight-text" id="oops-insight"></div>
+      </div>
+
+      <!-- Junk food -->
+      <div class="insight-card" style="background:var(--food-bg);border-color:rgba(234,179,8,0.3)">
+        <div class="insight-title" style="color:var(--food)">🍟 Junk Food %</div>
+        <div class="insight-text" id="junk-insight"></div>
+      </div>
+
+      <!-- Money savings -->
+      <div class="insight-card" style="background:var(--money-bg);border-color:rgba(16,185,129,0.3)">
+        <div class="insight-title" style="color:var(--money)">💰 Money Habits</div>
+        <div class="insight-text" id="money-insight"></div>
+      </div>
+
+      <!-- Morning routine -->
+      <div class="insight-card" style="background:var(--study-bg);border-color:rgba(34,197,94,0.3)">
+        <div class="insight-title" style="color:var(--study)">☀️ Morning Routine</div>
+        <div class="insight-text" id="morning-insight"></div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="screen" id="screen-history">
+      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">📚 My History</h2>
+      <div id="history-list">
+        <div style="color:var(--text3);font-size:0.88rem;">Nothing logged yet. Start your first day!</div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="screen" id="screen-settings">
+      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:20px;">⚙️ Settings</h2>
+
+      <div class="settings-section">
+        <div class="settings-title">Security</div>
+        <div class="settings-item" onclick="openChangePIN()">
+          <span class="settings-item-label">🔐 Change PIN</span>
+          <span class="settings-item-icon">→</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">Export Data</div>
+        <div class="settings-item" onclick="exportCSV()">
+          <span class="settings-item-label">📊 Export as CSV</span>
+          <span class="settings-item-icon">⬇</span>
+        </div>
+        <div class="settings-item" onclick="exportJSON()">
+          <span class="settings-item-label">🔧 Export as JSON</span>
+          <span class="settings-item-icon">⬇</span>
+        </div>
+        <div class="settings-item" onclick="exportText()">
+          <span class="settings-item-label">📝 Export Text Report</span>
+          <span class="settings-item-icon">⬇</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">Danger Zone</div>
+        <div class="settings-item" onclick="clearAllData()" style="border-color:rgba(239,68,68,0.3)">
+          <span class="settings-item-label" style="color:var(--oops)">🗑️ Clear All Data</span>
+          <span class="settings-item-icon">→</span>
+        </div>
+      </div>
+
+      <div style="padding:16px;text-align:center;color:var(--text3);font-size:0.78rem;line-height:1.6;">
+        Dhruti's Days 🌟<br>Made with 💙 just for you!<br>All data stays on your device.
+      </div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottomnav">
+    <button class="nav-btn active" onclick="gotoScreen('home')" id="nav-home">
+      <span class="nav-icon">🏠</span>Home
+    </button>
+    <button class="nav-btn" onclick="gotoScreen('timers')" id="nav-timers">
+      <span class="nav-icon">⏱️</span>Timers
+    </button>
+    <button class="nav-btn" onclick="gotoScreen('log')" id="nav-log">
+      <span class="nav-icon">📝</span>Log
+    </button>
+    <button class="nav-btn" onclick="gotoScreen('money')" id="nav-money">
+      <span class="nav-icon">💰</span>Money
+    </button>
+    <button class="nav-btn" onclick="gotoScreen('insights')" id="nav-insights">
+      <span class="nav-icon">📊</span>Insights
+    </button>
+    <button class="nav-btn" onclick="gotoScreen('history')" id="nav-history">
+      <span class="nav-icon">📚</span>History
+    </button>
+  </nav>
+
+  <!-- MODAL -->
+  <div id="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-title" id="modal-title"></div>
+      <div id="modal-body"></div>
     </div>
   </div>
 
-  <div class="screen" id="screen-timers">
-    <div class="section-head">Sleep Timer</div>
-    <div class="timer-card" id="sleepTimerCard">
-      <div class="timer-icon-wrap" style="background:var(--sleep-soft)">🌙</div>
-      <div class="timer-info">
-        <div class="timer-name">Sleep</div>
-        <div class="timer-time" id="sleepTimerDisplay">00:00:00</div>
-      </div>
-      <button class="timer-btn start" id="sleepTimerBtn" onclick="toggleSleepTimer()">▶</button>
-    </div>
-    <div id="sleepTimerNote" style="font-size:12px;color:var(--text2);margin:-4px 0 12px 14px;display:none">
-      😴 Tap ⏹ when you wake up!
-    </div>
+  <!-- TOAST -->
+  <div id="toast"></div>
 
-    <div class="section-head">Activity Timers</div>
-
-    <div class="timer-card" id="studyTimerCard">
-      <div class="timer-icon-wrap" style="background:var(--study-soft)">📚</div>
-      <div class="timer-info">
-        <div class="timer-name">Study</div>
-        <div class="timer-time" id="studyTimerDisplay">00:00:00</div>
-        <div id="studySubjectDisplay" style="font-size:11px;color:var(--text2);margin-top:3px;font-weight:700"></div>
-      </div>
-      <button class="timer-btn start" id="studyTimerBtn" onclick="toggleTimer('study')">▶</button>
-    </div>
-    <div id="studySubjectPicker" style="padding:0 4px 10px">
-      <div class="subject-tags">
-        <div class="subject-tag" onclick="selectSubject(this,'Maths')">➕ Maths</div>
-        <div class="subject-tag" onclick="selectSubject(this,'Science')">🔬 Science</div>
-        <div class="subject-tag" onclick="selectSubject(this,'English')">📖 English</div>
-        <div class="subject-tag" onclick="selectSubject(this,'Telugu')">🏡 Telugu</div>
-        <div class="subject-tag" onclick="selectSubject(this,'Hindi')">🇮🇳 Hindi</div>
-        <div class="subject-tag" onclick="selectSubject(this,'Social')">🌍 Social</div>
-      </div>
-    </div>
-
-    <div class="timer-card" id="tvTimerCard">
-      <div class="timer-icon-wrap" style="background:var(--tv-soft)">📺</div>
-      <div class="timer-info">
-        <div class="timer-name">TV / Screen</div>
-        <div class="timer-time" id="tvTimerDisplay">00:00:00</div>
-      </div>
-      <button class="timer-btn start" id="tvTimerBtn" onclick="toggleTimer('tv')">▶</button>
-    </div>
-
-    <div class="timer-card" id="playTimerCard">
-      <div class="timer-icon-wrap" style="background:var(--play-soft)">🎮</div>
-      <div class="timer-info">
-        <div class="timer-name">Play / Games</div>
-        <div class="timer-time" id="playTimerDisplay">00:00:00</div>
-      </div>
-      <button class="timer-btn start" id="playTimerBtn" onclick="toggleTimer('play')">▶</button>
-    </div>
-
-    <div class="timer-card" id="tuitionTimerCard">
-      <div class="timer-icon-wrap" style="background:var(--tuition-soft)">🏫</div>
-      <div class="timer-info">
-        <div class="timer-name">Tuition</div>
-        <div class="timer-time" id="tuitionTimerDisplay">00:00:00</div>
-      </div>
-      <button class="timer-btn start" id="tuitionTimerBtn" onclick="toggleTimer('tuition')">▶</button>
-    </div>
-
-    <div style="font-size:12px;color:var(--text3);text-align:center;padding:8px 0">Timers save automatically to today's log ✨</div>
-  </div>
-
-  <div class="screen" id="screen-log">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon" style="background:var(--morning-soft)" id="routineIcon">☀️</div>
-        <div>
-          <div class="card-title" style="color:var(--morning)" id="routineTitle">Morning Routine</div>
-          <div class="card-subtitle" id="routineSubtitle">Get ready for school!</div>
-        </div>
-      </div>
-      <div id="routineItems">
-        <div class="routine-item" onclick="toggleRoutine(this,'brush')">
-          <div class="routine-check">✓</div>
-          <div class="routine-label">Brushed teeth</div>
-          <div class="routine-emoji">🪥</div>
-        </div>
-        <div class="routine-item" onclick="toggleRoutine(this,'bath')">
-          <div class="routine-check">✓</div>
-          <div class="routine-label">Had a bath</div>
-          <div class="routine-emoji">🚿</div>
-        </div>
-        <div class="routine-item routine-school-only" onclick="toggleRoutine(this,'uniform')">
-          <div class="routine-check">✓</div>
-          <div class="routine-label">Uniform on</div>
-          <div class="routine-emoji">👗</div>
-        </div>
-        <div class="routine-item routine-school-only" onclick="toggleRoutine(this,'bag')">
-          <div class="routine-check">✓</div>
-          <div class="routine-label">Bag packed</div>
-          <div class="routine-emoji">🎒</div>
-        </div>
-        <div class="routine-item" onclick="toggleRoutine(this,'breakfast')">
-          <div class="routine-check">✓</div>
-          <div class="routine-label">Ate breakfast</div>
-          <div class="routine-emoji">🍱</div>
-        </div>
-      </div>
-      <div class="ready-bar">
-        <div class="ready-bar-bg">
-          <div class="ready-bar-fill" id="routineBar" style="width:0%"></div>
-        </div>
-        <div class="ready-label">
-          <span id="routineDoneCount">0 of 5 done</span>
-          <span id="routineTime"></span>
-        </div>
-      </div>
-    </div>
-
-    <button class="save-btn" onclick="saveLog()">✨ Save My Day</button>
-    <div style="height:20px"></div>
-  </div>
-
-  <div class="screen" id="screen-insights">
-    <div class="insight-card" style="--accent-grad:linear-gradient(90deg,var(--morning),var(--oops))">
-      <div class="insight-title">🔥 Current Streak</div>
-      <span class="streak-flame" id="streakFlame">🔥</span>
-      <div class="insight-big" id="streakDays" style="text-align:center;color:var(--morning)">0</div>
-      <div class="insight-label" style="text-align:center">days logged in a row</div>
-      <div style="margin-top:10px;font-size:13px;color:var(--text2);text-align:center" id="streakMsg"></div>
-    </div>
-  </div>
-
-  <div class="screen" id="screen-history">
-    <div id="historyList"></div>
-  </div>
-
-  <div class="screen" id="screen-settings">
-    <div class="section-head">Account</div>
-    <div class="settings-item" onclick="changePinPrompt()">
-      <div class="settings-item-left">
-        <div class="settings-item-icon">🔐</div>
-        <div>
-          <div class="settings-item-label">Change PIN</div>
-          <div class="settings-item-sub">Update your secret PIN</div>
-        </div>
-      </div>
-      <div class="settings-arrow">›</div>
-    </div>
-
-    <div class="section-head">Export Data</div>
-    <button class="export-btn primary" onclick="exportCSV()">📊 Export as CSV (Excel)</button>
-    <button class="export-btn" onclick="exportJSON()">💾 Export as JSON (Backup)</button>
-    <button class="export-btn" onclick="exportText()">📄 Export as Text Report</button>
-
-    <div class="section-head">Danger Zone</div>
-    <button class="export-btn" style="border-color:rgba(255,118,117,0.3);color:var(--oops)" onclick="clearData()">🗑️ Clear All Data</button>
-
-    <div style="text-align:center;margin-top:24px;font-size:12px;color:var(--text3)">
-      Dhruti's Days · Made with ❤️ by Papa<br>
-      <span id="totalEntries" style="margin-top:4px;display:block"></span>
-    </div>
-  </div>
-
-  <div class="screen" id="screen-money">
-    <div class="balance-hero">
-      <div class="balance-label">My Pocket Money</div>
-      <div class="balance-amount" id="moneyBalance">₹0</div>
-      <div class="balance-sub" id="moneyBalanceSub">Start adding your money!</div>
-      <div class="balance-stats">
-        <div class="balance-stat">
-          <div class="balance-stat-val" style="color:var(--money)" id="moneyTotalIn">₹0</div>
-          <div class="balance-stat-lbl">💰 Received</div>
-        </div>
-        <div class="balance-stat">
-          <div class="balance-stat-val" style="color:var(--spend)" id="moneyTotalOut">₹0</div>
-          <div class="balance-stat-lbl">🛍️ Spent</div>
-        </div>
-        <div class="balance-stat">
-          <div class="balance-stat-val" style="color:var(--save)" id="moneyTotalSave">₹0</div>
-          <div class="balance-stat-lbl">🐷 Saved</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-head">Recent Transactions</div>
-    <div id="txnList">
-      <div class="empty-state">
-        <span class="es-icon">💰</span>
-        <div class="es-title">No transactions yet</div>
-        <div class="es-sub">Add your first money entry above!</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="bottom-nav" id="bottomNav" style="display:none">
-  <div class="nav-item active" id="nav-home" onclick="showScreen('home')">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-label">Home</div>
-  </div>
-  <div class="nav-item" id="nav-timers" onclick="showScreen('timers')">
-    <div class="nav-icon">⏱️</div>
-    <div class="nav-label">Timers</div>
-  </div>
-  <div class="nav-item" id="nav-log" onclick="showScreen('log')">
-    <div class="nav-icon">📝</div>
-    <div class="nav-label">Log</div>
-  </div>
-  <div class="nav-item" id="nav-money" onclick="showScreen('money')">
-    <div class="nav-icon">💰</div>
-    <div class="nav-label">Money</div>
-  </div>
-  <div class="nav-item" id="nav-insights" onclick="showScreen('insights')">
-    <div class="nav-icon">💡</div>
-    <div class="nav-label">Insights</div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
+</div><!-- /app -->
 
 <script>
-  // ... existing code ...
+// ============================================================
+// DATA & STATE
+// ============================================================
+const LS = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set: (k,v) => localStorage.setItem(k, JSON.stringify(v)),
+  del: k => localStorage.removeItem(k)
+};
 
-  // PIN FUNCTIONS
-  let pinEntry = '';
-  const correctPin = '1234';
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 
-  function pinKey(num) {
-    if (pinEntry.length < 4) {
-      pinEntry += num;
-      updatePinDots();
-      if (pinEntry.length === 4) {
-        checkPin();
-      }
-    }
+function yesterdayKey() {
+  const d = new Date(); d.setDate(d.getDate()-1);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function fmtDate(k) {
+  const [y,m,d] = k.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dt = new Date(+y, +m-1, +d);
+  return `${days[dt.getDay()]}, ${d} ${months[+m-1]} ${y}`;
+}
+
+// Log state for today
+let logState = {
+  brush:false, bath:false, uniform:false, bag:false, breakfast:false,
+  school:'', tuition:'',
+  learnSubject:'', learnTopic:'', learnStatus:'',
+  friendMood:0, newFriend:'', newGame:'',
+  junkFood:'', foodDetail:'',
+  mood:0, sick:false, symptoms:[],
+  oops:[],
+  rememberTmr:''
+};
+
+let studySubject = LS.get('timer_study_subject') || '';
+
+// ============================================================
+// PIN LOCK
+// ============================================================
+let pinBuffer = '';
+let pinMode = 'unlock'; // or 'change_old' | 'change_new' | 'change_confirm'
+let pinNewTemp = '';
+
+function getPin() { return LS.get('app_pin') || '1234'; }
+
+function pinPress(val) {
+  if (val === 'del') { pinBuffer = pinBuffer.slice(0,-1); }
+  else if (pinBuffer.length < 4) { pinBuffer += val; }
+  updatePinDots();
+  if (pinBuffer.length === 4) {
+    setTimeout(() => checkPin(), 120);
   }
+}
 
-  function pinDel() {
-    pinEntry = pinEntry.slice(0, -1);
-    updatePinDots();
-    document.getElementById('pinError').classList.remove('show');
+function updatePinDots(err=false) {
+  for (let i=0;i<4;i++) {
+    const dot = document.getElementById(`pd${i}`);
+    dot.className = 'pin-dot';
+    if (err) dot.classList.add('error');
+    else if (i < pinBuffer.length) dot.classList.add('filled');
   }
+}
 
-  function updatePinDots() {
-    for (let i = 0; i < 4; i++) {
-      const dot = document.getElementById(`pd${i}`);
-      if (i < pinEntry.length) {
-        dot.classList.add('filled');
-      } else {
-        dot.classList.remove('filled');
-      }
-    }
-  }
-
-  function checkPin() {
-    if (pinEntry === correctPin) {
-      document.getElementById('pinScreen').classList.add('hidden');
-      document.getElementById('mainApp').style.display = 'block';
-      document.getElementById('bottomNav').style.display = 'flex';
+function checkPin() {
+  const pin = getPin();
+  if (pinMode === 'unlock') {
+    if (pinBuffer === pin) {
+      document.getElementById('pin-overlay').style.display = 'none';
       initApp();
     } else {
-      document.getElementById('pinError').classList.add('show');
-      pinEntry = '';
-      updatePinDots();
-      setTimeout(() => {
-        document.getElementById('pinError').classList.remove('show');
-      }, 2000);
+      document.getElementById('pin-err').textContent = 'Oops! Wrong PIN. Try again 🙈';
+      updatePinDots(true);
+      setTimeout(() => { pinBuffer=''; updatePinDots(); document.getElementById('pin-err').textContent=''; }, 1000);
     }
-  }
-
-  function changePinPrompt() {
-    const newPin = prompt('Enter new PIN (4 digits):');
-    if (newPin && newPin.length === 4 && /^\d+$/.test(newPin)) {
-      pinEntry = '';
-      updatePinDots();
-      showToast('✨ PIN changed successfully!');
-    }
-  }
-
-  // SCREEN NAVIGATION
-  function showScreen(screenName) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(`screen-${screenName}`).classList.add('active');
-    
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById(`nav-${screenName}`).classList.add('active');
-  }
-
-  // ROUTINE & LOG FUNCTIONS
-  function toggleRoutine(element, id) {
-    element.classList.toggle('done');
-    updateRoutineProgress();
-    saveToLocalStorage();
-  }
-
-  function updateRoutineProgress() {
-    const items = document.querySelectorAll('.routine-item');
-    const done = document.querySelectorAll('.routine-item.done').length;
-    const total = items.length;
-    document.getElementById('routineDoneCount').textContent = `${done} of ${total} done`;
-    document.getElementById('routineBar').style.width = `${(done / total) * 100}%`;
-  }
-
-  function saveLog() {
-    showToast('✨ Day saved successfully!');
-    saveToLocalStorage();
-  }
-
-  // TIMER FUNCTIONS
-  let timers = {
-    sleep: { running: false, seconds: 0, interval: null },
-    study: { running: false, seconds: 0, interval: null, subject: '' },
-    tv: { running: false, seconds: 0, interval: null },
-    play: { running: false, seconds: 0, interval: null },
-    tuition: { running: false, seconds: 0, interval: null }
-  };
-
-  function toggleTimer(type) {
-    const timer = timers[type];
-    if (timer.running) {
-      stopTimer(type);
+  } else if (pinMode === 'change_old') {
+    if (pinBuffer === pin) {
+      pinMode = 'change_new';
+      document.getElementById('modal-title').textContent = '🔐 Enter New PIN';
+      pinBuffer=''; updatePinDots(); document.getElementById('pin-err').textContent='';
     } else {
-      startTimer(type);
+      document.getElementById('pin-err').textContent = 'Wrong current PIN!';
+      updatePinDots(true);
+      setTimeout(() => { pinBuffer=''; updatePinDots(); document.getElementById('pin-err').textContent=''; }, 1000);
+    }
+  } else if (pinMode === 'change_new') {
+    pinNewTemp = pinBuffer;
+    pinMode = 'change_confirm';
+    document.getElementById('modal-title').textContent = '🔐 Confirm New PIN';
+    pinBuffer=''; updatePinDots();
+  } else if (pinMode === 'change_confirm') {
+    if (pinBuffer === pinNewTemp) {
+      LS.set('app_pin', pinBuffer);
+      closeModal();
+      pinMode = 'unlock';
+      showToast('✅ PIN changed successfully!');
+    } else {
+      document.getElementById('pin-err').textContent = "PINs don't match!";
+      updatePinDots(true);
+      setTimeout(() => { pinBuffer=''; pinNewTemp=''; pinMode='change_new';
+        document.getElementById('modal-title').textContent = '🔐 Enter New PIN';
+        updatePinDots(); document.getElementById('pin-err').textContent=''; }, 1200);
     }
   }
+}
 
-  function startTimer(type) {
-    const timer = timers[type];
-    timer.running = true;
-    updateTimerButton(type);
-    
-    timer.interval = setInterval(() => {
-      timer.seconds++;
-      updateTimerDisplay(type);
-      saveToLocalStorage();
+// ============================================================
+// NAVIGATION
+// ============================================================
+let currentScreen = 'home';
+
+function gotoScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`screen-${name}`).classList.add('active');
+  const nb = document.getElementById(`nav-${name}`);
+  if (nb) nb.classList.add('active');
+  currentScreen = name;
+  if (name === 'home') refreshHome();
+  if (name === 'insights') refreshInsights();
+  if (name === 'history') refreshHistory();
+  if (name === 'money') refreshMoney();
+  document.getElementById('screens').scrollTop = 0;
+}
+
+// ============================================================
+// TIMERS
+// ============================================================
+const TIMERS = ['sleep','study','tv','play','tuition'];
+let timerIntervals = {};
+
+function getTimerData(name) {
+  return LS.get(`timer_${name}`) || { running: false, elapsed: 0, startedAt: null };
+}
+
+function saveTimerData(name, data) {
+  LS.set(`timer_${name}`, data);
+}
+
+function getElapsed(data) {
+  if (!data.running) return data.elapsed;
+  return data.elapsed + Math.floor((Date.now() - data.startedAt) / 1000);
+}
+
+function toggleTimer(name) {
+  let data = getTimerData(name);
+  if (data.running) {
+    data.elapsed = getElapsed(data);
+    data.running = false;
+    data.startedAt = null;
+    // for sleep, if it was the wake-up stop, store sleep hours
+    if (name === 'sleep') {
+      const hrs = data.elapsed / 3600;
+      const today = todayKey();
+      let log = LS.get(`log_${today}`) || {};
+      log.sleepHours = hrs.toFixed(1);
+      LS.set(`log_${today}`, log);
+    }
+  } else {
+    data.running = true;
+    data.startedAt = Date.now();
+  }
+  saveTimerData(name, data);
+  updateTimerUI(name);
+  refreshHomeTimers();
+}
+
+function updateTimerUI(name) {
+  const data = getTimerData(name);
+  const elapsed = getElapsed(data);
+  const h = Math.floor(elapsed/3600), m = Math.floor((elapsed%3600)/60), s = elapsed%60;
+  const fmt = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const tdEl = document.getElementById(`td-${name}`);
+  const tsEl = document.getElementById(`ts-${name}`);
+  const taEl = document.getElementById(`ta-${name}`);
+  const cardEl = document.getElementById(`timer-${name}`);
+  if (!tdEl) return;
+  tdEl.textContent = fmt;
+  if (data.running) {
+    tsEl.textContent = name === 'sleep' ? 'Sleeping... tap when you wake up!' : 'Running... tap to stop';
+    taEl.textContent = '⏸';
+    cardEl.classList.add('running');
+  } else {
+    const msgs = { sleep:'Tap to start at bedtime', study:'Tap to start studying', tv:'Tap to start watching', play:'Tap to start playing', tuition:'Tap when tuition starts' };
+    tsEl.textContent = elapsed > 0 ? `Total: ${fmt}` : msgs[name];
+    taEl.textContent = '▶';
+    cardEl.classList.remove('running');
+  }
+}
+
+function startAllTimerTicks() {
+  TIMERS.forEach(name => {
+    if (timerIntervals[name]) clearInterval(timerIntervals[name]);
+    timerIntervals[name] = setInterval(() => {
+      const data = getTimerData(name);
+      if (data.running) {
+        updateTimerUI(name);
+        refreshHomeTimers();
+      }
     }, 1000);
-  }
-
-  function stopTimer(type) {
-    const timer = timers[type];
-    timer.running = false;
-    clearInterval(timer.interval);
-    updateTimerButton(type);
-    saveToLocalStorage();
-  }
-
-  function toggleSleepTimer() {
-    toggleTimer('sleep');
-  }
-
-  function updateTimerDisplay(type) {
-    const timer = timers[type];
-    const hours = Math.floor(timer.seconds / 3600);
-    const mins = Math.floor((timer.seconds % 3600) / 60);
-    const secs = timer.seconds % 60;
-    const display = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    document.getElementById(`${type}TimerDisplay`).textContent = display;
-  }
-
-  function updateTimerButton(type) {
-    const btn = document.getElementById(`${type}TimerBtn`);
-    const card = document.getElementById(`${type}TimerCard`);
-    if (timers[type].running) {
-      btn.textContent = '⏹';
-      btn.classList.remove('start');
-      btn.classList.add('stop');
-      card.classList.add('running');
-    } else {
-      btn.textContent = '▶';
-      btn.classList.add('start');
-      btn.classList.remove('stop');
-      card.classList.remove('running');
-    }
-  }
-
-  function selectSubject(element, subject) {
-    document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('selected'));
-    element.classList.add('selected');
-    timers.study.subject = subject;
-    document.getElementById('studySubjectDisplay').textContent = subject;
-    saveToLocalStorage();
-  }
-
-  // INSIGHTS
-  function updateInsights() {
-    document.getElementById('streakDays').textContent = '0';
-    document.getElementById('streakMsg').textContent = 'Start logging to build your streak! 🚀';
-  }
-
-  // HISTORY
-  function loadHistory() {
-    document.getElementById('historyList').innerHTML = `
-      <div class="empty-state">
-        <span class="es-icon">📅</span>
-        <div class="es-title">No entries yet</div>
-        <div class="es-sub">Start logging your days!</div>
-      </div>
-    `;
-  }
-
-  // EXPORT FUNCTIONS
-  function exportCSV() {
-    showToast('📊 CSV exported!');
-  }
-
-  function exportJSON() {
-    showToast('💾 JSON exported!');
-  }
-
-  function exportText() {
-    showToast('📄 Text exported!');
-  }
-
-  function clearData() {
-    if (confirm('⚠️ Clear all data? This cannot be undone!')) {
-      localStorage.clear();
-      location.reload();
-    }
-  }
-
-  // TOAST NOTIFICATIONS
-  function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2000);
-  }
-
-  // LOCAL STORAGE
-  function saveToLocalStorage() {
-    localStorage.setItem('dhruti_timers', JSON.stringify(timers));
-  }
-
-  function loadFromLocalStorage() {
-    const saved = localStorage.getItem('dhruti_timers');
-    if (saved) {
-      timers = JSON.parse(saved);
-    }
-    updateAllTimerDisplays();
-  }
-
-  function updateAllTimerDisplays() {
-    Object.keys(timers).forEach(type => {
-      updateTimerDisplay(type);
-    });
-  }
-
-  // INIT APP
-  function initApp() {
-    const now = new Date();
-    document.getElementById('topbarDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    
-    loadFromLocalStorage();
-    updateRoutineProgress();
-    updateInsights();
-    loadHistory();
-    showScreen('home');
-  }
-
-  // START
-  document.addEventListener('DOMContentLoaded', () => {
-    // Get all clickable elements and add proper touch support
-    const clickableElements = document.querySelectorAll('[onclick]');
-    
-    clickableElements.forEach(element => {
-      element.addEventListener('touchstart', function(e) {
-        this.style.opacity = '0.7';
-      }, false);
-      
-      element.addEventListener('touchend', function(e) {
-        this.style.opacity = '1';
-      }, false);
-    });
+    updateTimerUI(name);
   });
-</script>
+}
 
+function pickSubject(sub, el) {
+  studySubject = sub;
+  LS.set('timer_study_subject', sub);
+  document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ============================================================
+// HOME
+// ============================================================
+function refreshHome() {
+  // Greeting
+  const h = new Date().getHours();
+  let greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('greeting-name').textContent = `${greet}, Dhruti! 🌸`;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const now = new Date();
+  document.getElementById('greeting-time').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  // Streak
+  const streak = calcStreak();
+  document.getElementById('streak-num').textContent = streak;
+  document.getElementById('ins-streak').textContent = streak;
+
+  const subs = {0:'Start logging to build your streak!', 1:'First day! Let\'s go! 🚀', 3:'3 days - you\'re on a roll! 🎉', 7:'A whole week! Amazing!! 🌟', 14:'Two weeks! You\'re a legend! 👑'};
+  let msg = streak === 0 ? subs[0] : streak >= 14 ? subs[14] : streak >= 7 ? subs[7] : streak >= 3 ? subs[3] : subs[1];
+  document.getElementById('greeting-sub').textContent = msg;
+
+  // Yesterday's reminder
+  const yesterday = LS.get(`log_${yesterdayKey()}`);
+  const reminderCard = document.getElementById('reminder-card-home');
+  if (yesterday && yesterday.rememberTmr) {
+    document.getElementById('reminder-text-home').textContent = yesterday.rememberTmr;
+    reminderCard.style.display = 'block';
+  } else { reminderCard.style.display = 'none'; }
+
+  refreshHomeTimers();
+
+  // Today status
+  const todayLog = LS.get(`log_${todayKey()}`);
+  const statusDiv = document.getElementById('today-status-content');
+  if (todayLog && todayLog.saved) {
+    let parts = [];
+    if (todayLog.mood) parts.push(['😭','😔','😐','😄','🤩'][todayLog.mood-1] + ' Mood');
+    if (todayLog.school) parts.push(todayLog.school === 'yes' ? '🏫 Went to school' : todayLog.school === 'holiday' ? '🎉 Holiday' : '🏠 Stayed home');
+    if (todayLog.learnSubject) parts.push(`📚 ${todayLog.learnSubject}`);
+    if (todayLog.junkFood && todayLog.junkFood !== 'none') parts.push('🍟 Had junk');
+    if (todayLog.sick) parts.push('😷 Not well');
+    statusDiv.innerHTML = parts.length ? parts.map(p=>`<span style="display:inline-block;background:var(--bg4);border-radius:20px;padding:4px 10px;font-size:0.78rem;font-weight:700;margin:3px;">${p}</span>`).join('') : '<span style="color:var(--study);">✅ Day logged!</span>';
+  } else {
+    statusDiv.textContent = "Nothing logged yet today. Tap 'Log Today' to get started!";
+    statusDiv.style.color = 'var(--text3)';
+  }
+}
+
+function refreshHomeTimers() {
+  const running = TIMERS.filter(n => getTimerData(n).running);
+  const card = document.getElementById('home-live-timers');
+  const list = document.getElementById('live-timers-list');
+  if (!running.length) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  const colors = { sleep:'var(--sleep)', study:'var(--study)', tv:'var(--tv)', play:'var(--play)', tuition:'var(--tuition)' };
+  const icons = { sleep:'😴', study:'📚', tv:'📺', play:'🏃', tuition:'🏫' };
+  list.innerHTML = running.map(n => {
+    const d = getTimerData(n);
+    const el = getElapsed(d);
+    const h = Math.floor(el/3600), m = Math.floor((el%3600)/60), s = el%60;
+    const fmt = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    return `<div class="live-timer-item">
+      <div class="live-timer-label" style="color:${colors[n]}">${icons[n]} ${n[0].toUpperCase()+n.slice(1)}</div>
+      <div class="live-timer-val" style="color:${colors[n]}">${fmt}</div>
+      <button class="stop-btn" onclick="toggleTimer('${n}');event.stopPropagation()">⏹</button>
+    </div>`;
+  }).join('');
+}
+
+function calcStreak() {
+  let streak = 0;
+  const today = new Date();
+  // check yesterday and before (if today not yet saved)
+  const todayLog = LS.get(`log_${todayKey()}`);
+  let checkDate = new Date(today);
+  if (!todayLog || !todayLog.saved) checkDate.setDate(checkDate.getDate()-1);
+  for (let i=0;i<365;i++) {
+    const k = `${checkDate.getFullYear()}-${String(checkDate.getMonth()+1).padStart(2,'0')}-${String(checkDate.getDate()).padStart(2,'0')}`;
+    const log = LS.get(`log_${k}`);
+    if (log && log.saved) { streak++; checkDate.setDate(checkDate.getDate()-1); }
+    else break;
+  }
+  // add today if saved
+  if (todayLog && todayLog.saved && !LS.get(`log_${yesterdayKey()}`)?.saved) { /* already counted */ }
+  if (todayLog && todayLog.saved) { /* already handled */ }
+  return streak;
+}
+
+// ============================================================
+// LOG SCREEN
+// ============================================================
+function initLogScreen() {
+  const today = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('log-date-label').textContent = `Logging for: ${days[today.getDay()]}, ${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+
+  // Load existing log if any
+  const saved = LS.get(`log_${todayKey()}`);
+  if (saved) { logState = {...logState, ...saved}; restoreLogUI(); }
+  else { resetLogState(); }
+}
+
+function resetLogState() {
+  logState = { brush:false, bath:false, uniform:false, bag:false, breakfast:false,
+    school:'', tuition:'', learnSubject:'', learnTopic:'', learnStatus:'',
+    friendMood:0, newFriend:'', newGame:'', junkFood:'', foodDetail:'',
+    mood:0, sick:false, symptoms:[], oops:[], rememberTmr:'' };
+  updateRoutineUI();
+}
+
+function restoreLogUI() {
+  // checkboxes
+  ['brush','bath','uniform','bag','breakfast'].forEach(k => {
+    const el = document.getElementById(`chk-${k}`);
+    if (el) { el.classList.toggle('checked', !!logState[k]); }
+  });
+  updateRoutineUI();
+  // school
+  if (logState.school) {
+    document.querySelectorAll('#school-pills .pill').forEach(p => {
+      if (p.textContent.includes(logState.school==='yes'?'Yes':logState.school==='home'?'Stayed':'Holiday')) p.classList.add('selected');
+    });
+    updateSchoolUI(logState.school);
+  }
+  // learn subject
+  if (logState.learnSubject) {
+    document.querySelectorAll('#learn-subject-pills .pill').forEach(p => {
+      if (p.textContent.includes(logState.learnSubject)) p.classList.add('selected');
+    });
+  }
+  if (logState.learnTopic) document.getElementById('learn-topic').value = logState.learnTopic;
+  if (logState.learnStatus) {
+    document.querySelectorAll('.pill').forEach(p => {
+      if ((logState.learnStatus==='got' && p.textContent.includes('Got')) ||
+          (logState.learnStatus==='sortof' && p.textContent.includes('Sort')) ||
+          (logState.learnStatus==='confused' && p.textContent.includes('Confused'))) p.classList.add('selected');
+    });
+  }
+  // friend mood
+  if (logState.friendMood) {
+    const btns = document.querySelectorAll('#friend-mood-row .mood-btn');
+    if (btns[logState.friendMood-1]) btns[logState.friendMood-1].classList.add('selected');
+  }
+  if (logState.newFriend) document.getElementById('new-friend').value = logState.newFriend;
+  if (logState.newGame) document.getElementById('new-game').value = logState.newGame;
+  // junk
+  if (logState.junkFood) {
+    document.querySelectorAll('#junk-pills .pill').forEach(p => {
+      if ((logState.junkFood==='none'&&p.textContent.includes('None'))||
+          (logState.junkFood==='little'&&p.textContent.includes('little'))||
+          (logState.junkFood==='yes'&&p.textContent.includes('Yes'))) p.classList.add('selected');
+    });
+  }
+  if (logState.foodDetail) document.getElementById('food-detail').value = logState.foodDetail;
+  // mood
+  if (logState.mood) {
+    const btns = document.querySelectorAll('#mood-row .mood-btn');
+    if (btns[logState.mood-1]) btns[logState.mood-1].classList.add('selected');
+  }
+  // sick
+  if (logState.sick) { document.getElementById('sick-toggle').classList.add('on'); document.getElementById('symptom-area').style.display='block'; }
+  if (logState.symptoms) {
+    document.querySelectorAll('.chip').forEach(c => {
+      const sym = c.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+      if (sym && logState.symptoms.includes(sym)) c.classList.add('active');
+    });
+  }
+  // oops
+  if (logState.oops) {
+    document.querySelectorAll('#oops-pills .pill').forEach(p => {
+      const o = p.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+      if (o && logState.oops.includes(o)) p.classList.add('selected');
+    });
+  }
+  if (logState.rememberTmr) document.getElementById('remember-tmr').value = logState.rememberTmr;
+}
+
+function toggleCheck(key) {
+  logState[key] = !logState[key];
+  const el = document.getElementById(`chk-${key}`);
+  el.classList.toggle('checked', logState[key]);
+  el.textContent = logState[key] ? '✓' : '';
+  updateRoutineUI();
+}
+
+function updateRoutineUI() {
+  const isHoliday = logState.school === 'holiday';
+  document.getElementById('morning-title').textContent = isHoliday ? '☀️ Holiday Morning' : '☀️ Morning Routine';
+  const items = [
+    {k:'uniform', lbl: isHoliday ? '👔 School uniform' : '👔 School uniform', grey: isHoliday},
+    {k:'bag', lbl: isHoliday ? '🎒 School bag' : '🎒 School bag', grey: isHoliday}
+  ];
+  items.forEach(it => {
+    const row = document.getElementById(`row-${it.k}`);
+    const lbl = document.getElementById(`lbl-${it.k}`);
+    if (row) { row.style.opacity = it.grey ? '0.4' : '1'; row.style.pointerEvents = it.grey ? 'none' : 'auto'; }
+    if (lbl) lbl.className = `check-label${it.grey ? ' greyed' : ''}`;
+  });
+
+  const checkable = ['brush','bath','breakfast'].concat(isHoliday ? [] : ['uniform','bag']);
+  const checked = checkable.filter(k => logState[k]).length;
+  const pct = Math.round(checked/checkable.length*100);
+  document.getElementById('routine-progress').style.width = pct+'%';
+  document.getElementById('routine-pct').textContent = `${pct}% done${pct===100?' 🎉':''}`;
+
+  // update check marks
+  ['brush','bath','uniform','bag','breakfast'].forEach(k => {
+    const el = document.getElementById(`chk-${k}`);
+    if (el) el.textContent = logState[k] ? '✓' : '';
+  });
+}
+
+function pickSchool(val, el) {
+  logState.school = val;
+  document.querySelectorAll('#school-pills .pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  updateSchoolUI(val);
+  updateRoutineUI();
+}
+
+function updateSchoolUI(val) {
+  const tq = document.getElementById('tuition-q');
+  const hp = document.getElementById('tuition-holiday-pill');
+  const lbl = document.getElementById('tuition-q-label');
+  if (val === 'holiday') {
+    tq.style.display = 'block';
+    lbl.textContent = 'Did you still go to tuition?';
+    hp.style.display = 'inline-flex';
+  } else if (val) {
+    tq.style.display = 'block';
+    lbl.textContent = 'Did you go to tuition?';
+    hp.style.display = 'none';
+  } else {
+    tq.style.display = 'none';
+  }
+}
+
+function pickTuition(val, el) {
+  logState.tuition = val;
+  document.querySelectorAll('#tuition-q .pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function pickLearnSub(sub, el) {
+  logState.learnSubject = sub;
+  document.querySelectorAll('#learn-subject-pills .pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function pickLearnStatus(val, el) {
+  logState.learnStatus = val;
+  const parent = el.parentElement;
+  parent.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function pickFriendMood(val, el) {
+  logState.friendMood = val;
+  document.querySelectorAll('#friend-mood-row .mood-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function pickJunk(val, el) {
+  logState.junkFood = val;
+  document.querySelectorAll('#junk-pills .pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function pickMood(val, el) {
+  logState.mood = val;
+  document.querySelectorAll('#mood-row .mood-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleSick() {
+  logState.sick = !logState.sick;
+  document.getElementById('sick-toggle').classList.toggle('on', logState.sick);
+  document.getElementById('symptom-area').style.display = logState.sick ? 'block' : 'none';
+}
+
+function toggleSymptom(sym, el) {
+  if (!logState.symptoms) logState.symptoms = [];
+  const idx = logState.symptoms.indexOf(sym);
+  if (idx >= 0) { logState.symptoms.splice(idx,1); el.classList.remove('active'); }
+  else { logState.symptoms.push(sym); el.classList.add('active'); }
+}
+
+function toggleOops(val, el) {
+  if (!logState.oops) logState.oops = [];
+  if (val === 'good') {
+    logState.oops = ['good'];
+    document.querySelectorAll('#oops-pills .pill').forEach(p => p.classList.remove('selected'));
+    el.classList.add('selected');
+    return;
+  }
+  // remove 'good' if selecting bad
+  logState.oops = logState.oops.filter(o => o !== 'good');
+  document.querySelectorAll('#oops-pills .pill').forEach(p => {
+    const o = p.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if (o === 'good') p.classList.remove('selected');
+  });
+  const idx = logState.oops.indexOf(val);
+  if (idx >= 0) { logState.oops.splice(idx,1); el.classList.remove('selected'); }
+  else { logState.oops.push(val); el.classList.add('selected'); }
+}
+
+function saveDay() {
+  logState.learnTopic = document.getElementById('learn-topic').value;
+  logState.newFriend = document.getElementById('new-friend').value;
+  logState.newGame = document.getElementById('new-game').value;
+  logState.foodDetail = document.getElementById('food-detail').value;
+  logState.rememberTmr = document.getElementById('remember-tmr').value;
+  logState.saved = true;
+  logState.savedAt = Date.now();
+
+  // save timer snapshots
+  TIMERS.forEach(t => {
+    const d = getTimerData(t);
+    logState[`${t}Time`] = getElapsed(d);
+  });
+
+  LS.set(`log_${todayKey()}`, logState);
+  showToast('✨ Day saved! Great job Dhruti!');
+  updateStreakBadge();
+}
+
+function updateStreakBadge() {
+  const s = calcStreak();
+  document.getElementById('streak-num').textContent = s;
+}
+
+// ============================================================
+// MONEY
+// ============================================================
+let currentMoneyTab = 'got';
+let selectedSpendCat = '';
+
+function refreshMoney() {
+  const txs = LS.get('transactions') || [];
+  let got=0, spent=0, saved=0;
+  txs.forEach(t => {
+    if (t.type==='got') got += t.amount;
+    else if (t.type==='spent') spent += t.amount;
+    else if (t.type==='saved') saved += t.amount;
+  });
+  const balance = got - spent - saved;
+  document.getElementById('balance-amt').textContent = balance.toFixed(0);
+  document.getElementById('money-got-total').textContent = got.toFixed(0);
+  document.getElementById('money-spent-total').textContent = spent.toFixed(0);
+  document.getElementById('money-saved-total').textContent = saved.toFixed(0);
+
+  // Goal
+  const goal = LS.get('saving_goal');
+  if (goal) {
+    document.getElementById('no-goal-msg').style.display = 'none';
+    document.getElementById('goal-info').style.display = 'block';
+    document.getElementById('goal-name-display').textContent = '🎯 ' + goal.name;
+    document.getElementById('goal-saved-amt').textContent = saved.toFixed(0);
+    document.getElementById('goal-target-amt').textContent = goal.target;
+    const pct = Math.min(100, Math.round(saved/goal.target*100));
+    document.getElementById('goal-progress-bar').style.width = pct+'%';
+    document.getElementById('goal-pct-text').textContent = `${pct}% there! ${pct>=100?'🎉 Goal reached!':'Keep saving!'}`;
+  } else {
+    document.getElementById('no-goal-msg').style.display = 'block';
+    document.getElementById('goal-info').style.display = 'none';
+  }
+
+  // Tx list
+  renderTxList(txs);
+}
+
+function setGoal() {
+  const name = document.getElementById('goal-name-input').value.trim();
+  const target = parseFloat(document.getElementById('goal-target-input').value);
+  if (!name || !target || target <= 0) { showToast('Please enter goal name and amount!'); return; }
+  LS.set('saving_goal', { name, target });
+  document.getElementById('goal-name-input').value = '';
+  document.getElementById('goal-target-input').value = '';
+  refreshMoney();
+  showToast('🎯 Saving goal set!');
+}
+
+function switchMoneyTab(tab) {
+  currentMoneyTab = tab;
+  ['got','spent','saved'].forEach(t => {
+    document.getElementById(`mtab-${t}`).classList.toggle('active', t===tab);
+    document.getElementById(`money-form-${t}`).style.display = t===tab ? 'block' : 'none';
+  });
+}
+
+function pickSpendCat(cat, el) {
+  selectedSpendCat = cat;
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function addMoney(type) {
+  const amtEl = document.getElementById(`${type}-amount`);
+  const amount = parseFloat(amtEl.value);
+  if (!amount || amount <= 0) { showToast('Enter a valid amount!'); return; }
+
+  let desc = '';
+  if (type === 'got') desc = document.getElementById('got-who').value || 'Someone';
+  else if (type === 'spent') {
+    const d = document.getElementById('spent-desc').value;
+    desc = (selectedSpendCat ? selectedSpendCat+': ' : '') + (d || 'Something');
+  }
+  else if (type === 'saved') desc = document.getElementById('saved-reason').value || 'Saving up';
+
+  const txs = LS.get('transactions') || [];
+  txs.unshift({ id: Date.now(), type, amount, desc, date: todayKey() });
+  if (txs.length > 30) txs.pop();
+  LS.set('transactions', txs);
+
+  // Clear inputs
+  amtEl.value = '';
+  if (type==='got') document.getElementById('got-who').value='';
+  if (type==='spent') { document.getElementById('spent-desc').value=''; selectedSpendCat=''; document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); }
+  if (type==='saved') document.getElementById('saved-reason').value='';
+
+  refreshMoney();
+  showToast(type==='got'?'💰 Money added!':type==='spent'?'💸 Spent logged!':'🐷 Saved!');
+}
+
+function deleteTx(id) {
+  let txs = LS.get('transactions') || [];
+  txs = txs.filter(t => t.id !== id);
+  LS.set('transactions', txs);
+  refreshMoney();
+}
+
+function renderTxList(txs) {
+  const el = document.getElementById('tx-list');
+  if (!txs.length) { el.innerHTML='<div style="color:var(--text3);font-size:0.88rem;">No transactions yet!</div>'; return; }
+  const icons = { got:'💰', spent:'💸', saved:'🐷' };
+  el.innerHTML = txs.map(t => `
+    <div class="tx-item">
+      <div class="tx-info">
+        <div class="tx-desc">${icons[t.type]} ${t.desc}</div>
+        <div class="tx-meta">${fmtDate(t.date)}</div>
+      </div>
+      <div class="tx-amount ${t.type}">₹${t.amount}</div>
+      <button class="tx-del" onclick="deleteTx(${t.id})">🗑</button>
+    </div>`).join('');
+}
+
+// ============================================================
+// INSIGHTS
+// ============================================================
+function refreshInsights() {
+  const streak = calcStreak();
+  document.getElementById('ins-streak').textContent = streak;
+  const streakMsgs = [
+    "You haven't started yet — log today to begin! 🌱",
+    "1 day! Every journey starts somewhere! 🚀",
+    `${streak} days in a row! You're doing amazing! 🌟`,
+  ];
+  document.getElementById('ins-streak-text').textContent = streak === 0 ? streakMsgs[0] : streak === 1 ? streakMsgs[1] : streakMsgs[2];
+
+  // 7-day activity chart
+  const chart = document.getElementById('activity-chart');
+  const days = ['M','T','W','T','F','S','S'];
+  const today = new Date();
+  let logged=0;
+  const bars = [];
+  for (let i=6;i>=0;i--) {
+    const d = new Date(today); d.setDate(d.getDate()-i);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const log = LS.get(`log_${k}`);
+    const hasLog = log && log.saved;
+    if (hasLog) logged++;
+    bars.push({day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()].slice(0,1), has: hasLog, log});
+  }
+  chart.innerHTML = bars.map(b => `
+    <div class="bar-col">
+      <div class="bar-fill${b.has?'':' empty'}" style="height:${b.has?60:8}px"></div>
+      <div class="bar-lbl">${b.day}</div>
+    </div>`).join('');
+  document.getElementById('activity-text').innerHTML = logged === 0
+    ? "You haven't logged any days this week. Start today! 🌱"
+    : logged < 4 ? `You logged <span class="insight-highlight">${logged} out of 7 days</span> this week. Keep it up!`
+    : `Wow! <span class="insight-highlight">${logged} out of 7 days</span> this week — you're on fire! 🔥`;
+
+  // Learning patterns - confused subjects
+  const allLogs = getAllLogs();
+  const confusedSubs = {};
+  const gotSubs = {};
+  allLogs.forEach(l => {
+    if (l.learnSubject) {
+      if (l.learnStatus==='confused') confusedSubs[l.learnSubject]=(confusedSubs[l.learnSubject]||0)+1;
+      if (l.learnStatus==='got') gotSubs[l.learnSubject]=(gotSubs[l.learnSubject]||0)+1;
+    }
+  });
+  const confusedList = Object.entries(confusedSubs).sort((a,b)=>b[1]-a[1]);
+  const gotList = Object.entries(gotSubs).sort((a,b)=>b[1]-a[1]);
+  let learnText = '';
+  if (confusedList.length) learnText += `You found <span class="insight-highlight">${confusedList[0][0]}</span> confusing ${confusedList[0][1]} time${confusedList[0][1]>1?'s':''}. Maybe ask your teacher for extra help! 💪 `;
+  if (gotList.length) learnText += `You're really good at <span class="insight-highlight">${gotList[0][0]}</span> — you got it ${gotList[0][1]} time${gotList[0][1]>1?'s':''}! ⭐`;
+  if (!learnText) learnText = "Start logging what you learn to see patterns here! 📚";
+  document.getElementById('learn-insight').innerHTML = learnText;
+
+  // Sleep vs mood
+  const sleepMoodPairs = allLogs.filter(l => l.sleepHours && l.mood);
+  let smText = '';
+  if (sleepMoodPairs.length >= 3) {
+    const avg = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+    const goodSleep = sleepMoodPairs.filter(l => +l.sleepHours >= 8);
+    const poorSleep = sleepMoodPairs.filter(l => +l.sleepHours < 7);
+    if (goodSleep.length && poorSleep.length) {
+      const gMood = avg(goodSleep.map(l=>l.mood));
+      const pMood = avg(poorSleep.map(l=>l.mood));
+      smText = gMood > pMood
+        ? `On days you slept <span class="insight-highlight">8+ hours</span>, your mood was noticeably better! 😴✨ Sleep is your superpower!`
+        : `Your mood is pretty consistent regardless of sleep. Keep tracking to see more patterns! 🔍`;
+    } else {
+      smText = `You have <span class="insight-highlight">${sleepMoodPairs.length} days</span> of sleep data. Keep logging to see the connection! 😴`;
+    }
+  } else {
+    smText = "Log your sleep and mood for a few more days to see how they connect! 🌙";
+  }
+  document.getElementById('sleep-mood-insight').innerHTML = smText;
+
+  // Oops patterns
+  const oopsCounts = {};
+  allLogs.forEach(l => { if (l.oops) l.oops.forEach(o => { if(o!=='good') oopsCounts[o]=(oopsCounts[o]||0)+1; }); });
+  const oopsLabels = {tv:'watching too much TV',phone:'being on the phone too long',food:'not eating well',sister:'teasing your sister',listen:'not listening',hw:'HW trouble'};
+  const topOops = Object.entries(oopsCounts).sort((a,b)=>b[1]-a[1]);
+  const goodDays = allLogs.filter(l => l.oops && l.oops.includes('good')).length;
+  let oopsText = '';
+  if (goodDays > 0) oopsText += `You had <span class="insight-highlight">${goodDays} perfect day${goodDays>1?'s':''}</span>! That's amazing! 😇 `;
+  if (topOops.length) oopsText += `Your most common oops is <span class="insight-highlight">${oopsLabels[topOops[0][0]] || topOops[0][0]}</span> (${topOops[0][1]} times). You can work on this! 💪`;
+  if (!oopsText) oopsText = "No oops logged yet! You're either being perfect or you haven't started yet 😄";
+  document.getElementById('oops-insight').innerHTML = oopsText;
+
+  // Junk food
+  const junkLogs = allLogs.filter(l => l.junkFood);
+  const junkYes = junkLogs.filter(l => l.junkFood === 'yes').length;
+  const junkPct = junkLogs.length ? Math.round(junkYes/junkLogs.length*100) : 0;
+  let junkText = junkLogs.length === 0
+    ? "No food data yet! Log your meals to see patterns. 🥗"
+    : junkPct <= 20 ? `Only <span class="insight-highlight">${junkPct}%</span> junk food days — you're eating really healthy! 🥗🎉`
+    : junkPct <= 50 ? `<span class="insight-highlight">${junkPct}%</span> of days had junk food. Not bad, but try to eat more healthy stuff! 🥦`
+    : `<span class="insight-highlight">${junkPct}%</span> of days had junk food. Maybe try swapping one junk snack for a fruit? 🍎`;
+  document.getElementById('junk-insight').innerHTML = junkText;
+
+  // Money
+  const txs = LS.get('transactions') || [];
+  const totalGot = txs.filter(t=>t.type==='got').reduce((a,t)=>a+t.amount,0);
+  const totalSaved = txs.filter(t=>t.type==='saved').reduce((a,t)=>a+t.amount,0);
+  const savePct = totalGot > 0 ? Math.round(totalSaved/totalGot*100) : 0;
+  const moneyText = totalGot === 0
+    ? "Start logging your money to see your savings habits! 💰"
+    : savePct >= 30 ? `You save <span class="insight-highlight">${savePct}%</span> of your money — that's incredible! Future billionaire! 🤑`
+    : savePct > 0 ? `You're saving <span class="insight-highlight">${savePct}%</span> of what you get. Great habit — keep it up! 🐷`
+    : `You haven't saved any money yet. Try saving even ₹5 next time! 💙`;
+  document.getElementById('money-insight').innerHTML = moneyText;
+
+  // Morning routine
+  const morningLogs = allLogs.filter(l => l.brush !== undefined);
+  if (morningLogs.length) {
+    const perfect = morningLogs.filter(l => l.brush && l.bath && l.breakfast).length;
+    const pct = Math.round(perfect/morningLogs.length*100);
+    document.getElementById('morning-insight').innerHTML = `You completed a full morning routine on <span class="insight-highlight">${pct}%</span> of your logged days (${perfect}/${morningLogs.length})! ${pct>=80?'You\'re a morning champion! ☀️🏆':'Keep working on that routine! 💪'}`;
+  } else {
+    document.getElementById('morning-insight').innerHTML = "Start logging your mornings to track your routine! ☀️";
+  }
+}
+
+function getAllLogs() {
+  const logs = [];
+  for (let i=0; i<365; i++) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const log = LS.get(`log_${k}`);
+    if (log && log.saved) logs.push({...log, date:k});
+  }
+  return logs;
+}
+
+// ============================================================
+// HISTORY
+// ============================================================
+function refreshHistory() {
+  const logs = getAllLogs();
+  const el = document.getElementById('history-list');
+  if (!logs.length) { el.innerHTML='<div style="color:var(--text3);font-size:0.88rem;">Nothing logged yet. Start your first day!</div>'; return; }
+
+  const moodEmojis = ['','😭','😔','😐','😄','🤩'];
+  const schoolLabels = {yes:'🏫 School', home:'🏠 Home', holiday:'🎉 Holiday'};
+
+  el.innerHTML = logs.map(l => {
+    const chips = [];
+    if (l.mood) chips.push({text: moodEmojis[l.mood]+' Mood '+l.mood+'/5', color:'var(--mood)', bg:'var(--mood-bg)'});
+    if (l.school) chips.push({text: schoolLabels[l.school]||l.school, color:'var(--play)', bg:'var(--play-bg)'});
+    if (l.learnSubject) chips.push({text:'📚 '+l.learnSubject, color:'var(--study)', bg:'var(--study-bg)'});
+    if (l.sleepHours) chips.push({text:'😴 '+l.sleepHours+'h', color:'var(--sleep)', bg:'var(--sleep-bg)'});
+    if (l.junkFood && l.junkFood!=='none') chips.push({text:'🍟 Junk', color:'var(--food)', bg:'var(--food-bg)'});
+    if (l.sick) chips.push({text:'😷 Sick', color:'var(--oops)', bg:'var(--oops-bg)'});
+    if (l.oops && l.oops.includes('good')) chips.push({text:'😇 Perfect day', color:'var(--study)', bg:'var(--study-bg)'});
+    const routine = [l.brush,l.bath,l.uniform,l.bag,l.breakfast].filter(Boolean).length;
+    if (routine>0) chips.push({text:`☀️ ${routine}/5 routine`, color:'var(--accent)', bg:'rgba(244,162,97,0.1)'});
+
+    return `<div class="history-card">
+      <div class="history-date">${fmtDate(l.date)}</div>
+      <div class="history-chips">
+        ${chips.map(c=>`<span class="hchip" style="color:${c.color};background:${c.bg};border:1px solid ${c.color}">${c.text}</span>`).join('')}
+        ${(!chips.length)?'<span style="color:var(--text3);font-size:0.82rem;">Day logged ✓</span>':''}
+      </div>
+      ${l.rememberTmr?`<div style="margin-top:10px;font-size:0.82rem;color:var(--mood);"><span style="opacity:0.6">🔮 Note: </span>${l.rememberTmr}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function openChangePIN() {
+  pinMode = 'change_old';
+  pinBuffer = '';
+  openModal('🔐 Enter Current PIN', `
+    <div id="modal-pin-dots" style="display:flex;justify-content:center;gap:16px;margin-bottom:24px">
+      <div id="mpd0" class="pin-dot"></div>
+      <div id="mpd1" class="pin-dot"></div>
+      <div id="mpd2" class="pin-dot"></div>
+      <div id="mpd3" class="pin-dot"></div>
+    </div>
+    <div class="pin-grid" style="max-width:260px;margin:0 auto">
+      <button class="pin-btn" onclick="modalPinPress('1')">1</button>
+      <button class="pin-btn" onclick="modalPinPress('2')">2</button>
+      <button class="pin-btn" onclick="modalPinPress('3')">3</button>
+      <button class="pin-btn" onclick="modalPinPress('4')">4</button>
+      <button class="pin-btn" onclick="modalPinPress('5')">5</button>
+      <button class="pin-btn" onclick="modalPinPress('6')">6</button>
+      <button class="pin-btn" onclick="modalPinPress('7')">7</button>
+      <button class="pin-btn" onclick="modalPinPress('8')">8</button>
+      <button class="pin-btn" onclick="modalPinPress('9')">9</button>
+      <button class="pin-btn" onclick="modalPinPress('del')">⌫</button>
+      <button class="pin-btn" onclick="modalPinPress('0')">0</button>
+      <button class="pin-btn" onclick="modalPinPress('del')" style="font-size:0.9rem;opacity:0.5">clr</button>
+    </div>
+    <div id="pin-err" style="color:var(--oops);font-size:0.85rem;text-align:center;margin-top:12px;min-height:20px;"></div>
+  `);
+}
+
+function modalPinPress(val) {
+  if (val === 'del') pinBuffer = pinBuffer.slice(0,-1);
+  else if (pinBuffer.length < 4) pinBuffer += val;
+  // update dots
+  for (let i=0;i<4;i++) {
+    const d = document.getElementById(`mpd${i}`);
+    if (d) { d.className='pin-dot'; if(i<pinBuffer.length) d.classList.add('filled'); }
+  }
+  if (pinBuffer.length === 4) setTimeout(() => checkPin(), 120);
+}
+
+function exportCSV() {
+  const logs = getAllLogs();
+  if (!logs.length) { showToast('No data to export!'); return; }
+  const headers = ['Date','Mood','School','LearnSubject','LearnStatus','JunkFood','Sick','SleepHours','Oops','ReminderTmr'];
+  const rows = logs.map(l => [
+    l.date, l.mood||'', l.school||'', l.learnSubject||'', l.learnStatus||'',
+    l.junkFood||'', l.sick?'yes':'no', l.sleepHours||'',
+    (l.oops||[]).join(';'), l.rememberTmr||''
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  downloadFile('dhrutis-days.csv', csv, 'text/csv');
+}
+
+function exportJSON() {
+  const logs = getAllLogs();
+  const txs = LS.get('transactions') || [];
+  downloadFile('dhrutis-days.json', JSON.stringify({logs, transactions:txs}, null, 2), 'application/json');
+}
+
+function exportText() {
+  const logs = getAllLogs();
+  let text = "DHRUTI'S DAYS — Full Report\n" + '='.repeat(40) + '\n\n';
+  const moodEmojis = ['','😭','😔','😐','😄','🤩'];
+  logs.forEach(l => {
+    text += `📅 ${fmtDate(l.date)}\n`;
+    if (l.mood) text += `  Mood: ${moodEmojis[l.mood]} (${l.mood}/5)\n`;
+    if (l.school) text += `  School: ${l.school}\n`;
+    if (l.learnSubject) text += `  Learned: ${l.learnSubject} — ${l.learnStatus}\n`;
+    if (l.learnTopic) text += `  Topic: ${l.learnTopic}\n`;
+    if (l.junkFood) text += `  Junk food: ${l.junkFood}\n`;
+    if (l.sick) text += `  Sick: yes (${(l.symptoms||[]).join(', ')})\n`;
+    if (l.oops && l.oops.length) text += `  Oops: ${l.oops.join(', ')}\n`;
+    if (l.rememberTmr) text += `  Tomorrow: ${l.rememberTmr}\n`;
+    text += '\n';
+  });
+  downloadFile('dhrutis-days-report.txt', text, 'text/plain');
+}
+
+function downloadFile(name, content, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type}));
+  a.download = name;
+  a.click();
+  showToast('📥 Downloaded!');
+}
+
+function clearAllData() {
+  openModal('🗑️ Clear All Data?', `
+    <div style="color:var(--text2);margin-bottom:20px;line-height:1.6;font-size:0.9rem;">
+      This will delete ALL your logs, timers, money, and settings forever! Are you really sure? 😢
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost btn-full" onclick="closeModal()">No, keep it!</button>
+      <button class="btn btn-full" style="background:var(--oops);color:#fff" onclick="doDeleteAll()">Yes, delete!</button>
+    </div>
+  `);
+}
+
+function doDeleteAll() {
+  localStorage.clear();
+  closeModal();
+  showToast('All data cleared 🗑️');
+  setTimeout(() => location.reload(), 800);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(title, body) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  if (pinMode !== 'unlock') { pinMode = 'unlock'; pinBuffer = ''; }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimeout;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function initApp() {
+  startAllTimerTicks();
+  initLogScreen();
+  refreshHome();
+  // restore saved subject tag
+  if (studySubject) {
+    document.querySelectorAll('.subject-tag').forEach(t => {
+      if (t.dataset.sub === studySubject) t.classList.add('active');
+    });
+  }
+  // Set live timer refresh on home
+  setInterval(refreshHomeTimers, 1000);
+}
+
+// Auto-unlock if no PIN set yet (first run)
+window.addEventListener('DOMContentLoaded', () => {
+  // Small delay to ensure fonts load
+  setTimeout(() => {
+    // Show the pin screen
+    pinBuffer = '';
+    updatePinDots();
+  }, 100);
+});
+</script>
 </body>
 </html>
