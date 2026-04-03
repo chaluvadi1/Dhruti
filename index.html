@@ -2,1496 +2,1343 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Dhruti's Days 🌟</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
 :root {
   --bg: #0f1117;
-  --bg2: #161822;
-  --bg3: #1e2030;
-  --bg4: #252840;
-  --card: #1a1d2e;
-  --border: #2a2d45;
+  --bg2: #161b27;
+  --bg3: #1e2535;
+  --card: #1a2030;
+  --card2: #222840;
+  --border: rgba(255,255,255,0.07);
   --text: #e8eaf6;
-  --text2: #9fa3c8;
-  --text3: #6b6f94;
-  --accent: #f4a261;
-  --accent2: #e76f51;
+  --text2: #8892b0;
+  --text3: #4a5568;
 
-  --sleep: #6366f1;
-  --sleep-bg: #1e1f3d;
-  --study: #22c55e;
-  --study-bg: #0f2d1a;
-  --tv: #ec4899;
-  --tv-bg: #2d1127;
-  --play: #38bdf8;
-  --play-bg: #0d2533;
-  --tuition: #f97316;
-  --tuition-bg: #2d1a08;
-  --friends: #f472b6;
-  --friends-bg: #2d1127;
-  --food: #eab308;
-  --food-bg: #2a2100;
-  --mood: #a855f7;
-  --mood-bg: #1f1035;
-  --oops: #ef4444;
-  --oops-bg: #2d0f0f;
-  --money: #10b981;
-  --money-bg: #0a2d1e;
+  --sleep: #6c63ff;
+  --sleep-soft: rgba(108,99,255,0.15);
+  --morning: #f7c948;
+  --morning-soft: rgba(247,201,72,0.15);
+  --study: #43e97b;
+  --study-soft: rgba(67,233,123,0.15);
+  --tv: #f093fb;
+  --tv-soft: rgba(240,147,251,0.15);
+  --play: #4facfe;
+  --play-soft: rgba(79,172,254,0.15);
+  --tuition: #fa8231;
+  --tuition-soft: rgba(250,130,49,0.15);
+  --friends: #fd79a8;
+  --friends-soft: rgba(253,121,168,0.15);
+  --food: #fdcb6e;
+  --food-soft: rgba(253,203,110,0.15);
+  --mood: #a29bfe;
+  --mood-soft: rgba(162,155,254,0.15);
+  --oops: #ff7675;
+  --oops-soft: rgba(255,118,117,0.15);
+  --tomorrow: #55efc4;
+  --tomorrow-soft: rgba(85,239,196,0.15);
+  --learn: #ffeaa7;
+  --learn-soft: rgba(255,234,167,0.15);
+  --money: #2ecc71;
+  --money-soft: rgba(46,204,113,0.15);
+  --spend: #e17055;
+  --spend-soft: rgba(225,112,85,0.15);
+  --save: #fdcb6e;
+  --save-soft: rgba(253,203,110,0.15);
 
-  --radius: 16px;
-  --radius-sm: 10px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --radius: 18px;
+  --radius-sm: 12px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { height: 100%; }
 body {
   font-family: 'Nunito', sans-serif;
+  font-weight: 600;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
+::-webkit-scrollbar { width: 0; }
+input,textarea,button,select { font-family: 'Nunito', sans-serif; }
 
+/* ═══════════════════════════════════════════
+   APP SHELL
+═══════════════════════════════════════════ */
 #app {
   width: 100%;
-  max-width: 420px;
+  max-width: 430px;
   min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(108,99,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(253,121,168,0.06) 0%, transparent 50%),
+    var(--bg);
+  overflow: hidden;
 }
 
-/* ---- PIN LOCK ---- */
+/* ═══════════════════════════════════════════
+   PIN OVERLAY
+═══════════════════════════════════════════ */
 #pin-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  position: fixed; inset: 0; z-index: 9999;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(108,99,255,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 80%, rgba(253,121,168,0.08) 0%, transparent 55%),
+    var(--bg);
+  display: flex; align-items: center; justify-content: center;
 }
-.pin-box {
-  text-align: center;
-  padding: 32px 24px;
-  max-width: 340px;
-  width: 90%;
-}
+.pin-wrap { text-align: center; padding: 40px 28px; width: 100%; max-width: 360px; }
+.pin-star { font-size: 3rem; margin-bottom: 12px; display: block; animation: floatStar 3s ease-in-out infinite; }
+@keyframes floatStar { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 .pin-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-.pin-sub { color: var(--text2); font-size: 0.95rem; margin-bottom: 32px; }
-.pin-dots {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 32px;
-}
-.pin-dot {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: transparent;
-  transition: all 0.2s;
-}
-.pin-dot.filled { background: var(--accent); border-color: var(--accent); }
-.pin-dot.error { background: var(--oops); border-color: var(--oops); }
-.pin-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 260px;
-  margin: 0 auto;
-}
-.pin-btn {
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: var(--bg3);
-  color: var(--text);
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex; align-items: center; justify-content: center;
-}
-.pin-btn:active { transform: scale(0.9); background: var(--accent); color: #fff; }
-.pin-err { color: var(--oops); font-size: 0.85rem; margin-top: 12px; min-height: 20px; }
-
-/* ---- TOP BAR ---- */
-#topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 8px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-}
-.app-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.4rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), #f4c261);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.gear-btn {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: none;
-  background: var(--bg3);
-  color: var(--text2);
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
-.gear-btn:hover { background: var(--bg4); color: var(--text); }
-
-/* ---- BOTTOM NAV ---- */
-#bottomnav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 420px;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  display: flex;
-  z-index: 100;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-}
-.nav-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 4px 8px;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  color: var(--text3);
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  transition: all 0.2s;
-  gap: 3px;
-}
-.nav-btn .nav-icon { font-size: 1.3rem; line-height: 1; }
-.nav-btn.active { color: var(--accent); }
-.nav-btn.active .nav-icon { transform: translateY(-2px); }
-
-/* ---- SCREENS ---- */
-#screens {
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 90px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-.screen { display: none; padding: 16px; }
-.screen.active { display: block; animation: fadeIn 0.2s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ---- CARDS ---- */
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 14px;
-  border: 1px solid var(--border);
-}
-.card-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* ---- BUTTONS ---- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border-radius: var(--radius-sm);
-  border: none;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.18s;
-}
-.btn:active { transform: scale(0.96); }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent2); }
-.btn-ghost { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
-.btn-ghost:hover { background: var(--bg4); }
-.btn-full { width: 100%; }
-.btn-danger { background: var(--oops-bg); color: var(--oops); border: 1px solid var(--oops); }
-
-/* ---- HOME SCREEN ---- */
-.greeting-hero {
-  background: linear-gradient(135deg, #1e2040 0%, #1a1535 100%);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 14px;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-.greeting-hero::before {
-  content: '';
-  position: absolute;
-  top: -30px; right: -30px;
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(244,162,97,0.15) 0%, transparent 70%);
-  border-radius: 50%;
-}
-.greeting-time { font-size: 0.8rem; color: var(--text3); font-weight: 600; }
-.greeting-name {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.8rem;
-  font-weight: 800;
-  line-height: 1.1;
-  margin: 4px 0;
-}
-.greeting-sub { color: var(--text2); font-size: 0.9rem; }
-.streak-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, #2d1a08, #3d2010);
-  border: 1px solid var(--tuition);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--tuition);
-  margin-top: 12px;
-}
-
-.live-timers { display: flex; flex-direction: column; gap: 8px; }
-.live-timer-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--bg3);
-  border: 1px solid var(--border);
-}
-.live-timer-label { font-weight: 700; font-size: 0.9rem; }
-.live-timer-val { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700; }
-.stop-btn {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  border: none;
-  background: var(--oops-bg);
-  color: var(--oops);
-  font-size: 0.8rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-}
-.stop-btn:active { transform: scale(0.9); }
-
-.quick-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.quick-btn {
-  padding: 14px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  color: var(--text);
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.18s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.quick-btn:active { transform: scale(0.97); }
-.quick-icon { font-size: 1.3rem; }
-
-/* ---- TIMERS SCREEN ---- */
-.timer-card {
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-bottom: 12px;
-  border: 1px solid;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-.timer-card.running { animation: pulse 2s infinite; }
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-  50% { box-shadow: 0 0 0 6px rgba(255,255,255,0.06); }
-}
-.timer-label {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.1rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-family: 'Baloo 2', cursive; font-size: 2rem; font-weight: 800;
+  background: linear-gradient(135deg, #a29bfe, #fd79a8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   margin-bottom: 6px;
 }
-.timer-display {
-  font-family: 'Baloo 2', cursive;
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: 2px;
+.pin-sub { font-size: 0.9rem; color: var(--text2); margin-bottom: 36px; font-weight: 600; }
+.pin-dots { display: flex; justify-content: center; gap: 14px; margin-bottom: 36px; }
+.pdot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--text3); background: transparent;
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
 }
-.timer-status { font-size: 0.78rem; font-weight: 700; margin-top: 4px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
-.timer-action {
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
+.pdot.filled { background: var(--mood); border-color: var(--mood); transform: scale(1.15); }
+.pdot.error { background: var(--oops); border-color: var(--oops); animation: shake 0.35s ease; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.pin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 270px; margin: 0 auto; }
+.pbtn {
+  aspect-ratio: 1; border-radius: 50%; border: 1.5px solid var(--border);
+  background: var(--card2); color: var(--text);
+  font-family: 'Baloo 2', cursive; font-size: 1.6rem; font-weight: 700;
+  cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+}
+.pbtn:active { transform: scale(0.88); background: var(--mood); border-color: var(--mood); color: #fff; }
+.pin-errmsg { min-height: 22px; color: var(--oops); font-size: 0.82rem; margin-top: 14px; font-weight: 700; }
+
+/* ═══════════════════════════════════════════
+   TOP BAR
+═══════════════════════════════════════════ */
+#topbar {
+  position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px 12px;
+  background: rgba(15,17,23,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
+}
+.app-logo {
+  font-family: 'Baloo 2', cursive; font-size: 1.45rem; font-weight: 800;
+  background: linear-gradient(135deg, #a29bfe 0%, #fd79a8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: -0.3px;
+}
+.gear-btn {
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--card2);
+  color: var(--text2); font-size: 1.1rem; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.18s;
+  transition: all 0.2s;
+}
+.gear-btn:hover { border-color: var(--mood); color: var(--mood); }
+.gear-btn:active { transform: scale(0.9); }
+
+/* ═══════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════ */
+#screens {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding-bottom: 86px;
+  scroll-behavior: smooth;
+}
+.screen { display: none; padding: 16px; }
+.screen.active { display: block; animation: fadeUp 0.3s ease forwards; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.screen-title {
+  font-family: 'Baloo 2', cursive; font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 16px; color: var(--text);
+}
+
+/* ═══════════════════════════════════════════
+   BOTTOM NAV
+═══════════════════════════════════════════ */
+#bottomnav {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px; z-index: 200;
+  background: rgba(22,27,39,0.95);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nbtn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 4px 9px; border: none; background: transparent;
+  color: var(--text3); font-size: 0.6rem; font-weight: 800;
+  letter-spacing: 0.3px; cursor: pointer; gap: 3px;
+  text-transform: uppercase; transition: color 0.2s;
+}
+.nbtn .ni { font-size: 1.35rem; line-height: 1; transition: transform 0.2s cubic-bezier(.34,1.56,.64,1); }
+.nbtn.active { color: var(--mood); }
+.nbtn.active .ni { transform: scale(1.15) translateY(-1px); }
+
+/* ═══════════════════════════════════════════
+   CARD BASE
+═══════════════════════════════════════════ */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px;
+  margin-bottom: 14px;
+}
+.card2 { background: var(--card2); }
+.card-head {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.card-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.card-titles {}
+.card-title {
+  font-family: 'Baloo 2', cursive; font-size: 0.98rem; font-weight: 700;
+  color: var(--text); line-height: 1.2;
+}
+.card-sub { font-size: 0.75rem; color: var(--text2); font-weight: 600; margin-top: 1px; }
+
+/* ═══════════════════════════════════════════
+   HOME SCREEN
+═══════════════════════════════════════════ */
+.hero-card {
+  background: linear-gradient(135deg, rgba(108,99,255,0.35) 0%, rgba(253,121,168,0.25) 100%);
+  border: 1px solid rgba(162,155,254,0.25);
+  border-radius: var(--radius); padding: 22px 20px;
+  position: relative; overflow: hidden; margin-bottom: 14px;
+}
+.hero-card::before {
+  content: '✨'; position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%); font-size: 4.5rem; opacity: 0.18;
+  animation: floatStar 4s ease-in-out infinite;
+}
+.hero-time { font-size: 0.75rem; color: rgba(232,234,246,0.6); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+.hero-name { font-family: 'Baloo 2', cursive; font-size: 1.9rem; font-weight: 800; line-height: 1.1; margin: 6px 0 4px; }
+.hero-sub { font-size: 0.88rem; color: rgba(232,234,246,0.75); font-weight: 600; }
+.hero-streak {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(247,201,72,0.2); border: 1px solid rgba(247,201,72,0.35);
+  border-radius: 20px; padding: 5px 12px;
+  font-size: 0.82rem; font-weight: 800; color: var(--morning);
+  margin-top: 14px;
+}
+
+/* live timer pills */
+.live-pills { display: flex; flex-direction: column; gap: 8px; }
+.live-pill {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 50px;
+  border: 1.5px solid; background: var(--card2);
+  animation: pulseBorder 2s ease-in-out infinite;
+}
+@keyframes pulseBorder {
+  0%,100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 3px; }
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  animation: blink 1.2s ease-in-out infinite; flex-shrink: 0;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.live-label { font-weight: 800; font-size: 0.85rem; flex: 1; }
+.live-time { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; }
+.live-stop {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: none; background: var(--oops-soft);
+  color: var(--oops); font-size: 0.75rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: all 0.15s;
+}
+.live-stop:active { transform: scale(0.88); background: var(--oops); color: #fff; }
+
+/* quick grid */
+.quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quick-card {
+  padding: 16px 14px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--card2);
+  cursor: pointer; transition: all 0.18s; text-align: left;
+  display: flex; align-items: center; gap: 10px;
+}
+.quick-card:active { transform: scale(0.95); }
+.quick-icon { font-size: 1.5rem; }
+.quick-lbl { font-size: 0.85rem; font-weight: 800; color: var(--text); }
+
+/* today status chips */
+.status-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.schip {
+  padding: 5px 12px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 800;
+  border: 1px solid;
+}
+
+/* ═══════════════════════════════════════════
+   TIMERS SCREEN
+═══════════════════════════════════════════ */
+.timer-card {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px;
+  margin-bottom: 12px; transition: all 0.25s; cursor: pointer;
+}
+.timer-card.running {
+  animation: timerPulse 2s ease-in-out infinite;
+}
+@keyframes timerPulse {
+  0%,100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 4px; }
+}
+.timer-inner { display: flex; align-items: center; gap: 14px; }
+.timer-icon-wrap {
+  width: 46px; height: 46px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0; transition: transform 0.2s;
+}
+.timer-card.running .timer-icon-wrap { animation: iconBounce 1s ease-in-out infinite; }
+@keyframes iconBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.timer-info { flex: 1; }
+.timer-name { font-weight: 800; font-size: 0.88rem; color: var(--text); }
+.timer-elapsed {
+  font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 900;
+  letter-spacing: 1px; line-height: 1.1;
+}
+.timer-status { font-size: 0.72rem; color: var(--text3); font-weight: 700; margin-top: 1px; text-transform: uppercase; letter-spacing: 0.5px; }
+.timer-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: none; font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.18s;
+}
+.timer-btn:active { transform: scale(0.88); }
+.sub-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+.sub-tag {
+  padding: 4px 11px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: transparent;
+  font-size: 0.75rem; font-weight: 800; cursor: pointer;
+  transition: all 0.15s; color: var(--text2);
   font-family: 'Nunito', sans-serif;
 }
-.timer-action:active { transform: translateY(-50%) scale(0.9); }
+.sub-tag.active { color: var(--study); border-color: var(--study); background: var(--study-soft); }
+.sub-tag:active { transform: scale(0.92); }
 
-.subject-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.subject-tag {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  cursor: pointer;
-  transition: all 0.15s;
+/* ═══════════════════════════════════════════
+   LOG SCREEN
+═══════════════════════════════════════════ */
+.log-card {
+  border-radius: var(--radius); padding: 18px;
+  margin-bottom: 12px; border: 1.5px solid var(--border);
+  background: var(--card);
 }
-.subject-tag.active { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.4); }
+/* option grid */
+.opt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.opt-grid.cols2 { grid-template-columns: repeat(2,1fr); }
+.opt-grid.cols4 { grid-template-columns: repeat(4,1fr); }
+.opt-btn {
+  padding: 12px 6px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--card2);
+  color: var(--text); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  transition: all 0.18s; --accent: var(--mood); --accent-soft: var(--mood-soft);
+  font-family: 'Nunito', sans-serif;
+}
+.opt-btn:active { transform: scale(0.93); }
+.opt-btn.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt-btn.sel .opt-lbl { color: var(--accent); }
+.opt-emoji { font-size: 1.5rem; line-height: 1; }
+.opt-lbl { font-size: 0.72rem; font-weight: 800; color: var(--text2); text-align: center; }
 
-/* ---- LOG SCREEN ---- */
-.log-section {
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
-  border: 1px solid var(--border);
-}
-.section-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-}
-.checkbox-row:last-child { border-bottom: none; }
-.check-box {
-  width: 24px; height: 24px;
-  border-radius: 7px;
-  border: 2px solid var(--border);
-  background: transparent;
+/* mood row */
+.mood-row { display: flex; gap: 8px; }
+.mood-btn {
+  flex: 1; aspect-ratio: 1; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--card2);
+  font-size: 1.4rem; cursor: pointer; transition: all 0.18s;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
-  transition: all 0.15s;
-  flex-shrink: 0;
 }
-.check-box.checked { background: var(--study); border-color: var(--study); }
-.check-label { font-size: 0.9rem; font-weight: 600; }
-.check-label.greyed { opacity: 0.35; }
+.mood-btn:active { transform: scale(0.88); }
+.mood-btn.sel { transform: scale(1.08); border-color: var(--mood); background: var(--mood-soft); }
 
-.progress-bar-wrap {
-  height: 8px;
-  background: var(--bg3);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 12px;
+/* checkbox rows */
+.check-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer;
 }
-.progress-bar-fill {
-  height: 100%;
-  border-radius: 10px;
-  background: linear-gradient(90deg, var(--study), #86efac);
+.check-row:last-child { border-bottom: none; }
+.check-circle {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid var(--text3); background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; transition: all 0.2s; flex-shrink: 0;
+}
+.check-circle.done { background: var(--study); border-color: var(--study); }
+.check-lbl { font-size: 0.88rem; font-weight: 700; color: var(--text); transition: all 0.2s; }
+.check-lbl.done { color: var(--text3); text-decoration: line-through; }
+.check-row.greyed { opacity: 0.35; pointer-events: none; }
+
+/* progress bar */
+.pbar-wrap { height: 8px; background: var(--card2); border-radius: 8px; overflow: hidden; margin-top: 14px; }
+.pbar-fill {
+  height: 100%; border-radius: 8px;
+  background: linear-gradient(90deg, var(--study), var(--tomorrow));
   transition: width 0.4s ease;
 }
+.pbar-lbl { font-size: 0.74rem; color: var(--text3); margin-top: 5px; font-weight: 700; }
 
-.option-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill {
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: 2px solid var(--border);
-  background: var(--bg3);
-  color: var(--text);
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'Nunito', sans-serif;
-}
-.pill:active { transform: scale(0.95); }
-.pill.selected { border-color: var(--accent); background: rgba(244,162,97,0.15); color: var(--accent); }
-
-.mood-row { display: flex; justify-content: space-between; gap: 6px; }
-.mood-btn {
-  flex: 1;
-  aspect-ratio: 1;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--border);
-  background: var(--bg3);
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex; align-items: center; justify-content: center;
-}
-.mood-btn:active { transform: scale(0.9); }
-.mood-btn.selected { border-color: var(--mood); background: var(--mood-bg); transform: scale(1.08); }
-
+/* log inputs */
 .log-input {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  color: var(--text);
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s;
+  width: 100%; padding: 12px 14px;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  background: var(--card2); color: var(--text);
+  font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 600;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
   margin-top: 10px;
 }
-.log-input:focus { border-color: var(--accent); }
-.log-textarea { resize: vertical; min-height: 80px; }
+.log-input::placeholder { color: var(--text3); }
+.log-input:focus { border-color: var(--mood); box-shadow: 0 0 0 3px var(--mood-soft); }
+.log-textarea { resize: vertical; min-height: 82px; }
 
-.toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-}
-.toggle-label { font-size: 0.9rem; font-weight: 600; }
-.toggle {
-  width: 48px; height: 26px;
-  border-radius: 20px;
-  background: var(--border);
-  position: relative;
-  cursor: pointer;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-.toggle.on { background: var(--mood); }
-.toggle::after {
-  content: '';
-  position: absolute;
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  background: #fff;
-  top: 3px; left: 3px;
-  transition: left 0.2s;
-}
-.toggle.on::after { left: 25px; }
+/* sick toggle */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+.toggle-wrap { width: 50px; height: 28px; border-radius: 14px; background: var(--bg3); position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+.toggle-wrap.on { background: var(--mood); }
+.toggle-thumb { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: left 0.2s; }
+.toggle-wrap.on .toggle-thumb { left: 25px; }
+.toggle-lbl { font-size: 0.88rem; font-weight: 700; }
 
-.symptom-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.chip {
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--oops);
-  background: transparent;
-  color: var(--oops);
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'Nunito', sans-serif;
+/* symptom chips */
+.sym-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.sym-chip {
+  padding: 5px 12px; border-radius: 20px;
+  border: 1.5px solid var(--oops); color: var(--oops);
+  background: transparent; font-size: 0.78rem; font-weight: 800;
+  cursor: pointer; transition: all 0.15s; font-family: 'Nunito', sans-serif;
 }
-.chip.active { background: var(--oops); color: #fff; }
+.sym-chip.on { background: var(--oops); color: #fff; }
+.sym-chip:active { transform: scale(0.93); }
 
-.save-day-btn {
-  width: 100%;
-  padding: 18px;
-  border-radius: var(--radius);
-  border: none;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
-  font-family: 'Baloo 2', cursive;
-  font-size: 1.2rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(244,162,97,0.3);
+/* save button */
+.save-btn {
+  width: 100%; padding: 17px;
+  background: linear-gradient(135deg, var(--sleep) 0%, var(--friends) 100%);
+  border: none; border-radius: var(--radius);
+  color: #fff; font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem; font-weight: 800;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 24px rgba(108,99,255,0.35);
   margin-top: 6px;
 }
-.save-day-btn:active { transform: scale(0.98); box-shadow: none; }
+.save-btn:hover { box-shadow: 0 6px 30px rgba(108,99,255,0.5); }
+.save-btn:active { transform: scale(0.97); box-shadow: none; }
 
-/* ---- MONEY SCREEN ---- */
-.balance-hero {
-  background: linear-gradient(135deg, var(--money-bg), #0d3525);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  text-align: center;
-  border: 1px solid rgba(16,185,129,0.3);
-  margin-bottom: 14px;
-}
-.balance-label { font-size: 0.8rem; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-.balance-amount {
-  font-family: 'Baloo 2', cursive;
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: var(--money);
-  line-height: 1;
-  margin: 6px 0;
-}
-.balance-stats { display: flex; justify-content: space-around; margin-top: 14px; }
-.stat-item { text-align: center; }
-.stat-val { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700; }
-.stat-lbl { font-size: 0.72rem; color: var(--text3); font-weight: 600; }
-
-.goal-bar-wrap {
-  margin-top: 10px;
-  height: 10px;
-  background: var(--bg3);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.goal-bar-fill {
-  height: 100%;
-  border-radius: 10px;
-  background: linear-gradient(90deg, var(--money), #6ee7b7);
-  transition: width 0.5s ease;
+/* section label */
+.sec-label {
+  font-size: 0.72rem; font-weight: 900; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 10px;
+  display: block;
 }
 
-.money-tabs {
-  display: flex;
-  gap: 0;
-  background: var(--bg3);
-  border-radius: var(--radius-sm);
-  padding: 4px;
-  margin-bottom: 14px;
-  border: 1px solid var(--border);
+/* ═══════════════════════════════════════════
+   MONEY SCREEN
+═══════════════════════════════════════════ */
+.money-hero {
+  background: linear-gradient(135deg, rgba(46,204,113,0.25) 0%, rgba(46,204,113,0.1) 100%);
+  border: 1px solid rgba(46,204,113,0.25);
+  border-radius: var(--radius); padding: 24px 20px;
+  text-align: center; position: relative; overflow: hidden; margin-bottom: 14px;
 }
-.money-tab {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  color: var(--text3);
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+.money-hero::before {
+  content: '🐷'; position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%); font-size: 5rem; opacity: 0.12;
 }
-.money-tab.active { background: var(--card); color: var(--money); }
+.money-hero-label { font-size: 0.75rem; color: rgba(46,204,113,0.8); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+.money-hero-amt {
+  font-family: 'Baloo 2', cursive; font-size: 3rem; font-weight: 800;
+  color: var(--money); line-height: 1; margin: 8px 0;
+}
+.money-stats { display: flex; justify-content: space-around; margin-top: 14px; }
+.mstat { text-align: center; }
+.mstat-val { font-family: 'Baloo 2', cursive; font-size: 1.15rem; font-weight: 800; }
+.mstat-lbl { font-size: 0.7rem; color: var(--text3); font-weight: 800; text-transform: uppercase; margin-top: 2px; }
 
-.tx-list { display: flex; flex-direction: column; gap: 8px; }
+/* money tabs */
+.mtabs { display: flex; gap: 0; background: var(--card2); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 14px; border: 1px solid var(--border); }
+.mtab {
+  flex: 1; padding: 9px; border-radius: 9px; border: none;
+  background: transparent; color: var(--text3);
+  font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 800;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.mtab.active { background: var(--card); color: var(--money); }
+
+/* amount input with ₹ prefix */
+.amt-wrap { position: relative; margin-top: 10px; }
+.amt-prefix {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--text3); font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 700;
+  pointer-events: none;
+}
+.amt-input {
+  width: 100%; padding: 12px 14px 12px 30px;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  background: var(--card2); color: var(--text);
+  font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700;
+  outline: none; transition: all 0.2s;
+}
+.amt-input:focus { border-color: var(--money); box-shadow: 0 0 0 3px var(--money-soft); }
+.amt-input::placeholder { color: var(--text3); font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+
+/* cat chips */
+.cat-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.cat-chip {
+  padding: 6px 13px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: transparent;
+  color: var(--text2); font-size: 0.78rem; font-weight: 800;
+  cursor: pointer; transition: all 0.15s; font-family: 'Nunito', sans-serif;
+}
+.cat-chip.active { border-color: var(--spend); color: var(--spend); background: var(--spend-soft); }
+.cat-chip:active { transform: scale(0.92); }
+
+/* goal progress */
+.goal-bar { height: 10px; background: var(--bg3); border-radius: 10px; overflow: hidden; margin-top: 8px; }
+.goal-bar-fill { height: 100%; background: linear-gradient(90deg, var(--money), var(--tomorrow)); border-radius: 10px; transition: width 0.5s ease; }
+
+/* transaction items */
 .tx-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  background: var(--bg3);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-.tx-info { flex: 1; }
-.tx-desc { font-weight: 700; font-size: 0.9rem; }
-.tx-meta { font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
-.tx-amount { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; }
-.tx-amount.got { color: var(--money); }
-.tx-amount.spent { color: var(--oops); }
-.tx-amount.saved { color: var(--sleep); }
-.tx-del { background: none; border: none; color: var(--text3); font-size: 1rem; cursor: pointer; padding: 4px 8px; }
-
-/* ---- INSIGHTS SCREEN ---- */
-.insight-card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-bottom: 12px;
-  border: 1px solid var(--border);
-}
-.insight-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.insight-text { font-size: 0.88rem; color: var(--text2); line-height: 1.6; }
-.insight-highlight { color: var(--accent); font-weight: 700; }
-
-.bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 80px; }
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.bar-fill {
-  width: 100%;
-  background: linear-gradient(180deg, var(--accent), var(--accent2));
-  border-radius: 4px 4px 0 0;
-  min-height: 4px;
-  transition: height 0.4s ease;
-}
-.bar-fill.empty { background: var(--bg4); }
-.bar-lbl { font-size: 0.65rem; color: var(--text3); font-weight: 700; }
-
-/* ---- HISTORY SCREEN ---- */
-.history-card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
-  border: 1px solid var(--border);
-}
-.history-date {
-  font-family: 'Baloo 2', cursive;
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: var(--accent);
-}
-.history-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.hchip {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-/* ---- SETTINGS SCREEN ---- */
-.settings-section { margin-bottom: 20px; }
-.settings-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-.settings-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  background: var(--card);
-  border-radius: var(--radius-sm);
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px; border-radius: var(--radius-sm);
+  background: var(--card2); border: 1px solid var(--border);
   margin-bottom: 8px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all 0.18s;
 }
-.settings-item:hover { background: var(--bg3); }
-.settings-item-label { font-weight: 700; font-size: 0.9rem; }
-.settings-item-icon { font-size: 1.2rem; }
+.tx-icon-box {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.tx-info { flex: 1; min-width: 0; }
+.tx-desc { font-weight: 800; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-meta { font-size: 0.72rem; color: var(--text3); margin-top: 2px; }
+.tx-amt { font-family: 'Baloo 2', cursive; font-size: 1.05rem; font-weight: 800; flex-shrink: 0; }
+.tx-del { background: none; border: none; color: var(--text3); font-size: 1rem; cursor: pointer; padding: 4px 8px; flex-shrink: 0; }
+.tx-del:active { color: var(--oops); }
 
-/* ---- REMINDER CARD ---- */
+/* ═══════════════════════════════════════════
+   INSIGHTS SCREEN
+═══════════════════════════════════════════ */
+.ins-card {
+  border-radius: var(--radius); padding: 18px;
+  margin-bottom: 12px; border: 1px solid var(--border);
+  background: var(--card); position: relative; overflow: hidden;
+}
+.ins-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--accent-grad, linear-gradient(90deg, var(--sleep), var(--friends)));
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.ins-title { font-family: 'Baloo 2', cursive; font-size: 0.95rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+.ins-text { font-size: 0.87rem; color: var(--text2); line-height: 1.7; }
+.ins-text strong, .ins-hl { color: var(--text); font-weight: 800; }
+.streak-giant { text-align: center; padding: 10px 0 4px; }
+.streak-flame { font-size: 3.5rem; display: block; animation: floatStar 2.5s ease-in-out infinite; }
+.streak-num { font-family: 'Baloo 2', cursive; font-size: 4.5rem; font-weight: 800; color: var(--morning); line-height: 1; display: block; }
+.streak-days { font-size: 0.85rem; color: var(--text2); font-weight: 700; }
+
+/* bar chart */
+.bar-chart { display: flex; align-items: flex-end; gap: 5px; height: 80px; margin-bottom: 8px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar-fill { width: 100%; background: linear-gradient(180deg, var(--sleep), var(--mood)); border-radius: 5px 5px 0 0; min-height: 4px; }
+.bar-fill.empty { background: var(--bg3); }
+.bar-day { font-size: 0.65rem; color: var(--text3); font-weight: 800; }
+
+/* ═══════════════════════════════════════════
+   HISTORY SCREEN
+═══════════════════════════════════════════ */
+.hist-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+.hist-date { font-family: 'Baloo 2', cursive; font-size: 0.92rem; font-weight: 700; color: var(--mood); margin-bottom: 10px; }
+.hist-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.hchip { padding: 4px 10px; border-radius: 20px; font-size: 0.73rem; font-weight: 800; border: 1px solid; }
+
+/* ═══════════════════════════════════════════
+   SETTINGS SCREEN
+═══════════════════════════════════════════ */
+.set-group { margin-bottom: 22px; }
+.set-group-title { font-size: 0.72rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+.set-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 16px; background: var(--card);
+  border-radius: var(--radius-sm); border: 1px solid var(--border);
+  margin-bottom: 7px; cursor: pointer; transition: all 0.18s;
+}
+.set-item:hover { border-color: rgba(255,255,255,0.12); background: var(--card2); }
+.set-item:active { transform: scale(0.98); }
+.set-label { font-size: 0.9rem; font-weight: 800; }
+.set-arrow { font-size: 0.9rem; color: var(--text3); }
+
+/* ═══════════════════════════════════════════
+   REMINDER CARD
+═══════════════════════════════════════════ */
 .reminder-card {
-  background: linear-gradient(135deg, #1a1535, #1e1040);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 14px;
-  border: 1px solid rgba(168,85,247,0.3);
+  background: linear-gradient(135deg, rgba(85,239,196,0.12), rgba(85,239,196,0.06));
+  border: 1.5px solid rgba(85,239,196,0.2);
+  border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
 }
-.reminder-label { font-size: 0.75rem; color: var(--mood); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-.reminder-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; }
+.reminder-label { font-size: 0.72rem; font-weight: 900; color: var(--tomorrow); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.reminder-text { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
 
-/* ---- MODAL ---- */
+/* ═══════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════ */
 #modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  display: none;
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.65); display: none;
+  align-items: flex-end; justify-content: center;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
 #modal-overlay.open { display: flex; }
 .modal-box {
-  background: var(--bg2);
-  border-radius: var(--radius) var(--radius) 0 0;
-  padding: 24px 20px 32px;
-  width: 100%;
-  max-width: 420px;
+  background: var(--bg2); border-radius: var(--radius) var(--radius) 0 0;
+  padding: 24px 20px 36px; width: 100%; max-width: 430px;
   border-top: 1px solid var(--border);
-  animation: slideUp 0.25s ease;
+  animation: slideUp 0.28s cubic-bezier(.4,0,.2,1);
 }
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.modal-title { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; }
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal-title { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; margin-bottom: 18px; }
 
-/* ---- TOAST ---- */
+/* modal pin */
+.modal-pin-dots { display: flex; justify-content: center; gap: 14px; margin-bottom: 24px; }
+.modal-pin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; max-width: 260px; margin: 0 auto; }
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
 #toast {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
+  position: fixed; bottom: 96px; left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: var(--bg4);
-  color: var(--text);
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  z-index: 9000;
-  opacity: 0;
-  transition: all 0.3s;
-  pointer-events: none;
-  border: 1px solid var(--border);
+  background: var(--card2); color: var(--text);
+  padding: 10px 20px; border-radius: 30px;
+  font-size: 0.85rem; font-weight: 800;
+  border: 1.5px solid var(--border);
+  z-index: 9000; opacity: 0; pointer-events: none;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
   white-space: nowrap;
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* scroll fix */
-::-webkit-scrollbar { width: 0; }
-
-/* number input for money */
-.money-input {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+/* ═══════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 11px 18px; border-radius: var(--radius-sm); border: none;
+  font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 800;
+  cursor: pointer; transition: all 0.18s;
 }
-.money-input input {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  color: var(--text);
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.9rem;
-  outline: none;
-}
-.money-input input:focus { border-color: var(--money); }
-
-.cat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.cat-chip {
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  color: var(--text2);
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'Nunito', sans-serif;
-}
-.cat-chip.active { border-color: var(--money); color: var(--money); background: var(--money-bg); }
-
-/* Divider */
+.btn:active { transform: scale(0.95); }
+.btn-primary { background: var(--sleep); color: #fff; }
+.btn-ghost { background: var(--card2); color: var(--text); border: 1.5px solid var(--border); }
+.btn-full { width: 100%; }
+.btn-danger { background: var(--oops-soft); color: var(--oops); border: 1.5px solid var(--oops); }
 .divider { height: 1px; background: var(--border); margin: 14px 0; }
+.mt8 { margin-top: 8px; }
+.mt12 { margin-top: 12px; }
+.empty-state { color: var(--text3); font-size: 0.88rem; text-align: center; padding: 20px 0; font-weight: 700; }
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- PIN OVERLAY -->
-  <div id="pin-overlay">
-    <div class="pin-box">
-      <div class="pin-title">🌟 Dhruti's Days</div>
-      <div class="pin-sub">Enter your secret PIN to get in!</div>
-      <div class="pin-dots">
-        <div class="pin-dot" id="pd0"></div>
-        <div class="pin-dot" id="pd1"></div>
-        <div class="pin-dot" id="pd2"></div>
-        <div class="pin-dot" id="pd3"></div>
+<!-- ═══════════════════════════════════════
+     PIN OVERLAY
+═══════════════════════════════════════ -->
+<div id="pin-overlay">
+  <div class="pin-wrap">
+    <span class="pin-star">🌟</span>
+    <div class="pin-title">Dhruti's Days</div>
+    <div class="pin-sub">Enter your secret PIN to unlock ✨</div>
+    <div class="pin-dots">
+      <div class="pdot" id="pd0"></div>
+      <div class="pdot" id="pd1"></div>
+      <div class="pdot" id="pd2"></div>
+      <div class="pdot" id="pd3"></div>
+    </div>
+    <div class="pin-grid">
+      <button class="pbtn" onclick="pp('1')">1</button>
+      <button class="pbtn" onclick="pp('2')">2</button>
+      <button class="pbtn" onclick="pp('3')">3</button>
+      <button class="pbtn" onclick="pp('4')">4</button>
+      <button class="pbtn" onclick="pp('5')">5</button>
+      <button class="pbtn" onclick="pp('6')">6</button>
+      <button class="pbtn" onclick="pp('7')">7</button>
+      <button class="pbtn" onclick="pp('8')">8</button>
+      <button class="pbtn" onclick="pp('9')">9</button>
+      <button class="pbtn" onclick="pp('⌫')" style="font-size:1.2rem">⌫</button>
+      <button class="pbtn" onclick="pp('0')">0</button>
+      <button class="pbtn" onclick="pp('clr')" style="font-size:0.75rem;letter-spacing:-0.5px">CLR</button>
+    </div>
+    <div class="pin-errmsg" id="pin-err"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TOP BAR
+═══════════════════════════════════════ -->
+<div id="topbar">
+  <div class="app-logo">🌟 Dhruti's Days</div>
+  <button class="gear-btn" onclick="goTo('settings')">⚙️</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREENS
+═══════════════════════════════════════ -->
+<div id="screens">
+
+  <!-- ─── HOME ─── -->
+  <div class="screen active" id="sc-home">
+    <div class="hero-card">
+      <div class="hero-time" id="hero-time"></div>
+      <div class="hero-name" id="hero-name">Hey Dhruti! 🌸</div>
+      <div class="hero-sub" id="hero-sub">Ready to have an amazing day?</div>
+      <div class="hero-streak" id="hero-streak">🔥 <span id="streak-num">0</span> day streak!</div>
+    </div>
+
+    <div id="reminder-home" style="display:none">
+      <div class="reminder-card">
+        <div class="reminder-label">📌 Yesterday you wanted to remember</div>
+        <div class="reminder-text" id="reminder-text"></div>
       </div>
-      <div class="pin-grid">
-        <button class="pin-btn" onclick="pinPress('1')">1</button>
-        <button class="pin-btn" onclick="pinPress('2')">2</button>
-        <button class="pin-btn" onclick="pinPress('3')">3</button>
-        <button class="pin-btn" onclick="pinPress('4')">4</button>
-        <button class="pin-btn" onclick="pinPress('5')">5</button>
-        <button class="pin-btn" onclick="pinPress('6')">6</button>
-        <button class="pin-btn" onclick="pinPress('7')">7</button>
-        <button class="pin-btn" onclick="pinPress('8')">8</button>
-        <button class="pin-btn" onclick="pinPress('9')">9</button>
-        <button class="pin-btn" onclick="pinPress('del')" style="font-size:1.1rem">⌫</button>
-        <button class="pin-btn" onclick="pinPress('0')">0</button>
-        <button class="pin-btn" onclick="pinPress('del')" style="font-size:0.9rem;opacity:0.5">clr</button>
+    </div>
+
+    <div class="card" id="home-timers-card" style="display:none">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--sleep-soft);color:var(--sleep)">⏱️</div>
+        <div class="card-titles">
+          <div class="card-title">Running Now</div>
+          <div class="card-sub">Tap stop to finish a timer</div>
+        </div>
       </div>
-      <div class="pin-err" id="pin-err"></div>
+      <div class="live-pills" id="home-live-pills"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--morning-soft);color:var(--morning)">⚡</div>
+        <div class="card-titles">
+          <div class="card-title">Quick Jump</div>
+        </div>
+      </div>
+      <div class="quick-grid">
+        <div class="quick-card" onclick="goTo('log')"><span class="quick-icon">📝</span><span class="quick-lbl">Log Today</span></div>
+        <div class="quick-card" onclick="goTo('timers')"><span class="quick-icon">⏱️</span><span class="quick-lbl">Timers</span></div>
+        <div class="quick-card" onclick="goTo('money')"><span class="quick-icon">💰</span><span class="quick-lbl">Money</span></div>
+        <div class="quick-card" onclick="goTo('insights')"><span class="quick-icon">📊</span><span class="quick-lbl">Insights</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="today-card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--mood-soft);color:var(--mood)">📅</div>
+        <div class="card-titles">
+          <div class="card-title">Today's Snapshot</div>
+          <div class="card-sub" id="today-date-label"></div>
+        </div>
+      </div>
+      <div id="today-chips"><div class="empty-state">Nothing logged yet — tap Log Today! ✨</div></div>
+    </div>
+  </div><!-- /home -->
+
+  <!-- ─── TIMERS ─── -->
+  <div class="screen" id="sc-timers">
+    <div class="screen-title">⏱️ My Timers</div>
+    <!-- sleep -->
+    <div class="timer-card" id="tc-sleep" onclick="toggleTimer('sleep')">
+      <div class="timer-inner">
+        <div class="timer-icon-wrap" id="tiw-sleep" style="background:var(--sleep-soft)">😴</div>
+        <div class="timer-info">
+          <div class="timer-name" style="color:var(--sleep)">Sleep</div>
+          <div class="timer-elapsed" id="te-sleep" style="color:var(--sleep)">00:00:00</div>
+          <div class="timer-status" id="ts-sleep">Tap to start at bedtime</div>
+        </div>
+        <button class="timer-btn" id="tb-sleep" style="background:var(--sleep);color:#fff" onclick="toggleTimer('sleep');event.stopPropagation()">▶</button>
+      </div>
+    </div>
+    <!-- study -->
+    <div class="timer-card" id="tc-study" onclick="toggleTimer('study')">
+      <div class="timer-inner">
+        <div class="timer-icon-wrap" id="tiw-study" style="background:var(--study-soft)">📚</div>
+        <div class="timer-info">
+          <div class="timer-name" style="color:var(--study)">Study</div>
+          <div class="timer-elapsed" id="te-study" style="color:var(--study)">00:00:00</div>
+          <div class="timer-status" id="ts-study">Tap to start studying</div>
+        </div>
+        <button class="timer-btn" id="tb-study" style="background:var(--study);color:#fff" onclick="toggleTimer('study');event.stopPropagation()">▶</button>
+      </div>
+      <div class="sub-tags" onclick="event.stopPropagation()">
+        <span class="sub-tag" data-sub="Maths" onclick="pickSub('Maths',this)">🔢 Maths</span>
+        <span class="sub-tag" data-sub="Science" onclick="pickSub('Science',this)">🔬 Science</span>
+        <span class="sub-tag" data-sub="English" onclick="pickSub('English',this)">📖 English</span>
+        <span class="sub-tag" data-sub="Telugu" onclick="pickSub('Telugu',this)">🌺 Telugu</span>
+        <span class="sub-tag" data-sub="Hindi" onclick="pickSub('Hindi',this)">🇮🇳 Hindi</span>
+        <span class="sub-tag" data-sub="Social" onclick="pickSub('Social',this)">🌍 Social</span>
+      </div>
+    </div>
+    <!-- tv -->
+    <div class="timer-card" id="tc-tv" onclick="toggleTimer('tv')">
+      <div class="timer-inner">
+        <div class="timer-icon-wrap" id="tiw-tv" style="background:var(--tv-soft)">📺</div>
+        <div class="timer-info">
+          <div class="timer-name" style="color:var(--tv)">TV</div>
+          <div class="timer-elapsed" id="te-tv" style="color:var(--tv)">00:00:00</div>
+          <div class="timer-status" id="ts-tv">Tap to start watching</div>
+        </div>
+        <button class="timer-btn" id="tb-tv" style="background:var(--tv);color:#fff" onclick="toggleTimer('tv');event.stopPropagation()">▶</button>
+      </div>
+    </div>
+    <!-- play -->
+    <div class="timer-card" id="tc-play" onclick="toggleTimer('play')">
+      <div class="timer-inner">
+        <div class="timer-icon-wrap" id="tiw-play" style="background:var(--play-soft)">🏃</div>
+        <div class="timer-info">
+          <div class="timer-name" style="color:var(--play)">Play</div>
+          <div class="timer-elapsed" id="te-play" style="color:var(--play)">00:00:00</div>
+          <div class="timer-status" id="ts-play">Tap to start playing</div>
+        </div>
+        <button class="timer-btn" id="tb-play" style="background:var(--play);color:#fff" onclick="toggleTimer('play');event.stopPropagation()">▶</button>
+      </div>
+    </div>
+    <!-- tuition -->
+    <div class="timer-card" id="tc-tuition" onclick="toggleTimer('tuition')">
+      <div class="timer-inner">
+        <div class="timer-icon-wrap" id="tiw-tuition" style="background:var(--tuition-soft)">🏫</div>
+        <div class="timer-info">
+          <div class="timer-name" style="color:var(--tuition)">Tuition</div>
+          <div class="timer-elapsed" id="te-tuition" style="color:var(--tuition)">00:00:00</div>
+          <div class="timer-status" id="ts-tuition">Tap when tuition starts</div>
+        </div>
+        <button class="timer-btn" id="tb-tuition" style="background:var(--tuition);color:#fff" onclick="toggleTimer('tuition');event.stopPropagation()">▶</button>
+      </div>
+    </div>
+    <div style="padding:12px 14px;background:var(--card2);border-radius:var(--radius-sm);border:1px solid var(--border);margin-top:2px">
+      <div style="font-size:0.78rem;color:var(--text3);font-weight:700;">💡 Timers keep running even when you switch screens or reload!</div>
+    </div>
+  </div><!-- /timers -->
+
+  <!-- ─── LOG ─── -->
+  <div class="screen" id="sc-log">
+    <div class="screen-title">📝 Log My Day</div>
+    <div style="font-size:0.8rem;color:var(--text3);font-weight:700;margin-bottom:16px;" id="log-date"></div>
+
+    <!-- Morning Routine -->
+    <div class="log-card" style="border-color:rgba(247,201,72,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--morning-soft);color:var(--morning)">☀️</div>
+        <div class="card-titles">
+          <div class="card-title" id="morning-card-title">Morning Routine</div>
+          <div class="card-sub" id="morning-card-sub">How did you start your day?</div>
+        </div>
+      </div>
+      <div id="morning-checks">
+        <div class="check-row" onclick="chk('brush')"><div class="check-circle" id="cc-brush"></div><span class="check-lbl" id="cl-brush">🪥 Brush teeth</span></div>
+        <div class="check-row" onclick="chk('bath')"><div class="check-circle" id="cc-bath"></div><span class="check-lbl" id="cl-bath">🚿 Bath</span></div>
+        <div class="check-row" id="row-uni" onclick="chk('uniform')"><div class="check-circle" id="cc-uniform"></div><span class="check-lbl" id="cl-uniform">👔 School uniform</span></div>
+        <div class="check-row" id="row-bag" onclick="chk('bag')"><div class="check-circle" id="cc-bag"></div><span class="check-lbl" id="cl-bag">🎒 School bag</span></div>
+        <div class="check-row" onclick="chk('breakfast')"><div class="check-circle" id="cc-breakfast"></div><span class="check-lbl" id="cl-breakfast">🥞 Breakfast</span></div>
+      </div>
+      <div class="pbar-wrap"><div class="pbar-fill" id="pbar-morning" style="width:0%"></div></div>
+      <div class="pbar-lbl" id="pbar-lbl">0% done</div>
+    </div>
+
+    <!-- School -->
+    <div class="log-card" style="border-color:rgba(79,172,254,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--play-soft);color:var(--play)">🏫</div>
+        <div class="card-titles"><div class="card-title">School Today</div></div>
+      </div>
+      <div class="opt-grid cols2" id="school-opts" style="grid-template-columns:repeat(3,1fr)">
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickSchool('yes',this)"><span class="opt-emoji">✅</span><span class="opt-lbl">Yes I went</span></button>
+        <button class="opt-btn" style="--accent:var(--play);--accent-soft:var(--play-soft)" onclick="pickSchool('home',this)"><span class="opt-emoji">🏠</span><span class="opt-lbl">Stayed home</span></button>
+        <button class="opt-btn" style="--accent:var(--morning);--accent-soft:var(--morning-soft)" onclick="pickSchool('holiday',this)"><span class="opt-emoji">🎉</span><span class="opt-lbl">Holiday</span></button>
+      </div>
+      <div id="tuition-block" style="display:none;margin-top:14px">
+        <div class="sec-label" id="tuition-label">Did you go to tuition?</div>
+        <div class="opt-grid" style="grid-template-columns:repeat(3,1fr)" id="tuition-opts">
+          <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickTuition('yes',this)"><span class="opt-emoji">✅</span><span class="opt-lbl">Yes I went</span></button>
+          <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="pickTuition('no',this)"><span class="opt-emoji">❌</span><span class="opt-lbl">Skipped</span></button>
+          <button class="opt-btn" id="tuition-hol-btn" style="--accent:var(--morning);--accent-soft:var(--morning-soft);display:none" onclick="pickTuition('holiday',this)"><span class="opt-emoji">🎉</span><span class="opt-lbl">Holiday too</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- What I Learned -->
+    <div class="log-card" style="border-color:rgba(67,233,123,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--study-soft);color:var(--study)">📖</div>
+        <div class="card-titles"><div class="card-title">What I Learned</div><div class="card-sub">Today's subject & topic</div></div>
+      </div>
+      <div class="opt-grid" id="learn-sub-opts">
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnSub('Maths',this)"><span class="opt-emoji">🔢</span><span class="opt-lbl">Maths</span></button>
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnSub('Science',this)"><span class="opt-emoji">🔬</span><span class="opt-lbl">Science</span></button>
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnSub('English',this)"><span class="opt-emoji">📖</span><span class="opt-lbl">English</span></button>
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnSub('Telugu',this)"><span class="opt-emoji">🌺</span><span class="opt-lbl">Telugu</span></button>
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnSub('Hindi',this)"><span class="opt-emoji">🇮🇳</span><span class="opt-lbl">Hindi</span></button>
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnSub('Social',this)"><span class="opt-emoji">🌍</span><span class="opt-lbl">Social</span></button>
+      </div>
+      <textarea class="log-input log-textarea" id="learn-topic" placeholder="What did you learn today? Any cool facts?"></textarea>
+      <div class="sec-label mt12">How did you find it?</div>
+      <div class="opt-grid" id="learn-status-opts">
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickLearnStatus('got',this)"><span class="opt-emoji">💡</span><span class="opt-lbl">Got it!</span></button>
+        <button class="opt-btn" style="--accent:var(--morning);--accent-soft:var(--morning-soft)" onclick="pickLearnStatus('sortof',this)"><span class="opt-emoji">🤔</span><span class="opt-lbl">Sort of</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="pickLearnStatus('confused',this)"><span class="opt-emoji">😵</span><span class="opt-lbl">Confused</span></button>
+      </div>
+    </div>
+
+    <!-- Friends -->
+    <div class="log-card" style="border-color:rgba(253,121,168,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--friends-soft);color:var(--friends)">👫</div>
+        <div class="card-titles"><div class="card-title">Friends</div><div class="card-sub">Social vibes today</div></div>
+      </div>
+      <div class="sec-label">Friend vibe?</div>
+      <div class="mood-row" id="friend-mood-row">
+        <button class="mood-btn" onclick="pickFriendMood(1,this)">😔</button>
+        <button class="mood-btn" onclick="pickFriendMood(2,this)">😐</button>
+        <button class="mood-btn" onclick="pickFriendMood(3,this)">🙂</button>
+        <button class="mood-btn" onclick="pickFriendMood(4,this)">😄</button>
+        <button class="mood-btn" onclick="pickFriendMood(5,this)">🤩</button>
+      </div>
+      <input class="log-input" id="new-friend" placeholder="👋 New friend's name (if any)">
+      <input class="log-input" id="new-game" placeholder="🎮 Fun game you played" style="margin-top:8px">
+    </div>
+
+    <!-- Food -->
+    <div class="log-card" style="border-color:rgba(253,203,110,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--food-soft);color:var(--food)">🍟</div>
+        <div class="card-titles"><div class="card-title">Junk Food?</div><div class="card-sub">Be honest! 🤭</div></div>
+      </div>
+      <div class="opt-grid" id="junk-opts">
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="pickJunk('none',this)"><span class="opt-emoji">🥗</span><span class="opt-lbl">None</span></button>
+        <button class="opt-btn" style="--accent:var(--morning);--accent-soft:var(--morning-soft)" onclick="pickJunk('little',this)"><span class="opt-emoji">🍪</span><span class="opt-lbl">A little</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="pickJunk('yes',this)"><span class="opt-emoji">🍟</span><span class="opt-lbl">Yes!</span></button>
+      </div>
+      <input class="log-input" id="food-detail" placeholder="What did you eat today?">
+    </div>
+
+    <!-- Mood & Health -->
+    <div class="log-card" style="border-color:rgba(162,155,254,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--mood-soft);color:var(--mood)">😊</div>
+        <div class="card-titles"><div class="card-title">Mood & Health</div></div>
+      </div>
+      <div class="sec-label">How are you feeling today?</div>
+      <div class="mood-row" id="main-mood-row">
+        <button class="mood-btn" onclick="pickMood(1,this)">😭</button>
+        <button class="mood-btn" onclick="pickMood(2,this)">😔</button>
+        <button class="mood-btn" onclick="pickMood(3,this)">😐</button>
+        <button class="mood-btn" onclick="pickMood(4,this)">😄</button>
+        <button class="mood-btn" onclick="pickMood(5,this)">🤩</button>
+      </div>
+      <div class="divider"></div>
+      <div class="toggle-row">
+        <span class="toggle-lbl">😷 Feeling sick today?</span>
+        <div class="toggle-wrap" id="sick-tog" onclick="toggleSick()"><div class="toggle-thumb"></div></div>
+      </div>
+      <div id="symptom-area" style="display:none">
+        <div class="sym-chips">
+          <button class="sym-chip" onclick="toggleSym('headache',this)">🤕 Headache</button>
+          <button class="sym-chip" onclick="toggleSym('tummy',this)">🤢 Tummy</button>
+          <button class="sym-chip" onclick="toggleSym('cold',this)">🤧 Cold</button>
+          <button class="sym-chip" onclick="toggleSym('fever',this)">🌡️ Fever</button>
+          <button class="sym-chip" onclick="toggleSym('tired',this)">😴 Tired</button>
+          <button class="sym-chip" onclick="toggleSym('other',this)">💊 Other</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Oops Moments -->
+    <div class="log-card" style="border-color:rgba(255,118,117,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--oops-soft);color:var(--oops)">😬</div>
+        <div class="card-titles"><div class="card-title">Oops Moments</div><div class="card-sub">Be honest — no judging! 💙</div></div>
+      </div>
+      <div class="opt-grid" id="oops-opts" style="grid-template-columns:repeat(2,1fr);gap:8px">
+        <button class="opt-btn" style="--accent:var(--study);--accent-soft:var(--study-soft)" onclick="toggleOops('good',this)"><span class="opt-emoji">😇</span><span class="opt-lbl">I was good</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('tv',this)"><span class="opt-emoji">📺</span><span class="opt-lbl">TV too long</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('phone',this)"><span class="opt-emoji">📱</span><span class="opt-lbl">Phone too long</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('food',this)"><span class="opt-emoji">🍕</span><span class="opt-lbl">Didn't eat well</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('sister',this)"><span class="opt-emoji">😤</span><span class="opt-lbl">Teased sister</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('listen',this)"><span class="opt-emoji">🙉</span><span class="opt-lbl">Didn't listen</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('hw',this)"><span class="opt-emoji">📚</span><span class="opt-lbl">HW trouble</span></button>
+        <button class="opt-btn" style="--accent:var(--oops);--accent-soft:var(--oops-soft)" onclick="toggleOops('other',this)"><span class="opt-emoji">🤷</span><span class="opt-lbl">Other</span></button>
+      </div>
+    </div>
+
+    <!-- Remember Tomorrow -->
+    <div class="log-card" style="border-color:rgba(85,239,196,0.2)">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--tomorrow-soft);color:var(--tomorrow)">🔮</div>
+        <div class="card-titles"><div class="card-title">Remember Tomorrow</div><div class="card-sub">Shows on home screen next day</div></div>
+      </div>
+      <textarea class="log-input log-textarea" id="remember-tmr" placeholder="Anything to remember for tomorrow? 💭"></textarea>
+    </div>
+
+    <button class="save-btn" onclick="saveDay()">✨ Save My Day!</button>
+  </div><!-- /log -->
+
+  <!-- ─── MONEY ─── -->
+  <div class="screen" id="sc-money">
+    <div class="screen-title">💰 My Money</div>
+
+    <div class="money-hero">
+      <div class="money-hero-label">Money in Pocket</div>
+      <div class="money-hero-amt">₹<span id="bal-amt">0</span></div>
+      <div class="money-stats">
+        <div class="mstat"><div class="mstat-val" style="color:var(--money)">₹<span id="m-got">0</span></div><div class="mstat-lbl">Received</div></div>
+        <div class="mstat"><div class="mstat-val" style="color:var(--spend)">₹<span id="m-spent">0</span></div><div class="mstat-lbl">Spent</div></div>
+        <div class="mstat"><div class="mstat-val" style="color:var(--save)">₹<span id="m-saved">0</span></div><div class="mstat-lbl">Saved</div></div>
+      </div>
+    </div>
+
+    <!-- Goal -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--money-soft);color:var(--money)">🎯</div>
+        <div class="card-titles"><div class="card-title">Saving Goal</div></div>
+      </div>
+      <div id="goal-section">
+        <div class="empty-state" id="no-goal">No goal yet — set one below!</div>
+        <div id="goal-info" style="display:none">
+          <div style="font-weight:800;font-size:0.95rem" id="goal-name-disp"></div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.78rem;color:var(--text3)"><span>₹<span id="goal-saved-disp">0</span> saved</span><span>Target: ₹<span id="goal-target-disp">0</span></span></div>
+          <div class="goal-bar"><div id="goal-bar-fill" class="goal-bar-fill" style="width:0%"></div></div>
+          <div style="font-size:0.75rem;color:var(--money);font-weight:800;margin-top:6px" id="goal-pct-text"></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="sec-label">Set a new goal</div>
+      <input class="log-input" id="goal-name-in" placeholder="What are you saving for? (e.g. New toy 🎮)" style="margin-top:0">
+      <div class="amt-wrap mt8">
+        <span class="amt-prefix">₹</span>
+        <input class="amt-input" type="number" id="goal-amt-in" placeholder="Target amount">
+      </div>
+      <button class="btn btn-primary btn-full mt8" onclick="setGoal()" style="background:var(--money)">Set Goal 🎯</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="mtabs">
+      <button class="mtab active" id="mt-got" onclick="switchMTab('got')">💰 Got</button>
+      <button class="mtab" id="mt-spent" onclick="switchMTab('spent')">💸 Spent</button>
+      <button class="mtab" id="mt-saved" onclick="switchMTab('saved')">🐷 Saved</button>
+    </div>
+
+    <!-- Got Form -->
+    <div class="card" id="mf-got">
+      <div class="card-head"><div class="card-icon" style="background:var(--money-soft);color:var(--money)">💰</div><div class="card-titles"><div class="card-title">Got Money</div></div></div>
+      <input class="log-input" id="got-who" placeholder="Who gave it? (Amma, Nanna, Paati...)" style="margin-top:0">
+      <div class="amt-wrap mt8"><span class="amt-prefix">₹</span><input class="amt-input" type="number" id="got-amt" placeholder="Amount"></div>
+      <button class="btn btn-full mt8" style="background:var(--money);color:#fff" onclick="addTx('got')">Add Money ✓</button>
+    </div>
+
+    <!-- Spent Form -->
+    <div class="card" id="mf-spent" style="display:none">
+      <div class="card-head"><div class="card-icon" style="background:var(--spend-soft);color:var(--spend)">💸</div><div class="card-titles"><div class="card-title">Spent Money</div></div></div>
+      <div class="cat-chips" id="cat-chips-row">
+        <button class="cat-chip" onclick="pickCat('Snacks',this)">🍕 Snacks</button>
+        <button class="cat-chip" onclick="pickCat('School',this)">✏️ School</button>
+        <button class="cat-chip" onclick="pickCat('Games/Toys',this)">🎮 Games</button>
+        <button class="cat-chip" onclick="pickCat('Books',this)">📚 Books</button>
+        <button class="cat-chip" onclick="pickCat('Gift',this)">🎁 Gift</button>
+        <button class="cat-chip" onclick="pickCat('Gave away',this)">🤲 Gave</button>
+        <button class="cat-chip" onclick="pickCat('Other',this)">🛍️ Other</button>
+      </div>
+      <input class="log-input" id="spent-desc" placeholder="What did you buy?" style="margin-top:10px">
+      <div class="amt-wrap mt8"><span class="amt-prefix">₹</span><input class="amt-input" type="number" id="spent-amt" placeholder="Amount"></div>
+      <button class="btn btn-full mt8" style="background:var(--spend);color:#fff" onclick="addTx('spent')">Add Spent ✓</button>
+    </div>
+
+    <!-- Saved Form -->
+    <div class="card" id="mf-saved" style="display:none">
+      <div class="card-head"><div class="card-icon" style="background:var(--save-soft);color:var(--save)">🐷</div><div class="card-titles"><div class="card-title">Saved Money</div></div></div>
+      <input class="log-input" id="saved-reason" placeholder="Why are you saving? 🎯" style="margin-top:0">
+      <div class="amt-wrap mt8"><span class="amt-prefix">₹</span><input class="amt-input" type="number" id="saved-amt" placeholder="Amount"></div>
+      <button class="btn btn-full mt8" style="background:var(--save);color:#1a2030" onclick="addTx('saved')">Add Saved ✓</button>
+    </div>
+
+    <!-- Transactions -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon" style="background:var(--mood-soft);color:var(--mood)">📋</div>
+        <div class="card-titles"><div class="card-title">Transactions</div><div class="card-sub">Last 30 entries</div></div>
+      </div>
+      <div id="tx-list"><div class="empty-state">No transactions yet!</div></div>
+    </div>
+  </div><!-- /money -->
+
+  <!-- ─── INSIGHTS ─── -->
+  <div class="screen" id="sc-insights">
+    <div class="screen-title">📊 My Insights</div>
+
+    <!-- Streak -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--tuition),var(--morning))">
+      <div class="ins-title" style="color:var(--morning)">🔥 My Streak</div>
+      <div class="streak-giant">
+        <span class="streak-flame">🔥</span>
+        <span class="streak-num" id="ins-streak-num">0</span>
+        <span class="streak-days">days in a row</span>
+      </div>
+      <div class="ins-text" id="ins-streak-msg" style="margin-top:12px;text-align:center"></div>
+    </div>
+
+    <!-- 7-day chart -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--sleep),var(--mood))">
+      <div class="ins-title" style="color:var(--mood)">📅 Last 7 Days</div>
+      <div class="bar-chart" id="act-chart"></div>
+      <div class="ins-text" id="act-text"></div>
+    </div>
+
+    <!-- Learning -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--study),var(--tomorrow))">
+      <div class="ins-title" style="color:var(--study)">📚 Learning Patterns</div>
+      <div class="ins-text" id="ins-learn"></div>
+    </div>
+
+    <!-- Sleep & Mood -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--sleep),var(--mood))">
+      <div class="ins-title" style="color:var(--sleep)">😴 Sleep & Mood</div>
+      <div class="ins-text" id="ins-sleep"></div>
+    </div>
+
+    <!-- Oops -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--oops),var(--friends))">
+      <div class="ins-title" style="color:var(--oops)">😬 Oops Patterns</div>
+      <div class="ins-text" id="ins-oops"></div>
+    </div>
+
+    <!-- Junk Food -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--food),var(--tuition))">
+      <div class="ins-title" style="color:var(--food)">🍟 Junk Food</div>
+      <div class="ins-text" id="ins-junk"></div>
+    </div>
+
+    <!-- Money -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--money),var(--tomorrow))">
+      <div class="ins-title" style="color:var(--money)">💰 Money Habits</div>
+      <div class="ins-text" id="ins-money"></div>
+    </div>
+
+    <!-- Morning -->
+    <div class="ins-card" style="--accent-grad:linear-gradient(90deg,var(--morning),var(--study))">
+      <div class="ins-title" style="color:var(--morning)">☀️ Morning Routine</div>
+      <div class="ins-text" id="ins-morning"></div>
+    </div>
+  </div><!-- /insights -->
+
+  <!-- ─── HISTORY ─── -->
+  <div class="screen" id="sc-history">
+    <div class="screen-title">📚 My History</div>
+    <div id="hist-list"><div class="empty-state">Nothing logged yet. Start your first day! 🌱</div></div>
+  </div>
+
+  <!-- ─── SETTINGS ─── -->
+  <div class="screen" id="sc-settings">
+    <div class="screen-title">⚙️ Settings</div>
+    <div class="set-group">
+      <div class="set-group-title">Security</div>
+      <div class="set-item" onclick="openChangePIN()"><span class="set-label">🔐 Change PIN</span><span class="set-arrow">›</span></div>
+    </div>
+    <div class="set-group">
+      <div class="set-group-title">Export Data</div>
+      <div class="set-item" onclick="exportCSV()"><span class="set-label">📊 Export as CSV</span><span class="set-arrow">⬇</span></div>
+      <div class="set-item" onclick="exportJSON()"><span class="set-label">🔧 Export as JSON</span><span class="set-arrow">⬇</span></div>
+      <div class="set-item" onclick="exportText()"><span class="set-label">📝 Export Text Report</span><span class="set-arrow">⬇</span></div>
+    </div>
+    <div class="set-group">
+      <div class="set-group-title">Danger Zone</div>
+      <div class="set-item" onclick="clearAll()" style="border-color:rgba(255,118,117,0.25)"><span class="set-label" style="color:var(--oops)">🗑️ Clear All Data</span><span class="set-arrow">›</span></div>
+    </div>
+    <div style="text-align:center;color:var(--text3);font-size:0.78rem;line-height:1.7;padding:12px 0 8px">
+      Dhruti's Days 🌟<br>Made with 💙 just for Dhruti<br>All data stored on your device
     </div>
   </div>
 
-  <!-- TOP BAR -->
-  <div id="topbar">
-    <div class="app-title">🌟 Dhruti's Days</div>
-    <button class="gear-btn" onclick="gotoScreen('settings')">⚙️</button>
+</div><!-- /screens -->
+
+<!-- ─── BOTTOM NAV ─── -->
+<nav id="bottomnav">
+  <button class="nbtn active" id="nb-home" onclick="goTo('home')"><span class="ni">🏠</span>Home</button>
+  <button class="nbtn" id="nb-timers" onclick="goTo('timers')"><span class="ni">⏱️</span>Timers</button>
+  <button class="nbtn" id="nb-log" onclick="goTo('log')"><span class="ni">📝</span>Log</button>
+  <button class="nbtn" id="nb-money" onclick="goTo('money')"><span class="ni">💰</span>Money</button>
+  <button class="nbtn" id="nb-insights" onclick="goTo('insights')"><span class="ni">📊</span>Insights</button>
+  <button class="nbtn" id="nb-history" onclick="goTo('history')"><span class="ni">📚</span>History</button>
+</nav>
+
+<!-- MODAL -->
+<div id="modal-overlay" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-body"></div>
   </div>
+</div>
 
-  <!-- SCREENS -->
-  <div id="screens">
-
-    <!-- HOME -->
-    <div class="screen active" id="screen-home">
-      <div class="greeting-hero">
-        <div class="greeting-time" id="greeting-time"></div>
-        <div class="greeting-name" id="greeting-name">Hey Dhruti! 🌸</div>
-        <div class="greeting-sub" id="greeting-sub">Ready to have an amazing day?</div>
-        <div class="streak-badge" id="streak-badge">🔥 <span id="streak-num">0</span> day streak!</div>
-      </div>
-
-      <!-- Yesterday's reminder -->
-      <div id="reminder-card-home" style="display:none">
-        <div class="reminder-card">
-          <div class="reminder-label">📌 From Yesterday — Remember!</div>
-          <div class="reminder-text" id="reminder-text-home"></div>
-        </div>
-      </div>
-
-      <!-- Live timers -->
-      <div class="card" id="home-live-timers" style="display:none">
-        <div class="card-title">⏱️ Running Now</div>
-        <div class="live-timers" id="live-timers-list"></div>
-      </div>
-
-      <!-- Quick actions -->
-      <div class="card">
-        <div class="card-title">⚡ Quick Actions</div>
-        <div class="quick-grid">
-          <button class="quick-btn" onclick="gotoScreen('log')"><span class="quick-icon">📝</span> Log Today</button>
-          <button class="quick-btn" onclick="gotoScreen('timers')"><span class="quick-icon">⏱️</span> Timers</button>
-          <button class="quick-btn" onclick="gotoScreen('money')"><span class="quick-icon">💰</span> Money</button>
-          <button class="quick-btn" onclick="gotoScreen('insights')"><span class="quick-icon">📊</span> Insights</button>
-        </div>
-      </div>
-
-      <!-- Today status -->
-      <div class="card" id="today-status-card">
-        <div class="card-title">📅 Today's Status</div>
-        <div id="today-status-content" style="color:var(--text3);font-size:0.88rem;">Nothing logged yet today. Tap 'Log Today' to get started!</div>
-      </div>
-    </div>
-
-    <!-- TIMERS -->
-    <div class="screen" id="screen-timers">
-      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">⏱️ My Timers</h2>
-
-      <!-- Sleep -->
-      <div class="timer-card" id="timer-sleep" style="background:var(--sleep-bg);border-color:var(--sleep)" onclick="toggleTimer('sleep')">
-        <div class="timer-label" style="color:var(--sleep)">😴 Sleep</div>
-        <div class="timer-display" style="color:var(--sleep)" id="td-sleep">00:00:00</div>
-        <div class="timer-status" id="ts-sleep" style="color:var(--sleep)">Tap to start at bedtime</div>
-        <button class="timer-action" id="ta-sleep" style="background:var(--sleep);color:#fff">▶</button>
-      </div>
-
-      <!-- Study with subjects -->
-      <div class="timer-card" id="timer-study" style="background:var(--study-bg);border-color:var(--study)" onclick="toggleTimer('study')">
-        <div class="timer-label" style="color:var(--study)">📚 Study</div>
-        <div class="timer-display" style="color:var(--study)" id="td-study">00:00:00</div>
-        <div class="timer-status" id="ts-study" style="color:var(--study)">Tap to start studying</div>
-        <button class="timer-action" id="ta-study" style="background:var(--study);color:#fff">▶</button>
-        <div class="subject-tags" onclick="event.stopPropagation()">
-          <span class="subject-tag" style="color:var(--study)" data-sub="Maths" onclick="pickSubject('Maths',this)">🔢 Maths</span>
-          <span class="subject-tag" style="color:var(--study)" data-sub="Science" onclick="pickSubject('Science',this)">🔬 Science</span>
-          <span class="subject-tag" style="color:var(--study)" data-sub="English" onclick="pickSubject('English',this)">📖 English</span>
-          <span class="subject-tag" style="color:var(--study)" data-sub="Telugu" onclick="pickSubject('Telugu',this)">🌺 Telugu</span>
-          <span class="subject-tag" style="color:var(--study)" data-sub="Hindi" onclick="pickSubject('Hindi',this)">🇮🇳 Hindi</span>
-          <span class="subject-tag" style="color:var(--study)" data-sub="Social" onclick="pickSubject('Social',this)">🌍 Social</span>
-        </div>
-      </div>
-
-      <!-- TV -->
-      <div class="timer-card" id="timer-tv" style="background:var(--tv-bg);border-color:var(--tv)" onclick="toggleTimer('tv')">
-        <div class="timer-label" style="color:var(--tv)">📺 TV</div>
-        <div class="timer-display" style="color:var(--tv)" id="td-tv">00:00:00</div>
-        <div class="timer-status" id="ts-tv" style="color:var(--tv)">Tap to start watching</div>
-        <button class="timer-action" id="ta-tv" style="background:var(--tv);color:#fff">▶</button>
-      </div>
-
-      <!-- Play -->
-      <div class="timer-card" id="timer-play" style="background:var(--play-bg);border-color:var(--play)" onclick="toggleTimer('play')">
-        <div class="timer-label" style="color:var(--play)">🏃 Play</div>
-        <div class="timer-display" style="color:var(--play)" id="td-play">00:00:00</div>
-        <div class="timer-status" id="ts-play" style="color:var(--play)">Tap to start playing</div>
-        <button class="timer-action" id="ta-play" style="background:var(--play);color:#fff">▶</button>
-      </div>
-
-      <!-- Tuition -->
-      <div class="timer-card" id="timer-tuition" style="background:var(--tuition-bg);border-color:var(--tuition)" onclick="toggleTimer('tuition')">
-        <div class="timer-label" style="color:var(--tuition)">🏫 Tuition</div>
-        <div class="timer-display" style="color:var(--tuition)" id="td-tuition">00:00:00</div>
-        <div class="timer-status" id="ts-tuition" style="color:var(--tuition)">Tap when tuition starts</div>
-        <button class="timer-action" id="ta-tuition" style="background:var(--tuition);color:#fff">▶</button>
-      </div>
-
-      <div style="margin-top:6px;padding:12px 14px;background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border)">
-        <div style="font-size:0.8rem;color:var(--text3);font-weight:600;">ℹ️ Timers keep running even when you switch screens or reload the page!</div>
-      </div>
-    </div>
-
-    <!-- LOG -->
-    <div class="screen" id="screen-log">
-      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">📝 Log My Day</h2>
-      <div style="font-size:0.85rem;color:var(--text3);margin-bottom:16px;" id="log-date-label"></div>
-
-      <!-- Morning Routine -->
-      <div class="log-section" id="morning-section" style="background:var(--bg3);border-color:rgba(34,197,94,0.3)">
-        <div class="section-title" style="color:var(--study)">
-          <span id="morning-title">☀️ Morning Routine</span>
-        </div>
-        <div id="routine-checks">
-          <div class="checkbox-row" onclick="toggleCheck('brush')">
-            <div class="check-box" id="chk-brush"></div>
-            <span class="check-label">🪥 Brush teeth</span>
-          </div>
-          <div class="checkbox-row" onclick="toggleCheck('bath')">
-            <div class="check-box" id="chk-bath"></div>
-            <span class="check-label">🚿 Bath</span>
-          </div>
-          <div class="checkbox-row" id="row-uniform" onclick="toggleCheck('uniform')">
-            <div class="check-box" id="chk-uniform"></div>
-            <span class="check-label" id="lbl-uniform">👔 School uniform</span>
-          </div>
-          <div class="checkbox-row" id="row-bag" onclick="toggleCheck('bag')">
-            <div class="check-box" id="chk-bag"></div>
-            <span class="check-label" id="lbl-bag">🎒 School bag</span>
-          </div>
-          <div class="checkbox-row" onclick="toggleCheck('breakfast')">
-            <div class="check-box" id="chk-breakfast"></div>
-            <span class="check-label">🥞 Breakfast</span>
-          </div>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill" id="routine-progress" style="width:0%"></div>
-        </div>
-        <div style="font-size:0.75rem;color:var(--text3);margin-top:6px;font-weight:600;" id="routine-pct">0% done</div>
-      </div>
-
-      <!-- School -->
-      <div class="log-section" style="background:var(--bg3);border-color:rgba(56,189,248,0.3)">
-        <div class="section-title" style="color:var(--play)">🏫 School Today</div>
-        <div class="option-pills" id="school-pills">
-          <button class="pill" onclick="pickSchool('yes',this)">✅ Yes I went</button>
-          <button class="pill" onclick="pickSchool('home',this)">🏠 Stayed home</button>
-          <button class="pill" onclick="pickSchool('holiday',this)">🎉 Holiday</button>
-        </div>
-        <div id="tuition-q" style="margin-top:14px;display:none">
-          <div style="font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;" id="tuition-q-label">Did you go to tuition?</div>
-          <div class="option-pills">
-            <button class="pill" onclick="pickTuition('yes',this)">✅ Yes I went</button>
-            <button class="pill" onclick="pickTuition('no',this)">❌ Skipped</button>
-            <button class="pill" id="tuition-holiday-pill" style="display:none" onclick="pickTuition('holiday',this)">🎉 Holiday too</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- What I Learned -->
-      <div class="log-section" style="background:var(--study-bg);border-color:rgba(34,197,94,0.3)">
-        <div class="section-title" style="color:var(--study)">📖 What I Learned</div>
-        <div class="option-pills" id="learn-subject-pills">
-          <button class="pill" onclick="pickLearnSub('Maths',this)">🔢 Maths</button>
-          <button class="pill" onclick="pickLearnSub('Science',this)">🔬 Science</button>
-          <button class="pill" onclick="pickLearnSub('English',this)">📖 English</button>
-          <button class="pill" onclick="pickLearnSub('Telugu',this)">🌺 Telugu</button>
-          <button class="pill" onclick="pickLearnSub('Hindi',this)">🇮🇳 Hindi</button>
-          <button class="pill" onclick="pickLearnSub('Social',this)">🌍 Social</button>
-        </div>
-        <textarea class="log-input log-textarea" id="learn-topic" placeholder="What did you learn today? Anything interesting?" style="margin-top:10px"></textarea>
-        <div style="margin-top:10px;font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;">How was it?</div>
-        <div class="option-pills">
-          <button class="pill" onclick="pickLearnStatus('got',this)">💡 Got it!</button>
-          <button class="pill" onclick="pickLearnStatus('sortof',this)">🤔 Sort of</button>
-          <button class="pill" onclick="pickLearnStatus('confused',this)">😵 Confused</button>
-        </div>
-      </div>
-
-      <!-- Friends -->
-      <div class="log-section" style="background:var(--friends-bg);border-color:rgba(244,114,182,0.3)">
-        <div class="section-title" style="color:var(--friends)">👫 Friends</div>
-        <div style="font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;">Friend vibe today?</div>
-        <div class="mood-row" id="friend-mood-row">
-          <button class="mood-btn" onclick="pickFriendMood(1,this)" title="Lonely">😔</button>
-          <button class="mood-btn" onclick="pickFriendMood(2,this)" title="Okay">😐</button>
-          <button class="mood-btn" onclick="pickFriendMood(3,this)" title="Good">🙂</button>
-          <button class="mood-btn" onclick="pickFriendMood(4,this)" title="Happy">😄</button>
-          <button class="mood-btn" onclick="pickFriendMood(5,this)" title="Amazing">🤩</button>
-        </div>
-        <input class="log-input" id="new-friend" placeholder="👋 New friend's name (if any)" style="margin-top:10px">
-        <input class="log-input" id="new-game" placeholder="🎮 Fun game you played" style="margin-top:8px">
-      </div>
-
-      <!-- Food -->
-      <div class="log-section" style="background:var(--food-bg);border-color:rgba(234,179,8,0.3)">
-        <div class="section-title" style="color:var(--food)">🍟 Junk Food?</div>
-        <div class="option-pills" id="junk-pills">
-          <button class="pill" onclick="pickJunk('none',this)">🥗 None</button>
-          <button class="pill" onclick="pickJunk('little',this)">🍪 A little</button>
-          <button class="pill" onclick="pickJunk('yes',this)">🍟 Yes!</button>
-        </div>
-        <input class="log-input" id="food-detail" placeholder="What did you eat today?" style="margin-top:10px">
-      </div>
-
-      <!-- Mood & Health -->
-      <div class="log-section" style="background:var(--mood-bg);border-color:rgba(168,85,247,0.3)">
-        <div class="section-title" style="color:var(--mood)">😊 Mood & Health</div>
-        <div style="font-size:0.85rem;font-weight:600;color:var(--text2);margin-bottom:8px;">How are you feeling today?</div>
-        <div class="mood-row" id="mood-row">
-          <button class="mood-btn" onclick="pickMood(1,this)" title="Terrible">😭</button>
-          <button class="mood-btn" onclick="pickMood(2,this)" title="Sad">😔</button>
-          <button class="mood-btn" onclick="pickMood(3,this)" title="Okay">😐</button>
-          <button class="mood-btn" onclick="pickMood(4,this)" title="Happy">😄</button>
-          <button class="mood-btn" onclick="pickMood(5,this)" title="Amazing">🤩</button>
-        </div>
-        <div class="toggle-row" style="margin-top:12px">
-          <span class="toggle-label">😷 Feeling sick today?</span>
-          <div class="toggle" id="sick-toggle" onclick="toggleSick()"></div>
-        </div>
-        <div id="symptom-area" style="display:none">
-          <div class="symptom-chips">
-            <button class="chip" onclick="toggleSymptom('headache',this)">🤕 Headache</button>
-            <button class="chip" onclick="toggleSymptom('tummy',this)">🤢 Tummy</button>
-            <button class="chip" onclick="toggleSymptom('cold',this)">🤧 Cold</button>
-            <button class="chip" onclick="toggleSymptom('fever',this)">🌡️ Fever</button>
-            <button class="chip" onclick="toggleSymptom('tired',this)">😴 Tired</button>
-            <button class="chip" onclick="toggleSymptom('other',this)">💊 Other</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Oops Moments -->
-      <div class="log-section" style="background:var(--oops-bg);border-color:rgba(239,68,68,0.3)">
-        <div class="section-title" style="color:var(--oops)">😬 Oops Moments</div>
-        <div style="font-size:0.82rem;color:var(--text3);margin-bottom:10px;">Be honest, no one is judging! 💙</div>
-        <div class="option-pills" id="oops-pills" style="gap:8px">
-          <button class="pill" onclick="toggleOops('good',this)" style="border-color:var(--study);color:var(--study)">😇 I was good</button>
-          <button class="pill" onclick="toggleOops('tv',this)">📺 TV too long</button>
-          <button class="pill" onclick="toggleOops('phone',this)">📱 Phone too long</button>
-          <button class="pill" onclick="toggleOops('food',this)">🍕 Didn't eat well</button>
-          <button class="pill" onclick="toggleOops('sister',this)">😤 Teased sister</button>
-          <button class="pill" onclick="toggleOops('listen',this)">🙉 Didn't listen</button>
-          <button class="pill" onclick="toggleOops('hw',this)">📚 HW trouble</button>
-          <button class="pill" onclick="toggleOops('other',this)">🤷 Other</button>
-        </div>
-      </div>
-
-      <!-- Remember Tomorrow -->
-      <div class="log-section" style="background:var(--mood-bg);border-color:rgba(168,85,247,0.3)">
-        <div class="section-title" style="color:var(--mood)">🔮 Remember Tomorrow</div>
-        <textarea class="log-input log-textarea" id="remember-tmr" placeholder="Anything to remember for tomorrow? It'll show up on your home screen!"></textarea>
-      </div>
-
-      <button class="save-day-btn" onclick="saveDay()">✨ Save My Day!</button>
-    </div>
-
-    <!-- MONEY -->
-    <div class="screen" id="screen-money">
-      <!-- Balance Hero -->
-      <div class="balance-hero">
-        <div class="balance-label">Money in Pocket</div>
-        <div class="balance-amount">₹<span id="balance-amt">0</span></div>
-        <div class="balance-stats">
-          <div class="stat-item">
-            <div class="stat-val" style="color:var(--money)">₹<span id="money-got-total">0</span></div>
-            <div class="stat-lbl">Received</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-val" style="color:var(--oops)">₹<span id="money-spent-total">0</span></div>
-            <div class="stat-lbl">Spent</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-val" style="color:var(--sleep)">₹<span id="money-saved-total">0</span></div>
-            <div class="stat-lbl">Saved</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Saving Goal -->
-      <div class="card">
-        <div class="card-title" style="color:var(--money)">🎯 Saving Goal</div>
-        <div id="goal-display">
-          <div id="no-goal-msg" style="color:var(--text3);font-size:0.88rem;">No goal set yet. Add one below!</div>
-          <div id="goal-info" style="display:none">
-            <div style="font-weight:700;font-size:0.95rem;" id="goal-name-display"></div>
-            <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.82rem;color:var(--text3)">
-              <span>₹<span id="goal-saved-amt">0</span> saved</span>
-              <span>Target: ₹<span id="goal-target-amt">0</span></span>
-            </div>
-            <div class="goal-bar-wrap">
-              <div class="goal-bar-fill" id="goal-progress-bar" style="width:0%"></div>
-            </div>
-            <div style="font-size:0.75rem;color:var(--money);font-weight:700;margin-top:6px;" id="goal-pct-text"></div>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div style="font-size:0.82rem;font-weight:600;color:var(--text3);margin-bottom:8px;">Set a new goal:</div>
-        <input class="log-input" id="goal-name-input" placeholder="What are you saving for? (e.g. New toy)" style="margin-top:0">
-        <div class="money-input" style="margin-top:8px">
-          <input type="number" id="goal-target-input" placeholder="Target ₹ amount">
-          <button class="btn btn-primary" onclick="setGoal()" style="flex-shrink:0">Set Goal</button>
-        </div>
-      </div>
-
-      <!-- Tabs -->
-      <div class="money-tabs">
-        <button class="money-tab active" id="mtab-got" onclick="switchMoneyTab('got')">💰 Got Money</button>
-        <button class="money-tab" id="mtab-spent" onclick="switchMoneyTab('spent')">💸 Spent</button>
-        <button class="money-tab" id="mtab-saved" onclick="switchMoneyTab('saved')">🐷 Saved</button>
-      </div>
-
-      <!-- Got Money Form -->
-      <div id="money-form-got" class="card">
-        <div class="card-title" style="color:var(--money)">💰 Got Money</div>
-        <input class="log-input" id="got-who" placeholder="Who gave it? (e.g. Amma, Nanna, Paati)" style="margin-top:0">
-        <div class="money-input">
-          <input type="number" id="got-amount" placeholder="Amount ₹">
-          <button class="btn btn-primary" onclick="addMoney('got')" style="flex-shrink:0;background:var(--money)">Add ✓</button>
-        </div>
-      </div>
-
-      <!-- Spent Form -->
-      <div id="money-form-spent" class="card" style="display:none">
-        <div class="card-title" style="color:var(--oops)">💸 Spent Money</div>
-        <div class="cat-chips" id="spend-cat-chips">
-          <button class="cat-chip" onclick="pickSpendCat('Snacks',this)">🍕 Snacks</button>
-          <button class="cat-chip" onclick="pickSpendCat('School stuff',this)">✏️ School</button>
-          <button class="cat-chip" onclick="pickSpendCat('Games/Toys',this)">🎮 Games/Toys</button>
-          <button class="cat-chip" onclick="pickSpendCat('Books',this)">📚 Books</button>
-          <button class="cat-chip" onclick="pickSpendCat('Gift',this)">🎁 Gift</button>
-          <button class="cat-chip" onclick="pickSpendCat('Gave away',this)">🤲 Gave away</button>
-          <button class="cat-chip" onclick="pickSpendCat('Other',this)">🛍️ Other</button>
-        </div>
-        <input class="log-input" id="spent-desc" placeholder="What did you buy?" style="margin-top:8px">
-        <div class="money-input">
-          <input type="number" id="spent-amount" placeholder="Amount ₹">
-          <button class="btn" onclick="addMoney('spent')" style="flex-shrink:0;background:var(--oops);color:#fff">Add ✓</button>
-        </div>
-      </div>
-
-      <!-- Saved Form -->
-      <div id="money-form-saved" class="card" style="display:none">
-        <div class="card-title" style="color:var(--sleep)">🐷 Saved Money</div>
-        <input class="log-input" id="saved-reason" placeholder="Why are you saving this?" style="margin-top:0">
-        <div class="money-input">
-          <input type="number" id="saved-amount" placeholder="Amount ₹">
-          <button class="btn" onclick="addMoney('saved')" style="flex-shrink:0;background:var(--sleep);color:#fff">Add ✓</button>
-        </div>
-      </div>
-
-      <!-- Transaction List -->
-      <div class="card">
-        <div class="card-title">📋 Transactions <span style="font-size:0.75rem;color:var(--text3);font-weight:600;">(last 30)</span></div>
-        <div class="tx-list" id="tx-list">
-          <div style="color:var(--text3);font-size:0.88rem;">No transactions yet!</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- INSIGHTS -->
-    <div class="screen" id="screen-insights">
-      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">📊 My Insights</h2>
-
-      <!-- Streak -->
-      <div class="insight-card" style="background:linear-gradient(135deg,#2d1a08,#3d2010);border-color:var(--tuition)">
-        <div class="insight-title" style="color:var(--tuition)">🔥 Streak</div>
-        <div style="font-family:'Baloo 2',cursive;font-size:3rem;font-weight:800;color:var(--tuition);line-height:1"><span id="ins-streak">0</span></div>
-        <div class="insight-text" id="ins-streak-text">Start logging every day to build your streak!</div>
-      </div>
-
-      <!-- 7-day activity -->
-      <div class="insight-card">
-        <div class="insight-title">📅 Last 7 Days Activity</div>
-        <div class="bar-chart" id="activity-chart"></div>
-        <div class="insight-text" id="activity-text" style="margin-top:12px;"></div>
-      </div>
-
-      <!-- Learning patterns -->
-      <div class="insight-card" style="background:var(--study-bg);border-color:rgba(34,197,94,0.3)">
-        <div class="insight-title" style="color:var(--study)">📚 Learning Patterns</div>
-        <div class="insight-text" id="learn-insight"></div>
-      </div>
-
-      <!-- Sleep vs Mood -->
-      <div class="insight-card" style="background:var(--sleep-bg);border-color:rgba(99,102,241,0.3)">
-        <div class="insight-title" style="color:var(--sleep)">😴 Sleep & Mood</div>
-        <div class="insight-text" id="sleep-mood-insight"></div>
-      </div>
-
-      <!-- Oops patterns -->
-      <div class="insight-card" style="background:var(--oops-bg);border-color:rgba(239,68,68,0.3)">
-        <div class="insight-title" style="color:var(--oops)">😬 Oops Patterns</div>
-        <div class="insight-text" id="oops-insight"></div>
-      </div>
-
-      <!-- Junk food -->
-      <div class="insight-card" style="background:var(--food-bg);border-color:rgba(234,179,8,0.3)">
-        <div class="insight-title" style="color:var(--food)">🍟 Junk Food %</div>
-        <div class="insight-text" id="junk-insight"></div>
-      </div>
-
-      <!-- Money savings -->
-      <div class="insight-card" style="background:var(--money-bg);border-color:rgba(16,185,129,0.3)">
-        <div class="insight-title" style="color:var(--money)">💰 Money Habits</div>
-        <div class="insight-text" id="money-insight"></div>
-      </div>
-
-      <!-- Morning routine -->
-      <div class="insight-card" style="background:var(--study-bg);border-color:rgba(34,197,94,0.3)">
-        <div class="insight-title" style="color:var(--study)">☀️ Morning Routine</div>
-        <div class="insight-text" id="morning-insight"></div>
-      </div>
-    </div>
-
-    <!-- HISTORY -->
-    <div class="screen" id="screen-history">
-      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:16px;">📚 My History</h2>
-      <div id="history-list">
-        <div style="color:var(--text3);font-size:0.88rem;">Nothing logged yet. Start your first day!</div>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="screen" id="screen-settings">
-      <h2 style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:20px;">⚙️ Settings</h2>
-
-      <div class="settings-section">
-        <div class="settings-title">Security</div>
-        <div class="settings-item" onclick="openChangePIN()">
-          <span class="settings-item-label">🔐 Change PIN</span>
-          <span class="settings-item-icon">→</span>
-        </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-title">Export Data</div>
-        <div class="settings-item" onclick="exportCSV()">
-          <span class="settings-item-label">📊 Export as CSV</span>
-          <span class="settings-item-icon">⬇</span>
-        </div>
-        <div class="settings-item" onclick="exportJSON()">
-          <span class="settings-item-label">🔧 Export as JSON</span>
-          <span class="settings-item-icon">⬇</span>
-        </div>
-        <div class="settings-item" onclick="exportText()">
-          <span class="settings-item-label">📝 Export Text Report</span>
-          <span class="settings-item-icon">⬇</span>
-        </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-title">Danger Zone</div>
-        <div class="settings-item" onclick="clearAllData()" style="border-color:rgba(239,68,68,0.3)">
-          <span class="settings-item-label" style="color:var(--oops)">🗑️ Clear All Data</span>
-          <span class="settings-item-icon">→</span>
-        </div>
-      </div>
-
-      <div style="padding:16px;text-align:center;color:var(--text3);font-size:0.78rem;line-height:1.6;">
-        Dhruti's Days 🌟<br>Made with 💙 just for you!<br>All data stays on your device.
-      </div>
-    </div>
-
-  </div><!-- /screens -->
-
-  <!-- BOTTOM NAV -->
-  <nav id="bottomnav">
-    <button class="nav-btn active" onclick="gotoScreen('home')" id="nav-home">
-      <span class="nav-icon">🏠</span>Home
-    </button>
-    <button class="nav-btn" onclick="gotoScreen('timers')" id="nav-timers">
-      <span class="nav-icon">⏱️</span>Timers
-    </button>
-    <button class="nav-btn" onclick="gotoScreen('log')" id="nav-log">
-      <span class="nav-icon">📝</span>Log
-    </button>
-    <button class="nav-btn" onclick="gotoScreen('money')" id="nav-money">
-      <span class="nav-icon">💰</span>Money
-    </button>
-    <button class="nav-btn" onclick="gotoScreen('insights')" id="nav-insights">
-      <span class="nav-icon">📊</span>Insights
-    </button>
-    <button class="nav-btn" onclick="gotoScreen('history')" id="nav-history">
-      <span class="nav-icon">📚</span>History
-    </button>
-  </nav>
-
-  <!-- MODAL -->
-  <div id="modal-overlay" onclick="closeModal()">
-    <div class="modal-box" onclick="event.stopPropagation()">
-      <div class="modal-title" id="modal-title"></div>
-      <div id="modal-body"></div>
-    </div>
-  </div>
-
-  <!-- TOAST -->
-  <div id="toast"></div>
+<!-- TOAST -->
+<div id="toast"></div>
 
 </div><!-- /app -->
 
 <script>
-// ============================================================
-// DATA & STATE
-// ============================================================
-const LS = {
-  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
-  set: (k,v) => localStorage.setItem(k, JSON.stringify(v)),
-  del: k => localStorage.removeItem(k)
+// ════════════════════════════════════════════
+// STORAGE HELPERS
+// ════════════════════════════════════════════
+const S = {
+  g: k => { try { return JSON.parse(localStorage.getItem(k)); } catch{ return null; } },
+  s: (k,v) => localStorage.setItem(k, JSON.stringify(v)),
+  d: k => localStorage.removeItem(k)
 };
 
-function todayKey() {
+function todayStr() {
   const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`;
 }
-
-function yesterdayKey() {
-  const d = new Date(); d.setDate(d.getDate()-1);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function p2(n) { return String(n).padStart(2,'0'); }
+function dateStr(offset=0) {
+  const d = new Date(); d.setDate(d.getDate()+offset);
+  return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`;
 }
-
-function fmtDate(k) {
+function fmtDateKey(k) {
   const [y,m,d] = k.split('-');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const dt = new Date(+y, +m-1, +d);
-  return `${days[dt.getDay()]}, ${d} ${months[+m-1]} ${y}`;
+  return `${wd[dt.getDay()]}, ${d} ${mo[+m-1]} ${y}`;
 }
 
-// Log state for today
-let logState = {
-  brush:false, bath:false, uniform:false, bag:false, breakfast:false,
-  school:'', tuition:'',
-  learnSubject:'', learnTopic:'', learnStatus:'',
-  friendMood:0, newFriend:'', newGame:'',
-  junkFood:'', foodDetail:'',
-  mood:0, sick:false, symptoms:[],
-  oops:[],
-  rememberTmr:''
-};
+// ════════════════════════════════════════════
+// PIN LOGIC
+// ════════════════════════════════════════════
+let pinBuf = '', pinMode = 'unlock', pinNew = '';
 
-let studySubject = LS.get('timer_study_subject') || '';
+function getPin() { return S.g('app_pin') || '1234'; }
 
-// ============================================================
-// PIN LOCK
-// ============================================================
-let pinBuffer = '';
-let pinMode = 'unlock'; // or 'change_old' | 'change_new' | 'change_confirm'
-let pinNewTemp = '';
-
-function getPin() { return LS.get('app_pin') || '1234'; }
-
-function pinPress(val) {
-  if (val === 'del') { pinBuffer = pinBuffer.slice(0,-1); }
-  else if (pinBuffer.length < 4) { pinBuffer += val; }
-  updatePinDots();
-  if (pinBuffer.length === 4) {
-    setTimeout(() => checkPin(), 120);
-  }
+function pp(v) {
+  if (v === '⌫') { pinBuf = pinBuf.slice(0,-1); }
+  else if (v === 'clr') { pinBuf = ''; }
+  else if (pinBuf.length < 4) pinBuf += v;
+  renderPinDots();
+  if (pinBuf.length === 4) setTimeout(checkPin, 150);
 }
 
-function updatePinDots(err=false) {
+function renderPinDots(err=false) {
   for (let i=0;i<4;i++) {
-    const dot = document.getElementById(`pd${i}`);
-    dot.className = 'pin-dot';
-    if (err) dot.classList.add('error');
-    else if (i < pinBuffer.length) dot.classList.add('filled');
+    const el = document.getElementById(`pd${i}`);
+    if (!el) return;
+    el.className = 'pdot';
+    if (err) el.classList.add('error');
+    else if (i < pinBuf.length) el.classList.add('filled');
   }
 }
 
 function checkPin() {
-  const pin = getPin();
+  const correct = getPin();
   if (pinMode === 'unlock') {
-    if (pinBuffer === pin) {
+    if (pinBuf === correct) {
       document.getElementById('pin-overlay').style.display = 'none';
       initApp();
     } else {
-      document.getElementById('pin-err').textContent = 'Oops! Wrong PIN. Try again 🙈';
-      updatePinDots(true);
-      setTimeout(() => { pinBuffer=''; updatePinDots(); document.getElementById('pin-err').textContent=''; }, 1000);
+      document.getElementById('pin-err').textContent = '😬 Wrong PIN! Try again.';
+      renderPinDots(true);
+      setTimeout(() => { pinBuf=''; renderPinDots(); document.getElementById('pin-err').textContent=''; }, 1000);
     }
   } else if (pinMode === 'change_old') {
-    if (pinBuffer === pin) {
-      pinMode = 'change_new';
+    if (pinBuf === correct) {
+      pinMode = 'change_new'; pinBuf = '';
       document.getElementById('modal-title').textContent = '🔐 Enter New PIN';
-      pinBuffer=''; updatePinDots(); document.getElementById('pin-err').textContent='';
+      renderModalDots();
     } else {
       document.getElementById('pin-err').textContent = 'Wrong current PIN!';
-      updatePinDots(true);
-      setTimeout(() => { pinBuffer=''; updatePinDots(); document.getElementById('pin-err').textContent=''; }, 1000);
+      renderModalDots(true);
+      setTimeout(() => { pinBuf=''; renderModalDots(); document.getElementById('pin-err').textContent=''; }, 1000);
     }
   } else if (pinMode === 'change_new') {
-    pinNewTemp = pinBuffer;
-    pinMode = 'change_confirm';
+    pinNew = pinBuf; pinBuf = ''; pinMode = 'change_confirm';
     document.getElementById('modal-title').textContent = '🔐 Confirm New PIN';
-    pinBuffer=''; updatePinDots();
+    renderModalDots();
   } else if (pinMode === 'change_confirm') {
-    if (pinBuffer === pinNewTemp) {
-      LS.set('app_pin', pinBuffer);
-      closeModal();
-      pinMode = 'unlock';
-      showToast('✅ PIN changed successfully!');
+    if (pinBuf === pinNew) {
+      S.s('app_pin', pinBuf);
+      closeModal(); pinMode = 'unlock';
+      toast('✅ PIN changed!');
     } else {
-      document.getElementById('pin-err').textContent = "PINs don't match!";
-      updatePinDots(true);
-      setTimeout(() => { pinBuffer=''; pinNewTemp=''; pinMode='change_new';
-        document.getElementById('modal-title').textContent = '🔐 Enter New PIN';
-        updatePinDots(); document.getElementById('pin-err').textContent=''; }, 1200);
+      document.getElementById('pin-err').textContent = "PINs don't match! Try again.";
+      renderModalDots(true);
+      setTimeout(() => { pinBuf=''; pinNew=''; pinMode='change_new'; document.getElementById('modal-title').textContent='🔐 Enter New PIN'; renderModalDots(); document.getElementById('pin-err').textContent=''; }, 1200);
     }
   }
 }
 
-// ============================================================
-// NAVIGATION
-// ============================================================
-let currentScreen = 'home';
+function renderModalDots(err=false) {
+  for (let i=0;i<4;i++) {
+    const el = document.getElementById(`mpd${i}`);
+    if (!el) return;
+    el.className = 'pdot';
+    if (err) el.classList.add('error');
+    else if (i < pinBuf.length) el.classList.add('filled');
+  }
+}
 
-function gotoScreen(name) {
+function openChangePIN() {
+  pinMode = 'change_old'; pinBuf = '';
+  openModal('🔐 Enter Current PIN', `
+    <div class="modal-pin-dots" id="modal-pdots">
+      <div class="pdot" id="mpd0"></div><div class="pdot" id="mpd1"></div>
+      <div class="pdot" id="mpd2"></div><div class="pdot" id="mpd3"></div>
+    </div>
+    <div class="modal-pin-grid">
+      <button class="pbtn" onclick="mpp('1')">1</button><button class="pbtn" onclick="mpp('2')">2</button><button class="pbtn" onclick="mpp('3')">3</button>
+      <button class="pbtn" onclick="mpp('4')">4</button><button class="pbtn" onclick="mpp('5')">5</button><button class="pbtn" onclick="mpp('6')">6</button>
+      <button class="pbtn" onclick="mpp('7')">7</button><button class="pbtn" onclick="mpp('8')">8</button><button class="pbtn" onclick="mpp('9')">9</button>
+      <button class="pbtn" onclick="mpp('⌫')" style="font-size:1.2rem">⌫</button><button class="pbtn" onclick="mpp('0')">0</button><button class="pbtn" onclick="mpp('clr')" style="font-size:0.75rem">CLR</button>
+    </div>
+    <div class="pin-errmsg" id="pin-err" style="text-align:center"></div>
+  `);
+}
+function mpp(v) { if (v==='⌫'){pinBuf=pinBuf.slice(0,-1);}else if(v==='clr'){pinBuf='';}else if(pinBuf.length<4)pinBuf+=v; renderModalDots(); if(pinBuf.length===4)setTimeout(checkPin,150); }
+
+// ════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════
+let curScreen = 'home';
+function goTo(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`screen-${name}`).classList.add('active');
-  const nb = document.getElementById(`nav-${name}`);
+  document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`sc-${name}`).classList.add('active');
+  const nb = document.getElementById(`nb-${name}`);
   if (nb) nb.classList.add('active');
-  currentScreen = name;
+  curScreen = name;
   if (name === 'home') refreshHome();
   if (name === 'insights') refreshInsights();
   if (name === 'history') refreshHistory();
@@ -1499,865 +1346,644 @@ function gotoScreen(name) {
   document.getElementById('screens').scrollTop = 0;
 }
 
-// ============================================================
+// ════════════════════════════════════════════
 // TIMERS
-// ============================================================
-const TIMERS = ['sleep','study','tv','play','tuition'];
-let timerIntervals = {};
+// ════════════════════════════════════════════
+const TNAMES = ['sleep','study','tv','play','tuition'];
+const TCOLORS = { sleep:'--sleep', study:'--study', tv:'--tv', play:'--play', tuition:'--tuition' };
+const TICONS = { sleep:'😴', study:'📚', tv:'📺', play:'🏃', tuition:'🏫' };
+const TSOFTBG = { sleep:'var(--sleep-soft)', study:'var(--study-soft)', tv:'var(--tv-soft)', play:'var(--play-soft)', tuition:'var(--tuition-soft)' };
+const TSTATUSTEXT = { sleep:'Tap to start at bedtime', study:'Tap to start studying', tv:'Tap to start watching', play:'Tap to start playing', tuition:'Tap when tuition starts' };
+const TRUNNINGTEXT = { sleep:'Sleeping 💤 tap when you wake up!', study:'Studying hard! Tap to stop', tv:'Watching TV! Tap to stop', play:'Playing! Tap to stop', tuition:'In tuition! Tap to stop' };
 
-function getTimerData(name) {
-  return LS.get(`timer_${name}`) || { running: false, elapsed: 0, startedAt: null };
-}
+let timerTicks = {};
 
-function saveTimerData(name, data) {
-  LS.set(`timer_${name}`, data);
-}
-
-function getElapsed(data) {
-  if (!data.running) return data.elapsed;
-  return data.elapsed + Math.floor((Date.now() - data.startedAt) / 1000);
-}
+function getTD(name) { return S.g(`t_${name}`) || { running:false, elapsed:0, startedAt:null }; }
+function setTD(name, d) { S.s(`t_${name}`, d); }
+function getElapsed(d) { return d.running ? d.elapsed + Math.floor((Date.now() - d.startedAt)/1000) : d.elapsed; }
+function fmtSec(s) { const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60; return `${p2(h)}:${p2(m)}:${p2(ss)}`; }
 
 function toggleTimer(name) {
-  let data = getTimerData(name);
-  if (data.running) {
-    data.elapsed = getElapsed(data);
-    data.running = false;
-    data.startedAt = null;
-    // for sleep, if it was the wake-up stop, store sleep hours
+  let d = getTD(name);
+  if (d.running) {
+    d.elapsed = getElapsed(d);
+    d.running = false; d.startedAt = null;
     if (name === 'sleep') {
-      const hrs = data.elapsed / 3600;
-      const today = todayKey();
-      let log = LS.get(`log_${today}`) || {};
-      log.sleepHours = hrs.toFixed(1);
-      LS.set(`log_${today}`, log);
+      const log = S.g(`log_${todayStr()}`) || {};
+      log.sleepHours = (d.elapsed/3600).toFixed(1);
+      S.s(`log_${todayStr()}`, log);
     }
   } else {
-    data.running = true;
-    data.startedAt = Date.now();
+    d.running = true; d.startedAt = Date.now();
   }
-  saveTimerData(name, data);
+  setTD(name, d);
   updateTimerUI(name);
-  refreshHomeTimers();
+  updateHomePills();
 }
 
 function updateTimerUI(name) {
-  const data = getTimerData(name);
-  const elapsed = getElapsed(data);
-  const h = Math.floor(elapsed/3600), m = Math.floor((elapsed%3600)/60), s = elapsed%60;
-  const fmt = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  const tdEl = document.getElementById(`td-${name}`);
-  const tsEl = document.getElementById(`ts-${name}`);
-  const taEl = document.getElementById(`ta-${name}`);
-  const cardEl = document.getElementById(`timer-${name}`);
-  if (!tdEl) return;
-  tdEl.textContent = fmt;
-  if (data.running) {
-    tsEl.textContent = name === 'sleep' ? 'Sleeping... tap when you wake up!' : 'Running... tap to stop';
-    taEl.textContent = '⏸';
-    cardEl.classList.add('running');
+  const d = getTD(name);
+  const el = getElapsed(d);
+  const fmt = fmtSec(el);
+  const te = document.getElementById(`te-${name}`);
+  const ts = document.getElementById(`ts-${name}`);
+  const tb = document.getElementById(`tb-${name}`);
+  const tc = document.getElementById(`tc-${name}`);
+  const tiw = document.getElementById(`tiw-${name}`);
+  if (!te) return;
+  te.textContent = fmt;
+  const cv = `var(${TCOLORS[name]})`;
+  const csf = TSOFTBG[name];
+  if (d.running) {
+    ts.textContent = TRUNNINGTEXT[name];
+    tb.textContent = '⏸';
+    tc.style.borderColor = cv;
+    tc.style.background = `linear-gradient(135deg, ${csf} 0%, transparent 100%)`;
+    tc.classList.add('running');
+    tc.style.setProperty('box-shadow-color', cv);
   } else {
-    const msgs = { sleep:'Tap to start at bedtime', study:'Tap to start studying', tv:'Tap to start watching', play:'Tap to start playing', tuition:'Tap when tuition starts' };
-    tsEl.textContent = elapsed > 0 ? `Total: ${fmt}` : msgs[name];
-    taEl.textContent = '▶';
-    cardEl.classList.remove('running');
+    ts.textContent = el > 0 ? `Total: ${fmt}` : TSTATUSTEXT[name];
+    tb.textContent = '▶';
+    tc.style.borderColor = 'var(--border)';
+    tc.style.background = 'var(--card)';
+    tc.classList.remove('running');
   }
 }
 
-function startAllTimerTicks() {
-  TIMERS.forEach(name => {
-    if (timerIntervals[name]) clearInterval(timerIntervals[name]);
-    timerIntervals[name] = setInterval(() => {
-      const data = getTimerData(name);
-      if (data.running) {
-        updateTimerUI(name);
-        refreshHomeTimers();
-      }
+function startTimerTicks() {
+  TNAMES.forEach(name => {
+    if (timerTicks[name]) clearInterval(timerTicks[name]);
+    timerTicks[name] = setInterval(() => {
+      if (getTD(name).running) { updateTimerUI(name); updateHomePills(); }
     }, 1000);
     updateTimerUI(name);
   });
 }
 
-function pickSubject(sub, el) {
-  studySubject = sub;
-  LS.set('timer_study_subject', sub);
-  document.querySelectorAll('.subject-tag').forEach(t => t.classList.remove('active'));
+function pickSub(sub, el) {
+  S.s('study_sub', sub);
+  document.querySelectorAll('.sub-tag').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
 
-// ============================================================
+// ════════════════════════════════════════════
 // HOME
-// ============================================================
+// ════════════════════════════════════════════
 function refreshHome() {
-  // Greeting
   const h = new Date().getHours();
-  let greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
-  document.getElementById('greeting-name').textContent = `${greet}, Dhruti! 🌸`;
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const greets = ['Good night','Good morning','Good afternoon','Good evening'];
+  const gi = h < 5 ? 0 : h < 12 ? 1 : h < 17 ? 2 : 3;
+  const emojis = ['🌙','🌸','☀️','🌙'];
+  const wd = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const now = new Date();
-  document.getElementById('greeting-time').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-
-  // Streak
+  document.getElementById('hero-time').textContent = `${wd[now.getDay()]}, ${now.getDate()} ${mo[now.getMonth()]} ${now.getFullYear()}`;
+  document.getElementById('hero-name').textContent = `${greets[gi]}, Dhruti! ${emojis[gi]}`;
+  const msgs = ['Every amazing streak starts with day one! 🌱', 'You started! Keep it going! 🚀', 'You\'re building something great! ✨', 'Three days strong! You\'re a star! ⭐', 'One week! You\'re incredible! 🏆', 'Look at you go! Keep it up! 🔥'];
   const streak = calcStreak();
   document.getElementById('streak-num').textContent = streak;
-  document.getElementById('ins-streak').textContent = streak;
+  const mi = streak === 0 ? 0 : streak === 1 ? 1 : streak <= 2 ? 2 : streak <= 4 ? 3 : streak <= 7 ? 4 : 5;
+  document.getElementById('hero-sub').textContent = msgs[mi];
 
-  const subs = {0:'Start logging to build your streak!', 1:'First day! Let\'s go! 🚀', 3:'3 days - you\'re on a roll! 🎉', 7:'A whole week! Amazing!! 🌟', 14:'Two weeks! You\'re a legend! 👑'};
-  let msg = streak === 0 ? subs[0] : streak >= 14 ? subs[14] : streak >= 7 ? subs[7] : streak >= 3 ? subs[3] : subs[1];
-  document.getElementById('greeting-sub').textContent = msg;
+  // Reminder from yesterday
+  const yLog = S.g(`log_${dateStr(-1)}`);
+  const remEl = document.getElementById('reminder-home');
+  if (yLog?.rememberTmr?.trim()) {
+    document.getElementById('reminder-text').textContent = yLog.rememberTmr;
+    remEl.style.display = 'block';
+  } else { remEl.style.display = 'none'; }
 
-  // Yesterday's reminder
-  const yesterday = LS.get(`log_${yesterdayKey()}`);
-  const reminderCard = document.getElementById('reminder-card-home');
-  if (yesterday && yesterday.rememberTmr) {
-    document.getElementById('reminder-text-home').textContent = yesterday.rememberTmr;
-    reminderCard.style.display = 'block';
-  } else { reminderCard.style.display = 'none'; }
+  updateHomePills();
 
-  refreshHomeTimers();
-
-  // Today status
-  const todayLog = LS.get(`log_${todayKey()}`);
-  const statusDiv = document.getElementById('today-status-content');
-  if (todayLog && todayLog.saved) {
-    let parts = [];
-    if (todayLog.mood) parts.push(['😭','😔','😐','😄','🤩'][todayLog.mood-1] + ' Mood');
-    if (todayLog.school) parts.push(todayLog.school === 'yes' ? '🏫 Went to school' : todayLog.school === 'holiday' ? '🎉 Holiday' : '🏠 Stayed home');
-    if (todayLog.learnSubject) parts.push(`📚 ${todayLog.learnSubject}`);
-    if (todayLog.junkFood && todayLog.junkFood !== 'none') parts.push('🍟 Had junk');
-    if (todayLog.sick) parts.push('😷 Not well');
-    statusDiv.innerHTML = parts.length ? parts.map(p=>`<span style="display:inline-block;background:var(--bg4);border-radius:20px;padding:4px 10px;font-size:0.78rem;font-weight:700;margin:3px;">${p}</span>`).join('') : '<span style="color:var(--study);">✅ Day logged!</span>';
+  // Today status chips
+  const td = document.getElementById('today-date-label');
+  const mo2 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const n = new Date();
+  td.textContent = `${n.getDate()} ${mo2[n.getMonth()]} ${n.getFullYear()}`;
+  const tlog = S.g(`log_${todayStr()}`);
+  const chipsEl = document.getElementById('today-chips');
+  if (tlog?.saved) {
+    const moodEmj = ['','😭','😔','😐','😄','🤩'];
+    const chips = [];
+    if (tlog.mood) chips.push({t: moodEmj[tlog.mood]+' Mood', c:'var(--mood)', b:'var(--mood-soft)'});
+    if (tlog.school === 'holiday') chips.push({t:'🎉 Holiday', c:'var(--morning)', b:'var(--morning-soft)'});
+    else if (tlog.school === 'yes') chips.push({t:'🏫 School ✓', c:'var(--study)', b:'var(--study-soft)'});
+    else if (tlog.school === 'home') chips.push({t:'🏠 Home', c:'var(--play)', b:'var(--play-soft)'});
+    if (tlog.learnSubject) chips.push({t:'📚 '+tlog.learnSubject, c:'var(--study)', b:'var(--study-soft)'});
+    if (tlog.junkFood && tlog.junkFood!=='none') chips.push({t:'🍟 Junk food', c:'var(--food)', b:'var(--food-soft)'});
+    if (tlog.sick) chips.push({t:'😷 Sick', c:'var(--oops)', b:'var(--oops-soft)'});
+    if (tlog.oops?.includes('good')) chips.push({t:'😇 Good day!', c:'var(--study)', b:'var(--study-soft)'});
+    const r = ['brush','bath','breakfast'].filter(k=>tlog[k]).length;
+    if (r > 0) chips.push({t:`☀️ ${r}/3+ routine`, c:'var(--morning)', b:'var(--morning-soft)'});
+    chipsEl.innerHTML = chips.length
+      ? `<div class="status-chips">${chips.map(c=>`<span class="schip" style="color:${c.c};background:${c.b};border-color:${c.c}">${c.t}</span>`).join('')}</div>`
+      : '<div style="color:var(--study);font-weight:800;font-size:0.88rem">✅ Day logged!</div>';
   } else {
-    statusDiv.textContent = "Nothing logged yet today. Tap 'Log Today' to get started!";
-    statusDiv.style.color = 'var(--text3)';
+    chipsEl.innerHTML = '<div class="empty-state">Nothing logged yet — tap Log Today! ✨</div>';
   }
 }
 
-function refreshHomeTimers() {
-  const running = TIMERS.filter(n => getTimerData(n).running);
-  const card = document.getElementById('home-live-timers');
-  const list = document.getElementById('live-timers-list');
+function updateHomePills() {
+  const running = TNAMES.filter(n => getTD(n).running);
+  const card = document.getElementById('home-timers-card');
+  const pillsEl = document.getElementById('home-live-pills');
   if (!running.length) { card.style.display = 'none'; return; }
   card.style.display = 'block';
-  const colors = { sleep:'var(--sleep)', study:'var(--study)', tv:'var(--tv)', play:'var(--play)', tuition:'var(--tuition)' };
-  const icons = { sleep:'😴', study:'📚', tv:'📺', play:'🏃', tuition:'🏫' };
-  list.innerHTML = running.map(n => {
-    const d = getTimerData(n);
-    const el = getElapsed(d);
-    const h = Math.floor(el/3600), m = Math.floor((el%3600)/60), s = el%60;
-    const fmt = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    return `<div class="live-timer-item">
-      <div class="live-timer-label" style="color:${colors[n]}">${icons[n]} ${n[0].toUpperCase()+n.slice(1)}</div>
-      <div class="live-timer-val" style="color:${colors[n]}">${fmt}</div>
-      <button class="stop-btn" onclick="toggleTimer('${n}');event.stopPropagation()">⏹</button>
+  const cv = n => `var(${TCOLORS[n]})`;
+  pillsEl.innerHTML = running.map(name => {
+    const el = getElapsed(getTD(name));
+    const fmt = fmtSec(el);
+    const c = cv(name);
+    return `<div class="live-pill" style="border-color:${c}">
+      <div class="live-dot" style="background:${c}"></div>
+      <span class="live-label" style="color:${c}">${TICONS[name]} ${name[0].toUpperCase()+name.slice(1)}</span>
+      <span class="live-time" style="color:${c}">${fmt}</span>
+      <button class="live-stop" onclick="toggleTimer('${name}');event.stopPropagation()">⏹</button>
     </div>`;
   }).join('');
 }
 
 function calcStreak() {
+  const tlog = S.g(`log_${todayStr()}`);
   let streak = 0;
-  const today = new Date();
-  // check yesterday and before (if today not yet saved)
-  const todayLog = LS.get(`log_${todayKey()}`);
-  let checkDate = new Date(today);
-  if (!todayLog || !todayLog.saved) checkDate.setDate(checkDate.getDate()-1);
+  let d = new Date();
+  if (!tlog?.saved) d.setDate(d.getDate()-1);
   for (let i=0;i<365;i++) {
-    const k = `${checkDate.getFullYear()}-${String(checkDate.getMonth()+1).padStart(2,'0')}-${String(checkDate.getDate()).padStart(2,'0')}`;
-    const log = LS.get(`log_${k}`);
-    if (log && log.saved) { streak++; checkDate.setDate(checkDate.getDate()-1); }
+    const k=`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`;
+    const log=S.g(`log_${k}`);
+    if (log?.saved){streak++;d.setDate(d.getDate()-1);}
     else break;
   }
-  // add today if saved
-  if (todayLog && todayLog.saved && !LS.get(`log_${yesterdayKey()}`)?.saved) { /* already counted */ }
-  if (todayLog && todayLog.saved) { /* already handled */ }
+  if (tlog?.saved) streak = Math.max(streak,1);
   return streak;
 }
 
-// ============================================================
+// ════════════════════════════════════════════
 // LOG SCREEN
-// ============================================================
-function initLogScreen() {
-  const today = new Date();
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  document.getElementById('log-date-label').textContent = `Logging for: ${days[today.getDay()]}, ${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+// ════════════════════════════════════════════
+let LS2 = {}; // log state
 
-  // Load existing log if any
-  const saved = LS.get(`log_${todayKey()}`);
-  if (saved) { logState = {...logState, ...saved}; restoreLogUI(); }
-  else { resetLogState(); }
-}
-
-function resetLogState() {
-  logState = { brush:false, bath:false, uniform:false, bag:false, breakfast:false,
-    school:'', tuition:'', learnSubject:'', learnTopic:'', learnStatus:'',
-    friendMood:0, newFriend:'', newGame:'', junkFood:'', foodDetail:'',
-    mood:0, sick:false, symptoms:[], oops:[], rememberTmr:'' };
-  updateRoutineUI();
+function initLog() {
+  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const wd=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const n=new Date();
+  document.getElementById('log-date').textContent = `Logging for: ${wd[n.getDay()]}, ${n.getDate()} ${mo[n.getMonth()]} ${n.getFullYear()}`;
+  const saved = S.g(`log_${todayStr()}`);
+  LS2 = saved ? {...saved} : { brush:false,bath:false,uniform:false,bag:false,breakfast:false,school:'',tuition:'',learnSubject:'',learnTopic:'',learnStatus:'',friendMood:0,newFriend:'',newGame:'',junkFood:'',foodDetail:'',mood:0,sick:false,symptoms:[],oops:[],rememberTmr:'' };
+  restoreLogUI();
 }
 
 function restoreLogUI() {
-  // checkboxes
-  ['brush','bath','uniform','bag','breakfast'].forEach(k => {
-    const el = document.getElementById(`chk-${k}`);
-    if (el) { el.classList.toggle('checked', !!logState[k]); }
+  ['brush','bath','uniform','bag','breakfast'].forEach(k => syncCheck(k));
+  updateMorningUI();
+  if (LS2.school) syncSchool(LS2.school);
+  if (LS2.learnSubject) syncPillGroup('learn-sub-opts', LS2.learnSubject, s => s.querySelector('.opt-lbl')?.textContent.includes(LS2.learnSubject));
+  if (LS2.learnStatus) syncPillGroup('learn-status-opts', null, btn => btn.getAttribute('onclick')?.includes(`'${LS2.learnStatus}'`));
+  const lt = document.getElementById('learn-topic'); if(lt) lt.value = LS2.learnTopic||'';
+  if (LS2.friendMood) { const btns=document.querySelectorAll('#friend-mood-row .mood-btn'); if(btns[LS2.friendMood-1]) btns[LS2.friendMood-1].classList.add('sel'); }
+  const nf=document.getElementById('new-friend'); if(nf) nf.value=LS2.newFriend||'';
+  const ng=document.getElementById('new-game'); if(ng) ng.value=LS2.newGame||'';
+  if (LS2.junkFood) syncPillGroup('junk-opts', null, btn => btn.getAttribute('onclick')?.includes(`'${LS2.junkFood}'`));
+  const fd=document.getElementById('food-detail'); if(fd) fd.value=LS2.foodDetail||'';
+  if (LS2.mood) { const btns=document.querySelectorAll('#main-mood-row .mood-btn'); if(btns[LS2.mood-1]) btns[LS2.mood-1].classList.add('sel'); }
+  if (LS2.sick) { document.getElementById('sick-tog').classList.add('on'); document.getElementById('symptom-area').style.display='block'; }
+  if (LS2.symptoms) document.querySelectorAll('.sym-chip').forEach(c => { const s=c.getAttribute('onclick')?.match(/'([^']+)'/)?.[1]; if(s&&LS2.symptoms.includes(s)) c.classList.add('on'); });
+  if (LS2.oops) document.querySelectorAll('#oops-opts .opt-btn').forEach(b => { const o=b.getAttribute('onclick')?.match(/'([^']+)'/)?.[1]; if(o&&LS2.oops.includes(o)) b.classList.add('sel'); });
+  const rt=document.getElementById('remember-tmr'); if(rt) rt.value=LS2.rememberTmr||'';
+}
+
+function syncPillGroup(parentId, text, predicate) {
+  const parent = document.getElementById(parentId);
+  if (!parent) return;
+  parent.querySelectorAll('.opt-btn').forEach(b => { if(predicate(b)) b.classList.add('sel'); });
+}
+
+function syncCheck(k) {
+  const cc=document.getElementById(`cc-${k}`), cl=document.getElementById(`cl-${k}`);
+  if (!cc) return;
+  cc.classList.toggle('done', !!LS2[k]);
+  cc.textContent = LS2[k] ? '✓' : '';
+  if (cl) cl.classList.toggle('done', !!LS2[k]);
+}
+
+function chk(k) {
+  LS2[k] = !LS2[k];
+  syncCheck(k);
+  updateMorningUI();
+}
+
+function updateMorningUI() {
+  const hol = LS2.school === 'holiday';
+  document.getElementById('morning-card-title').textContent = hol ? 'Holiday Morning ☀️' : 'Morning Routine';
+  const rowU=document.getElementById('row-uni'), rowB=document.getElementById('row-bag');
+  if(rowU) { rowU.classList.toggle('greyed', hol); }
+  if(rowB) { rowB.classList.toggle('greyed', hol); }
+  const checkable = ['brush','bath','breakfast'].concat(hol?[]:['uniform','bag']);
+  const done = checkable.filter(k => LS2[k]).length;
+  const pct = Math.round(done/checkable.length*100);
+  const pb = document.getElementById('pbar-morning');
+  if(pb) pb.style.width = pct+'%';
+  const pl = document.getElementById('pbar-lbl');
+  if(pl) pl.textContent = `${pct}% done${pct===100?' 🎉 Perfect!':''}`;
+}
+
+function syncSchool(val) {
+  document.querySelectorAll('#school-opts .opt-btn').forEach(b => {
+    const bv = b.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+    b.classList.toggle('sel', bv === val);
   });
-  updateRoutineUI();
-  // school
-  if (logState.school) {
-    document.querySelectorAll('#school-pills .pill').forEach(p => {
-      if (p.textContent.includes(logState.school==='yes'?'Yes':logState.school==='home'?'Stayed':'Holiday')) p.classList.add('selected');
-    });
-    updateSchoolUI(logState.school);
-  }
-  // learn subject
-  if (logState.learnSubject) {
-    document.querySelectorAll('#learn-subject-pills .pill').forEach(p => {
-      if (p.textContent.includes(logState.learnSubject)) p.classList.add('selected');
-    });
-  }
-  if (logState.learnTopic) document.getElementById('learn-topic').value = logState.learnTopic;
-  if (logState.learnStatus) {
-    document.querySelectorAll('.pill').forEach(p => {
-      if ((logState.learnStatus==='got' && p.textContent.includes('Got')) ||
-          (logState.learnStatus==='sortof' && p.textContent.includes('Sort')) ||
-          (logState.learnStatus==='confused' && p.textContent.includes('Confused'))) p.classList.add('selected');
-    });
-  }
-  // friend mood
-  if (logState.friendMood) {
-    const btns = document.querySelectorAll('#friend-mood-row .mood-btn');
-    if (btns[logState.friendMood-1]) btns[logState.friendMood-1].classList.add('selected');
-  }
-  if (logState.newFriend) document.getElementById('new-friend').value = logState.newFriend;
-  if (logState.newGame) document.getElementById('new-game').value = logState.newGame;
-  // junk
-  if (logState.junkFood) {
-    document.querySelectorAll('#junk-pills .pill').forEach(p => {
-      if ((logState.junkFood==='none'&&p.textContent.includes('None'))||
-          (logState.junkFood==='little'&&p.textContent.includes('little'))||
-          (logState.junkFood==='yes'&&p.textContent.includes('Yes'))) p.classList.add('selected');
-    });
-  }
-  if (logState.foodDetail) document.getElementById('food-detail').value = logState.foodDetail;
-  // mood
-  if (logState.mood) {
-    const btns = document.querySelectorAll('#mood-row .mood-btn');
-    if (btns[logState.mood-1]) btns[logState.mood-1].classList.add('selected');
-  }
-  // sick
-  if (logState.sick) { document.getElementById('sick-toggle').classList.add('on'); document.getElementById('symptom-area').style.display='block'; }
-  if (logState.symptoms) {
-    document.querySelectorAll('.chip').forEach(c => {
-      const sym = c.getAttribute('onclick').match(/'([^']+)'/)?.[1];
-      if (sym && logState.symptoms.includes(sym)) c.classList.add('active');
-    });
-  }
-  // oops
-  if (logState.oops) {
-    document.querySelectorAll('#oops-pills .pill').forEach(p => {
-      const o = p.getAttribute('onclick').match(/'([^']+)'/)?.[1];
-      if (o && logState.oops.includes(o)) p.classList.add('selected');
-    });
-  }
-  if (logState.rememberTmr) document.getElementById('remember-tmr').value = logState.rememberTmr;
-}
-
-function toggleCheck(key) {
-  logState[key] = !logState[key];
-  const el = document.getElementById(`chk-${key}`);
-  el.classList.toggle('checked', logState[key]);
-  el.textContent = logState[key] ? '✓' : '';
-  updateRoutineUI();
-}
-
-function updateRoutineUI() {
-  const isHoliday = logState.school === 'holiday';
-  document.getElementById('morning-title').textContent = isHoliday ? '☀️ Holiday Morning' : '☀️ Morning Routine';
-  const items = [
-    {k:'uniform', lbl: isHoliday ? '👔 School uniform' : '👔 School uniform', grey: isHoliday},
-    {k:'bag', lbl: isHoliday ? '🎒 School bag' : '🎒 School bag', grey: isHoliday}
-  ];
-  items.forEach(it => {
-    const row = document.getElementById(`row-${it.k}`);
-    const lbl = document.getElementById(`lbl-${it.k}`);
-    if (row) { row.style.opacity = it.grey ? '0.4' : '1'; row.style.pointerEvents = it.grey ? 'none' : 'auto'; }
-    if (lbl) lbl.className = `check-label${it.grey ? ' greyed' : ''}`;
-  });
-
-  const checkable = ['brush','bath','breakfast'].concat(isHoliday ? [] : ['uniform','bag']);
-  const checked = checkable.filter(k => logState[k]).length;
-  const pct = Math.round(checked/checkable.length*100);
-  document.getElementById('routine-progress').style.width = pct+'%';
-  document.getElementById('routine-pct').textContent = `${pct}% done${pct===100?' 🎉':''}`;
-
-  // update check marks
-  ['brush','bath','uniform','bag','breakfast'].forEach(k => {
-    const el = document.getElementById(`chk-${k}`);
-    if (el) el.textContent = logState[k] ? '✓' : '';
-  });
-}
-
-function pickSchool(val, el) {
-  logState.school = val;
-  document.querySelectorAll('#school-pills .pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
-  updateSchoolUI(val);
-  updateRoutineUI();
-}
-
-function updateSchoolUI(val) {
-  const tq = document.getElementById('tuition-q');
-  const hp = document.getElementById('tuition-holiday-pill');
-  const lbl = document.getElementById('tuition-q-label');
+  const tb = document.getElementById('tuition-block');
+  const thb = document.getElementById('tuition-hol-btn');
+  const tlbl = document.getElementById('tuition-label');
+  if (val) { tb.style.display='block'; }
+  else { tb.style.display='none'; }
   if (val === 'holiday') {
-    tq.style.display = 'block';
-    lbl.textContent = 'Did you still go to tuition?';
-    hp.style.display = 'inline-flex';
-  } else if (val) {
-    tq.style.display = 'block';
-    lbl.textContent = 'Did you go to tuition?';
-    hp.style.display = 'none';
+    tlbl.textContent = 'Did you still go to tuition?';
+    if(thb) thb.style.display='flex';
   } else {
-    tq.style.display = 'none';
+    tlbl.textContent = 'Did you go to tuition?';
+    if(thb) thb.style.display='none';
   }
+  if (LS2.tuition) {
+    document.querySelectorAll('#tuition-opts .opt-btn').forEach(b => {
+      const bv = b.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+      b.classList.toggle('sel', bv === LS2.tuition);
+    });
+  }
+  updateMorningUI();
 }
 
-function pickTuition(val, el) {
-  logState.tuition = val;
-  document.querySelectorAll('#tuition-q .pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
+function pickSchool(v, el) {
+  LS2.school = v; syncSchool(v);
 }
-
-function pickLearnSub(sub, el) {
-  logState.learnSubject = sub;
-  document.querySelectorAll('#learn-subject-pills .pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
+function pickTuition(v, el) {
+  LS2.tuition = v;
+  document.querySelectorAll('#tuition-opts .opt-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-function pickLearnStatus(val, el) {
-  logState.learnStatus = val;
-  const parent = el.parentElement;
-  parent.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
+function pickLearnSub(v, el) {
+  LS2.learnSubject = v;
+  document.querySelectorAll('#learn-sub-opts .opt-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-function pickFriendMood(val, el) {
-  logState.friendMood = val;
-  document.querySelectorAll('#friend-mood-row .mood-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
+function pickLearnStatus(v, el) {
+  LS2.learnStatus = v;
+  document.querySelectorAll('#learn-status-opts .opt-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-function pickJunk(val, el) {
-  logState.junkFood = val;
-  document.querySelectorAll('#junk-pills .pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
+function pickFriendMood(v, el) {
+  LS2.friendMood = v;
+  document.querySelectorAll('#friend-mood-row .mood-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-function pickMood(val, el) {
-  logState.mood = val;
-  document.querySelectorAll('#mood-row .mood-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
+function pickJunk(v, el) {
+  LS2.junkFood = v;
+  document.querySelectorAll('#junk-opts .opt-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
+function pickMood(v, el) {
+  LS2.mood = v;
+  document.querySelectorAll('#main-mood-row .mood-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+}
 function toggleSick() {
-  logState.sick = !logState.sick;
-  document.getElementById('sick-toggle').classList.toggle('on', logState.sick);
-  document.getElementById('symptom-area').style.display = logState.sick ? 'block' : 'none';
+  LS2.sick = !LS2.sick;
+  document.getElementById('sick-tog').classList.toggle('on', LS2.sick);
+  document.getElementById('symptom-area').style.display = LS2.sick ? 'block' : 'none';
 }
-
-function toggleSymptom(sym, el) {
-  if (!logState.symptoms) logState.symptoms = [];
-  const idx = logState.symptoms.indexOf(sym);
-  if (idx >= 0) { logState.symptoms.splice(idx,1); el.classList.remove('active'); }
-  else { logState.symptoms.push(sym); el.classList.add('active'); }
+function toggleSym(sym, el) {
+  if (!LS2.symptoms) LS2.symptoms = [];
+  const i = LS2.symptoms.indexOf(sym);
+  if (i>=0){LS2.symptoms.splice(i,1);el.classList.remove('on');}
+  else{LS2.symptoms.push(sym);el.classList.add('on');}
 }
-
-function toggleOops(val, el) {
-  if (!logState.oops) logState.oops = [];
-  if (val === 'good') {
-    logState.oops = ['good'];
-    document.querySelectorAll('#oops-pills .pill').forEach(p => p.classList.remove('selected'));
-    el.classList.add('selected');
-    return;
+function toggleOops(v, el) {
+  if (!LS2.oops) LS2.oops = [];
+  if (v==='good') {
+    LS2.oops=['good'];
+    document.querySelectorAll('#oops-opts .opt-btn').forEach(b=>b.classList.remove('sel'));
+    el.classList.add('sel'); return;
   }
-  // remove 'good' if selecting bad
-  logState.oops = logState.oops.filter(o => o !== 'good');
-  document.querySelectorAll('#oops-pills .pill').forEach(p => {
-    const o = p.getAttribute('onclick').match(/'([^']+)'/)?.[1];
-    if (o === 'good') p.classList.remove('selected');
+  LS2.oops = LS2.oops.filter(o=>o!=='good');
+  document.querySelectorAll('#oops-opts .opt-btn').forEach(b=>{
+    const bv=b.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+    if(bv==='good') b.classList.remove('sel');
   });
-  const idx = logState.oops.indexOf(val);
-  if (idx >= 0) { logState.oops.splice(idx,1); el.classList.remove('selected'); }
-  else { logState.oops.push(val); el.classList.add('selected'); }
+  const i=LS2.oops.indexOf(v);
+  if(i>=0){LS2.oops.splice(i,1);el.classList.remove('sel');}
+  else{LS2.oops.push(v);el.classList.add('sel');}
 }
-
 function saveDay() {
-  logState.learnTopic = document.getElementById('learn-topic').value;
-  logState.newFriend = document.getElementById('new-friend').value;
-  logState.newGame = document.getElementById('new-game').value;
-  logState.foodDetail = document.getElementById('food-detail').value;
-  logState.rememberTmr = document.getElementById('remember-tmr').value;
-  logState.saved = true;
-  logState.savedAt = Date.now();
-
-  // save timer snapshots
-  TIMERS.forEach(t => {
-    const d = getTimerData(t);
-    logState[`${t}Time`] = getElapsed(d);
-  });
-
-  LS.set(`log_${todayKey()}`, logState);
-  showToast('✨ Day saved! Great job Dhruti!');
-  updateStreakBadge();
+  LS2.learnTopic = document.getElementById('learn-topic')?.value || '';
+  LS2.newFriend = document.getElementById('new-friend')?.value || '';
+  LS2.newGame = document.getElementById('new-game')?.value || '';
+  LS2.foodDetail = document.getElementById('food-detail')?.value || '';
+  LS2.rememberTmr = document.getElementById('remember-tmr')?.value || '';
+  LS2.saved = true; LS2.savedAt = Date.now();
+  TNAMES.forEach(t => { LS2[`${t}Time`] = getElapsed(getTD(t)); });
+  S.s(`log_${todayStr()}`, LS2);
+  toast('✨ Day saved! You did great, Dhruti!');
+  refreshHome();
 }
 
-function updateStreakBadge() {
-  const s = calcStreak();
-  document.getElementById('streak-num').textContent = s;
-}
-
-// ============================================================
+// ════════════════════════════════════════════
 // MONEY
-// ============================================================
-let currentMoneyTab = 'got';
-let selectedSpendCat = '';
+// ════════════════════════════════════════════
+let curMTab = 'got', selCat = '';
 
 function refreshMoney() {
-  const txs = LS.get('transactions') || [];
+  const txs = S.g('transactions') || [];
   let got=0, spent=0, saved=0;
-  txs.forEach(t => {
-    if (t.type==='got') got += t.amount;
-    else if (t.type==='spent') spent += t.amount;
-    else if (t.type==='saved') saved += t.amount;
-  });
-  const balance = got - spent - saved;
-  document.getElementById('balance-amt').textContent = balance.toFixed(0);
-  document.getElementById('money-got-total').textContent = got.toFixed(0);
-  document.getElementById('money-spent-total').textContent = spent.toFixed(0);
-  document.getElementById('money-saved-total').textContent = saved.toFixed(0);
-
-  // Goal
-  const goal = LS.get('saving_goal');
+  txs.forEach(t => { if(t.type==='got')got+=t.amount; else if(t.type==='spent')spent+=t.amount; else if(t.type==='saved')saved+=t.amount; });
+  document.getElementById('bal-amt').textContent = (got-spent-saved).toFixed(0);
+  document.getElementById('m-got').textContent = got.toFixed(0);
+  document.getElementById('m-spent').textContent = spent.toFixed(0);
+  document.getElementById('m-saved').textContent = saved.toFixed(0);
+  const goal = S.g('saving_goal');
   if (goal) {
-    document.getElementById('no-goal-msg').style.display = 'none';
-    document.getElementById('goal-info').style.display = 'block';
-    document.getElementById('goal-name-display').textContent = '🎯 ' + goal.name;
-    document.getElementById('goal-saved-amt').textContent = saved.toFixed(0);
-    document.getElementById('goal-target-amt').textContent = goal.target;
-    const pct = Math.min(100, Math.round(saved/goal.target*100));
-    document.getElementById('goal-progress-bar').style.width = pct+'%';
-    document.getElementById('goal-pct-text').textContent = `${pct}% there! ${pct>=100?'🎉 Goal reached!':'Keep saving!'}`;
+    document.getElementById('no-goal').style.display='none';
+    document.getElementById('goal-info').style.display='block';
+    document.getElementById('goal-name-disp').textContent='🎯 '+goal.name;
+    document.getElementById('goal-saved-disp').textContent=saved.toFixed(0);
+    document.getElementById('goal-target-disp').textContent=goal.target;
+    const pct=Math.min(100,Math.round(saved/goal.target*100));
+    document.getElementById('goal-bar-fill').style.width=pct+'%';
+    document.getElementById('goal-pct-text').textContent=`${pct}% there!${pct>=100?' 🎉 Goal reached!':''}`;
   } else {
-    document.getElementById('no-goal-msg').style.display = 'block';
-    document.getElementById('goal-info').style.display = 'none';
+    document.getElementById('no-goal').style.display='block';
+    document.getElementById('goal-info').style.display='none';
   }
-
-  // Tx list
   renderTxList(txs);
 }
 
 function setGoal() {
-  const name = document.getElementById('goal-name-input').value.trim();
-  const target = parseFloat(document.getElementById('goal-target-input').value);
-  if (!name || !target || target <= 0) { showToast('Please enter goal name and amount!'); return; }
-  LS.set('saving_goal', { name, target });
-  document.getElementById('goal-name-input').value = '';
-  document.getElementById('goal-target-input').value = '';
-  refreshMoney();
-  showToast('🎯 Saving goal set!');
+  const nm=document.getElementById('goal-name-in').value.trim();
+  const am=parseFloat(document.getElementById('goal-amt-in').value);
+  if(!nm||!am||am<=0){toast('Enter goal name and amount!');return;}
+  S.s('saving_goal',{name:nm,target:am});
+  document.getElementById('goal-name-in').value='';
+  document.getElementById('goal-amt-in').value='';
+  refreshMoney(); toast('🎯 Saving goal set!');
 }
 
-function switchMoneyTab(tab) {
-  currentMoneyTab = tab;
-  ['got','spent','saved'].forEach(t => {
-    document.getElementById(`mtab-${t}`).classList.toggle('active', t===tab);
-    document.getElementById(`money-form-${t}`).style.display = t===tab ? 'block' : 'none';
+function switchMTab(tab) {
+  curMTab=tab;
+  ['got','spent','saved'].forEach(t=>{
+    document.getElementById(`mt-${t}`).classList.toggle('active',t===tab);
+    document.getElementById(`mf-${t}`).style.display=t===tab?'block':'none';
   });
 }
 
-function pickSpendCat(cat, el) {
-  selectedSpendCat = cat;
-  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+function pickCat(cat,el) {
+  selCat=cat;
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
 }
 
-function addMoney(type) {
-  const amtEl = document.getElementById(`${type}-amount`);
-  const amount = parseFloat(amtEl.value);
-  if (!amount || amount <= 0) { showToast('Enter a valid amount!'); return; }
-
-  let desc = '';
-  if (type === 'got') desc = document.getElementById('got-who').value || 'Someone';
-  else if (type === 'spent') {
-    const d = document.getElementById('spent-desc').value;
-    desc = (selectedSpendCat ? selectedSpendCat+': ' : '') + (d || 'Something');
-  }
-  else if (type === 'saved') desc = document.getElementById('saved-reason').value || 'Saving up';
-
-  const txs = LS.get('transactions') || [];
-  txs.unshift({ id: Date.now(), type, amount, desc, date: todayKey() });
-  if (txs.length > 30) txs.pop();
-  LS.set('transactions', txs);
-
-  // Clear inputs
-  amtEl.value = '';
-  if (type==='got') document.getElementById('got-who').value='';
-  if (type==='spent') { document.getElementById('spent-desc').value=''; selectedSpendCat=''; document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); }
-  if (type==='saved') document.getElementById('saved-reason').value='';
-
+function addTx(type) {
+  const amtEl=document.getElementById(`${type}-amt`);
+  const amount=parseFloat(amtEl.value);
+  if(!amount||amount<=0){toast('Enter a valid amount!');return;}
+  let desc='';
+  if(type==='got') desc=document.getElementById('got-who').value||'Someone';
+  else if(type==='spent'){const d=document.getElementById('spent-desc').value; desc=(selCat?selCat+': ':'')+( d||'Something');}
+  else if(type==='saved') desc=document.getElementById('saved-reason').value||'Saving up';
+  const txs=S.g('transactions')||[];
+  txs.unshift({id:Date.now(),type,amount,desc,date:todayStr()});
+  if(txs.length>30)txs.pop();
+  S.s('transactions',txs);
+  amtEl.value='';
+  if(type==='got')document.getElementById('got-who').value='';
+  if(type==='spent'){document.getElementById('spent-desc').value='';selCat='';document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));}
+  if(type==='saved')document.getElementById('saved-reason').value='';
   refreshMoney();
-  showToast(type==='got'?'💰 Money added!':type==='spent'?'💸 Spent logged!':'🐷 Saved!');
+  const msgs={got:'💰 Money added!',spent:'💸 Spent logged!',saved:'🐷 Saved!'};
+  toast(msgs[type]);
 }
 
-function deleteTx(id) {
-  let txs = LS.get('transactions') || [];
-  txs = txs.filter(t => t.id !== id);
-  LS.set('transactions', txs);
-  refreshMoney();
+function delTx(id) {
+  let txs=(S.g('transactions')||[]).filter(t=>t.id!==id);
+  S.s('transactions',txs); refreshMoney();
 }
 
 function renderTxList(txs) {
-  const el = document.getElementById('tx-list');
-  if (!txs.length) { el.innerHTML='<div style="color:var(--text3);font-size:0.88rem;">No transactions yet!</div>'; return; }
-  const icons = { got:'💰', spent:'💸', saved:'🐷' };
-  el.innerHTML = txs.map(t => `
-    <div class="tx-item">
-      <div class="tx-info">
-        <div class="tx-desc">${icons[t.type]} ${t.desc}</div>
-        <div class="tx-meta">${fmtDate(t.date)}</div>
-      </div>
-      <div class="tx-amount ${t.type}">₹${t.amount}</div>
-      <button class="tx-del" onclick="deleteTx(${t.id})">🗑</button>
-    </div>`).join('');
-}
-
-// ============================================================
-// INSIGHTS
-// ============================================================
-function refreshInsights() {
-  const streak = calcStreak();
-  document.getElementById('ins-streak').textContent = streak;
-  const streakMsgs = [
-    "You haven't started yet — log today to begin! 🌱",
-    "1 day! Every journey starts somewhere! 🚀",
-    `${streak} days in a row! You're doing amazing! 🌟`,
-  ];
-  document.getElementById('ins-streak-text').textContent = streak === 0 ? streakMsgs[0] : streak === 1 ? streakMsgs[1] : streakMsgs[2];
-
-  // 7-day activity chart
-  const chart = document.getElementById('activity-chart');
-  const days = ['M','T','W','T','F','S','S'];
-  const today = new Date();
-  let logged=0;
-  const bars = [];
-  for (let i=6;i>=0;i--) {
-    const d = new Date(today); d.setDate(d.getDate()-i);
-    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const log = LS.get(`log_${k}`);
-    const hasLog = log && log.saved;
-    if (hasLog) logged++;
-    bars.push({day: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()].slice(0,1), has: hasLog, log});
-  }
-  chart.innerHTML = bars.map(b => `
-    <div class="bar-col">
-      <div class="bar-fill${b.has?'':' empty'}" style="height:${b.has?60:8}px"></div>
-      <div class="bar-lbl">${b.day}</div>
-    </div>`).join('');
-  document.getElementById('activity-text').innerHTML = logged === 0
-    ? "You haven't logged any days this week. Start today! 🌱"
-    : logged < 4 ? `You logged <span class="insight-highlight">${logged} out of 7 days</span> this week. Keep it up!`
-    : `Wow! <span class="insight-highlight">${logged} out of 7 days</span> this week — you're on fire! 🔥`;
-
-  // Learning patterns - confused subjects
-  const allLogs = getAllLogs();
-  const confusedSubs = {};
-  const gotSubs = {};
-  allLogs.forEach(l => {
-    if (l.learnSubject) {
-      if (l.learnStatus==='confused') confusedSubs[l.learnSubject]=(confusedSubs[l.learnSubject]||0)+1;
-      if (l.learnStatus==='got') gotSubs[l.learnSubject]=(gotSubs[l.learnSubject]||0)+1;
-    }
-  });
-  const confusedList = Object.entries(confusedSubs).sort((a,b)=>b[1]-a[1]);
-  const gotList = Object.entries(gotSubs).sort((a,b)=>b[1]-a[1]);
-  let learnText = '';
-  if (confusedList.length) learnText += `You found <span class="insight-highlight">${confusedList[0][0]}</span> confusing ${confusedList[0][1]} time${confusedList[0][1]>1?'s':''}. Maybe ask your teacher for extra help! 💪 `;
-  if (gotList.length) learnText += `You're really good at <span class="insight-highlight">${gotList[0][0]}</span> — you got it ${gotList[0][1]} time${gotList[0][1]>1?'s':''}! ⭐`;
-  if (!learnText) learnText = "Start logging what you learn to see patterns here! 📚";
-  document.getElementById('learn-insight').innerHTML = learnText;
-
-  // Sleep vs mood
-  const sleepMoodPairs = allLogs.filter(l => l.sleepHours && l.mood);
-  let smText = '';
-  if (sleepMoodPairs.length >= 3) {
-    const avg = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
-    const goodSleep = sleepMoodPairs.filter(l => +l.sleepHours >= 8);
-    const poorSleep = sleepMoodPairs.filter(l => +l.sleepHours < 7);
-    if (goodSleep.length && poorSleep.length) {
-      const gMood = avg(goodSleep.map(l=>l.mood));
-      const pMood = avg(poorSleep.map(l=>l.mood));
-      smText = gMood > pMood
-        ? `On days you slept <span class="insight-highlight">8+ hours</span>, your mood was noticeably better! 😴✨ Sleep is your superpower!`
-        : `Your mood is pretty consistent regardless of sleep. Keep tracking to see more patterns! 🔍`;
-    } else {
-      smText = `You have <span class="insight-highlight">${sleepMoodPairs.length} days</span> of sleep data. Keep logging to see the connection! 😴`;
-    }
-  } else {
-    smText = "Log your sleep and mood for a few more days to see how they connect! 🌙";
-  }
-  document.getElementById('sleep-mood-insight').innerHTML = smText;
-
-  // Oops patterns
-  const oopsCounts = {};
-  allLogs.forEach(l => { if (l.oops) l.oops.forEach(o => { if(o!=='good') oopsCounts[o]=(oopsCounts[o]||0)+1; }); });
-  const oopsLabels = {tv:'watching too much TV',phone:'being on the phone too long',food:'not eating well',sister:'teasing your sister',listen:'not listening',hw:'HW trouble'};
-  const topOops = Object.entries(oopsCounts).sort((a,b)=>b[1]-a[1]);
-  const goodDays = allLogs.filter(l => l.oops && l.oops.includes('good')).length;
-  let oopsText = '';
-  if (goodDays > 0) oopsText += `You had <span class="insight-highlight">${goodDays} perfect day${goodDays>1?'s':''}</span>! That's amazing! 😇 `;
-  if (topOops.length) oopsText += `Your most common oops is <span class="insight-highlight">${oopsLabels[topOops[0][0]] || topOops[0][0]}</span> (${topOops[0][1]} times). You can work on this! 💪`;
-  if (!oopsText) oopsText = "No oops logged yet! You're either being perfect or you haven't started yet 😄";
-  document.getElementById('oops-insight').innerHTML = oopsText;
-
-  // Junk food
-  const junkLogs = allLogs.filter(l => l.junkFood);
-  const junkYes = junkLogs.filter(l => l.junkFood === 'yes').length;
-  const junkPct = junkLogs.length ? Math.round(junkYes/junkLogs.length*100) : 0;
-  let junkText = junkLogs.length === 0
-    ? "No food data yet! Log your meals to see patterns. 🥗"
-    : junkPct <= 20 ? `Only <span class="insight-highlight">${junkPct}%</span> junk food days — you're eating really healthy! 🥗🎉`
-    : junkPct <= 50 ? `<span class="insight-highlight">${junkPct}%</span> of days had junk food. Not bad, but try to eat more healthy stuff! 🥦`
-    : `<span class="insight-highlight">${junkPct}%</span> of days had junk food. Maybe try swapping one junk snack for a fruit? 🍎`;
-  document.getElementById('junk-insight').innerHTML = junkText;
-
-  // Money
-  const txs = LS.get('transactions') || [];
-  const totalGot = txs.filter(t=>t.type==='got').reduce((a,t)=>a+t.amount,0);
-  const totalSaved = txs.filter(t=>t.type==='saved').reduce((a,t)=>a+t.amount,0);
-  const savePct = totalGot > 0 ? Math.round(totalSaved/totalGot*100) : 0;
-  const moneyText = totalGot === 0
-    ? "Start logging your money to see your savings habits! 💰"
-    : savePct >= 30 ? `You save <span class="insight-highlight">${savePct}%</span> of your money — that's incredible! Future billionaire! 🤑`
-    : savePct > 0 ? `You're saving <span class="insight-highlight">${savePct}%</span> of what you get. Great habit — keep it up! 🐷`
-    : `You haven't saved any money yet. Try saving even ₹5 next time! 💙`;
-  document.getElementById('money-insight').innerHTML = moneyText;
-
-  // Morning routine
-  const morningLogs = allLogs.filter(l => l.brush !== undefined);
-  if (morningLogs.length) {
-    const perfect = morningLogs.filter(l => l.brush && l.bath && l.breakfast).length;
-    const pct = Math.round(perfect/morningLogs.length*100);
-    document.getElementById('morning-insight').innerHTML = `You completed a full morning routine on <span class="insight-highlight">${pct}%</span> of your logged days (${perfect}/${morningLogs.length})! ${pct>=80?'You\'re a morning champion! ☀️🏆':'Keep working on that routine! 💪'}`;
-  } else {
-    document.getElementById('morning-insight').innerHTML = "Start logging your mornings to track your routine! ☀️";
-  }
-}
-
-function getAllLogs() {
-  const logs = [];
-  for (let i=0; i<365; i++) {
-    const d = new Date(); d.setDate(d.getDate()-i);
-    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const log = LS.get(`log_${k}`);
-    if (log && log.saved) logs.push({...log, date:k});
-  }
-  return logs;
-}
-
-// ============================================================
-// HISTORY
-// ============================================================
-function refreshHistory() {
-  const logs = getAllLogs();
-  const el = document.getElementById('history-list');
-  if (!logs.length) { el.innerHTML='<div style="color:var(--text3);font-size:0.88rem;">Nothing logged yet. Start your first day!</div>'; return; }
-
-  const moodEmojis = ['','😭','😔','😐','😄','🤩'];
-  const schoolLabels = {yes:'🏫 School', home:'🏠 Home', holiday:'🎉 Holiday'};
-
-  el.innerHTML = logs.map(l => {
-    const chips = [];
-    if (l.mood) chips.push({text: moodEmojis[l.mood]+' Mood '+l.mood+'/5', color:'var(--mood)', bg:'var(--mood-bg)'});
-    if (l.school) chips.push({text: schoolLabels[l.school]||l.school, color:'var(--play)', bg:'var(--play-bg)'});
-    if (l.learnSubject) chips.push({text:'📚 '+l.learnSubject, color:'var(--study)', bg:'var(--study-bg)'});
-    if (l.sleepHours) chips.push({text:'😴 '+l.sleepHours+'h', color:'var(--sleep)', bg:'var(--sleep-bg)'});
-    if (l.junkFood && l.junkFood!=='none') chips.push({text:'🍟 Junk', color:'var(--food)', bg:'var(--food-bg)'});
-    if (l.sick) chips.push({text:'😷 Sick', color:'var(--oops)', bg:'var(--oops-bg)'});
-    if (l.oops && l.oops.includes('good')) chips.push({text:'😇 Perfect day', color:'var(--study)', bg:'var(--study-bg)'});
-    const routine = [l.brush,l.bath,l.uniform,l.bag,l.breakfast].filter(Boolean).length;
-    if (routine>0) chips.push({text:`☀️ ${routine}/5 routine`, color:'var(--accent)', bg:'rgba(244,162,97,0.1)'});
-
-    return `<div class="history-card">
-      <div class="history-date">${fmtDate(l.date)}</div>
-      <div class="history-chips">
-        ${chips.map(c=>`<span class="hchip" style="color:${c.color};background:${c.bg};border:1px solid ${c.color}">${c.text}</span>`).join('')}
-        ${(!chips.length)?'<span style="color:var(--text3);font-size:0.82rem;">Day logged ✓</span>':''}
-      </div>
-      ${l.rememberTmr?`<div style="margin-top:10px;font-size:0.82rem;color:var(--mood);"><span style="opacity:0.6">🔮 Note: </span>${l.rememberTmr}</div>`:''}
+  const el=document.getElementById('tx-list');
+  if(!txs.length){el.innerHTML='<div class="empty-state">No transactions yet!</div>';return;}
+  const cfg={got:{icon:'💰',ibg:'var(--money-soft)',ic:'var(--money)',ac:'var(--money)'},spent:{icon:'💸',ibg:'var(--spend-soft)',ic:'var(--spend)',ac:'var(--spend)'},saved:{icon:'🐷',ibg:'var(--save-soft)',ic:'var(--save)',ac:'var(--save)'}};
+  el.innerHTML=txs.map(t=>{
+    const c=cfg[t.type];
+    return `<div class="tx-item">
+      <div class="tx-icon-box" style="background:${c.ibg}">${c.icon}</div>
+      <div class="tx-info"><div class="tx-desc">${t.desc}</div><div class="tx-meta">${fmtDateKey(t.date)}</div></div>
+      <div class="tx-amt" style="color:${c.ac}">₹${t.amount}</div>
+      <button class="tx-del" onclick="delTx(${t.id})">🗑</button>
     </div>`;
   }).join('');
 }
 
-// ============================================================
-// SETTINGS
-// ============================================================
-function openChangePIN() {
-  pinMode = 'change_old';
-  pinBuffer = '';
-  openModal('🔐 Enter Current PIN', `
-    <div id="modal-pin-dots" style="display:flex;justify-content:center;gap:16px;margin-bottom:24px">
-      <div id="mpd0" class="pin-dot"></div>
-      <div id="mpd1" class="pin-dot"></div>
-      <div id="mpd2" class="pin-dot"></div>
-      <div id="mpd3" class="pin-dot"></div>
-    </div>
-    <div class="pin-grid" style="max-width:260px;margin:0 auto">
-      <button class="pin-btn" onclick="modalPinPress('1')">1</button>
-      <button class="pin-btn" onclick="modalPinPress('2')">2</button>
-      <button class="pin-btn" onclick="modalPinPress('3')">3</button>
-      <button class="pin-btn" onclick="modalPinPress('4')">4</button>
-      <button class="pin-btn" onclick="modalPinPress('5')">5</button>
-      <button class="pin-btn" onclick="modalPinPress('6')">6</button>
-      <button class="pin-btn" onclick="modalPinPress('7')">7</button>
-      <button class="pin-btn" onclick="modalPinPress('8')">8</button>
-      <button class="pin-btn" onclick="modalPinPress('9')">9</button>
-      <button class="pin-btn" onclick="modalPinPress('del')">⌫</button>
-      <button class="pin-btn" onclick="modalPinPress('0')">0</button>
-      <button class="pin-btn" onclick="modalPinPress('del')" style="font-size:0.9rem;opacity:0.5">clr</button>
-    </div>
-    <div id="pin-err" style="color:var(--oops);font-size:0.85rem;text-align:center;margin-top:12px;min-height:20px;"></div>
-  `);
-}
-
-function modalPinPress(val) {
-  if (val === 'del') pinBuffer = pinBuffer.slice(0,-1);
-  else if (pinBuffer.length < 4) pinBuffer += val;
-  // update dots
-  for (let i=0;i<4;i++) {
-    const d = document.getElementById(`mpd${i}`);
-    if (d) { d.className='pin-dot'; if(i<pinBuffer.length) d.classList.add('filled'); }
+// ════════════════════════════════════════════
+// INSIGHTS
+// ════════════════════════════════════════════
+function getAllLogs() {
+  const logs=[]; const today=new Date();
+  for(let i=0;i<365;i++){
+    const d=new Date(today); d.setDate(d.getDate()-i);
+    const k=`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`;
+    const log=S.g(`log_${k}`);
+    if(log?.saved) logs.push({...log,date:k});
   }
-  if (pinBuffer.length === 4) setTimeout(() => checkPin(), 120);
+  return logs;
 }
 
+function refreshInsights() {
+  const streak=calcStreak();
+  document.getElementById('ins-streak-num').textContent=streak;
+  const msgs=['Log your first day to start your streak! 🌱','Amazing first day! Keep it up! 🚀',`${streak} days! You\'re on a roll! ✨`,`${streak} days strong! You\'re a superstar! ⭐`,`${streak} days!! You\'re unstoppable! 🔥`];
+  const mi=streak===0?0:streak===1?1:streak<=3?2:streak<=7?3:4;
+  document.getElementById('ins-streak-msg').textContent=msgs[mi];
+
+  const allLogs=getAllLogs();
+  // 7-day chart
+  const today=new Date();
+  let logged=0;
+  const bars=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(today); d.setDate(d.getDate()-i);
+    const k=`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`;
+    const log=S.g(`log_${k}`);
+    const has=log?.saved;
+    if(has)logged++;
+    const dayL=['S','M','T','W','T','F','S'][d.getDay()];
+    bars.push({day:dayL,has});
+  }
+  document.getElementById('act-chart').innerHTML=bars.map(b=>`<div class="bar-col"><div class="bar-fill${b.has?'':' empty'}" style="height:${b.has?65:6}px"></div><div class="bar-day">${b.day}</div></div>`).join('');
+  document.getElementById('act-text').innerHTML=logged===0?'You haven\'t logged this week. Start today! 🌱':logged<4?`You logged <strong>${logged}/7 days</strong> this week. Keep building that habit!`:`<strong>${logged} out of 7 days</strong> logged this week — you\'re on fire! 🔥`;
+
+  // Learning
+  const confMap={},gotMap={};
+  allLogs.forEach(l=>{if(l.learnSubject){if(l.learnStatus==='confused')confMap[l.learnSubject]=(confMap[l.learnSubject]||0)+1;if(l.learnStatus==='got')gotMap[l.learnSubject]=(gotMap[l.learnSubject]||0)+1;}});
+  const confTop=Object.entries(confMap).sort((a,b)=>b[1]-a[1]);
+  const gotTop=Object.entries(gotMap).sort((a,b)=>b[1]-a[1]);
+  let lt='';
+  if(confTop.length) lt+=`You\'ve found <strong>${confTop[0][0]}</strong> confusing ${confTop[0][1]} time${confTop[0][1]>1?'s':''}. Ask your teacher for extra help! 💪 `;
+  if(gotTop.length) lt+=`You\'re really good at <strong>${gotTop[0][0]}</strong>! You got it ${gotTop[0][1]} time${gotTop[0][1]>1?'s':''}! ⭐`;
+  document.getElementById('ins-learn').innerHTML=lt||'Start logging what you learn to see patterns here! 📚';
+
+  // Sleep vs mood
+  const smpairs=allLogs.filter(l=>l.sleepHours&&l.mood);
+  let smT='';
+  if(smpairs.length>=3){
+    const avg=arr=>arr.reduce((a,b)=>a+b,0)/arr.length;
+    const good=smpairs.filter(l=>+l.sleepHours>=8),poor=smpairs.filter(l=>+l.sleepHours<7);
+    if(good.length&&poor.length){const gm=avg(good.map(l=>l.mood)),pm=avg(poor.map(l=>l.mood));smT=gm>pm?`On days you slept <strong>8+ hours</strong>, your mood was noticeably better! 😴 Sleep really is your superpower!`:`Your mood stays pretty consistent! Keep logging to see deeper patterns. 🔍`;}
+    else smT=`You have <strong>${smpairs.length} days</strong> of combined data. Keep logging to see the sleep–mood connection! 🌙`;
+  }else smT='Log a few more days of sleep and mood to see how they\'re connected! 🌙';
+  document.getElementById('ins-sleep').innerHTML=smT;
+
+  // Oops
+  const oc={};
+  allLogs.forEach(l=>{if(l.oops)l.oops.forEach(o=>{if(o!=='good')oc[o]=(oc[o]||0)+1;});});
+  const topOops=Object.entries(oc).sort((a,b)=>b[1]-a[1]);
+  const goodDays=allLogs.filter(l=>l.oops?.includes('good')).length;
+  const oopsLbls={tv:'watching too much TV',phone:'being on phone too long',food:'not eating well',sister:'teasing your sister',listen:'not listening',hw:'HW trouble'};
+  let ot='';
+  if(goodDays) ot+=`You had <strong>${goodDays} perfect day${goodDays>1?'s':''}</strong>! That\'s wonderful! 😇 `;
+  if(topOops.length) ot+=`Your most common oops is <strong>${oopsLbls[topOops[0][0]]||topOops[0][0]}</strong> (${topOops[0][1]} times). You\'ve got this! 💙`;
+  document.getElementById('ins-oops').innerHTML=ot||'No oops logged yet — either you\'re perfect or you haven\'t started logging! 😄';
+
+  // Junk
+  const jl=allLogs.filter(l=>l.junkFood);
+  const jy=jl.filter(l=>l.junkFood==='yes').length;
+  const jp=jl.length?Math.round(jy/jl.length*100):0;
+  document.getElementById('ins-junk').innerHTML=jl.length===0?'No food data yet! Log your meals to track patterns. 🥗':jp<=20?`Only <strong>${jp}%</strong> of your logged days had junk food. You\'re eating so healthy! 🥗🎉`:jp<=50?`<strong>${jp}%</strong> of days had junk food. Not bad, but try swapping one for a healthy snack! 🥦`:`<strong>${jp}%</strong> of days had junk food. Let\'s try to eat more healthy stuff! 🍎`;
+
+  // Money
+  const txs=S.g('transactions')||[];
+  const tg=txs.filter(t=>t.type==='got').reduce((a,t)=>a+t.amount,0);
+  const ts2=txs.filter(t=>t.type==='saved').reduce((a,t)=>a+t.amount,0);
+  const sp=tg>0?Math.round(ts2/tg*100):0;
+  document.getElementById('ins-money').innerHTML=tg===0?'Start logging your money to see saving habits! 💰':sp>=30?`You save <strong>${sp}%</strong> of your money — that\'s incredible! Future superstar! 🤑`:sp>0?`You\'re saving <strong>${sp}%</strong> of what you get. Great habit — keep it up! 🐷`:`You haven\'t saved anything yet. Try saving even ₹5 next time! 💙`;
+
+  // Morning
+  const ml=allLogs.filter(l=>l.brush!==undefined);
+  if(ml.length){const perf=ml.filter(l=>l.brush&&l.bath&&l.breakfast).length;const pct=Math.round(perf/ml.length*100);document.getElementById('ins-morning').innerHTML=`You completed a full morning routine on <strong>${pct}%</strong> of your logged days (${perf}/${ml.length})! ${pct>=80?'You\'re a morning champion! ☀️🏆':'Keep working on it — you\'re getting better! 💪'}`;}
+  else document.getElementById('ins-morning').innerHTML='Start logging your mornings to track your routine! ☀️';
+}
+
+// ════════════════════════════════════════════
+// HISTORY
+// ════════════════════════════════════════════
+function refreshHistory() {
+  const logs=getAllLogs();
+  const el=document.getElementById('hist-list');
+  if(!logs.length){el.innerHTML='<div class="empty-state">Nothing logged yet. Start your first day! 🌱</div>';return;}
+  const moodE=['','😭','😔','😐','😄','🤩'];
+  const schoolL={yes:'🏫 School',home:'🏠 Stayed home',holiday:'🎉 Holiday'};
+  el.innerHTML=logs.map(l=>{
+    const chips=[];
+    if(l.mood) chips.push({t:moodE[l.mood]+' Mood '+l.mood+'/5',c:'var(--mood)',b:'var(--mood-soft)'});
+    if(l.school) chips.push({t:schoolL[l.school]||l.school,c:'var(--play)',b:'var(--play-soft)'});
+    if(l.learnSubject) chips.push({t:'📚 '+l.learnSubject,c:'var(--study)',b:'var(--study-soft)'});
+    if(l.sleepHours) chips.push({t:'😴 '+l.sleepHours+'h',c:'var(--sleep)',b:'var(--sleep-soft)'});
+    if(l.junkFood&&l.junkFood!=='none') chips.push({t:'🍟 Junk',c:'var(--food)',b:'var(--food-soft)'});
+    if(l.sick) chips.push({t:'😷 Sick',c:'var(--oops)',b:'var(--oops-soft)'});
+    if(l.oops?.includes('good')) chips.push({t:'😇 Perfect!',c:'var(--study)',b:'var(--study-soft)'});
+    const r=['brush','bath','breakfast'].filter(k=>l[k]).length;
+    if(r>0) chips.push({t:`☀️ ${r}/3+ routine`,c:'var(--morning)',b:'var(--morning-soft)'});
+    return `<div class="hist-card">
+      <div class="hist-date">${fmtDateKey(l.date)}</div>
+      <div class="hist-chips">${chips.map(c=>`<span class="hchip" style="color:${c.c};background:${c.b};border-color:${c.c}">${c.t}</span>`).join('')}${!chips.length?'<span style="color:var(--text3);font-size:0.82rem">Logged ✓</span>':''}</div>
+      ${l.rememberTmr?`<div style="margin-top:9px;font-size:0.8rem;color:var(--tomorrow)">🔮 ${l.rememberTmr}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+// SETTINGS — EXPORT
+// ════════════════════════════════════════════
 function exportCSV() {
-  const logs = getAllLogs();
-  if (!logs.length) { showToast('No data to export!'); return; }
-  const headers = ['Date','Mood','School','LearnSubject','LearnStatus','JunkFood','Sick','SleepHours','Oops','ReminderTmr'];
-  const rows = logs.map(l => [
-    l.date, l.mood||'', l.school||'', l.learnSubject||'', l.learnStatus||'',
-    l.junkFood||'', l.sick?'yes':'no', l.sleepHours||'',
-    (l.oops||[]).join(';'), l.rememberTmr||''
-  ]);
-  const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  downloadFile('dhrutis-days.csv', csv, 'text/csv');
+  const logs=getAllLogs();
+  if(!logs.length){toast('No data to export!');return;}
+  const hdrs=['Date','Mood','School','LearnSubject','LearnStatus','JunkFood','Sick','SleepHours','Oops'];
+  const rows=logs.map(l=>[l.date,l.mood||'',l.school||'',l.learnSubject||'',l.learnStatus||'',l.junkFood||'',l.sick?'yes':'no',l.sleepHours||'',(l.oops||[]).join(';')]);
+  const csv=[hdrs,...rows].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  dl('dhrutis-days.csv',csv,'text/csv');
 }
-
 function exportJSON() {
-  const logs = getAllLogs();
-  const txs = LS.get('transactions') || [];
-  downloadFile('dhrutis-days.json', JSON.stringify({logs, transactions:txs}, null, 2), 'application/json');
+  const data={logs:getAllLogs(),transactions:S.g('transactions')||[]};
+  dl('dhrutis-days.json',JSON.stringify(data,null,2),'application/json');
 }
-
 function exportText() {
-  const logs = getAllLogs();
-  let text = "DHRUTI'S DAYS — Full Report\n" + '='.repeat(40) + '\n\n';
-  const moodEmojis = ['','😭','😔','😐','😄','🤩'];
-  logs.forEach(l => {
-    text += `📅 ${fmtDate(l.date)}\n`;
-    if (l.mood) text += `  Mood: ${moodEmojis[l.mood]} (${l.mood}/5)\n`;
-    if (l.school) text += `  School: ${l.school}\n`;
-    if (l.learnSubject) text += `  Learned: ${l.learnSubject} — ${l.learnStatus}\n`;
-    if (l.learnTopic) text += `  Topic: ${l.learnTopic}\n`;
-    if (l.junkFood) text += `  Junk food: ${l.junkFood}\n`;
-    if (l.sick) text += `  Sick: yes (${(l.symptoms||[]).join(', ')})\n`;
-    if (l.oops && l.oops.length) text += `  Oops: ${l.oops.join(', ')}\n`;
-    if (l.rememberTmr) text += `  Tomorrow: ${l.rememberTmr}\n`;
-    text += '\n';
+  const logs=getAllLogs();
+  let txt="DHRUTI'S DAYS — Full Report\n"+'═'.repeat(36)+'\n\n';
+  const me=['','😭','😔','😐','😄','🤩'];
+  logs.forEach(l=>{
+    txt+=`📅 ${fmtDateKey(l.date)}\n`;
+    if(l.mood)txt+=`  Mood: ${me[l.mood]} (${l.mood}/5)\n`;
+    if(l.school)txt+=`  School: ${l.school}\n`;
+    if(l.learnSubject)txt+=`  Learned: ${l.learnSubject}${l.learnStatus?' — '+l.learnStatus:''}\n`;
+    if(l.learnTopic)txt+=`  Topic: ${l.learnTopic}\n`;
+    if(l.junkFood)txt+=`  Junk food: ${l.junkFood}\n`;
+    if(l.sick)txt+=`  Sick: yes (${(l.symptoms||[]).join(', ')})\n`;
+    if(l.oops?.length)txt+=`  Oops: ${l.oops.join(', ')}\n`;
+    if(l.rememberTmr)txt+=`  Tomorrow: ${l.rememberTmr}\n`;
+    txt+='\n';
   });
-  downloadFile('dhrutis-days-report.txt', text, 'text/plain');
+  dl('dhrutis-days-report.txt',txt,'text/plain');
 }
-
-function downloadFile(name, content, type) {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([content], {type}));
-  a.download = name;
-  a.click();
-  showToast('📥 Downloaded!');
+function dl(name,content,type) {
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type}));
+  a.download=name; a.click(); toast('📥 Downloaded!');
 }
-
-function clearAllData() {
-  openModal('🗑️ Clear All Data?', `
-    <div style="color:var(--text2);margin-bottom:20px;line-height:1.6;font-size:0.9rem;">
-      This will delete ALL your logs, timers, money, and settings forever! Are you really sure? 😢
+function clearAll() {
+  openModal('🗑️ Clear All Data?',`
+    <div style="color:var(--text2);margin-bottom:20px;font-size:0.88rem;line-height:1.7">
+      This will erase all your logs, timers, money records and settings forever. Are you really sure? 😢
     </div>
     <div style="display:flex;gap:10px">
       <button class="btn btn-ghost btn-full" onclick="closeModal()">No, keep it!</button>
-      <button class="btn btn-full" style="background:var(--oops);color:#fff" onclick="doDeleteAll()">Yes, delete!</button>
+      <button class="btn btn-full btn-danger" onclick="doDelete()">Yes, delete!</button>
     </div>
   `);
 }
+function doDelete() { localStorage.clear(); closeModal(); toast('All data cleared 🗑️'); setTimeout(()=>location.reload(),900); }
 
-function doDeleteAll() {
-  localStorage.clear();
-  closeModal();
-  showToast('All data cleared 🗑️');
-  setTimeout(() => location.reload(), 800);
-}
-
-// ============================================================
-// MODAL
-// ============================================================
-function openModal(title, body) {
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-body').innerHTML = body;
+// ════════════════════════════════════════════
+// MODAL & TOAST
+// ════════════════════════════════════════════
+function openModal(title,body) {
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-body').innerHTML=body;
   document.getElementById('modal-overlay').classList.add('open');
 }
-
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
-  if (pinMode !== 'unlock') { pinMode = 'unlock'; pinBuffer = ''; }
+  if(pinMode!=='unlock'){pinMode='unlock';pinBuf='';}
+}
+let toastT;
+function toast(msg) {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
-// ============================================================
-// TOAST
-// ============================================================
-let toastTimeout;
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => el.classList.remove('show'), 2500);
-}
-
-// ============================================================
+// ════════════════════════════════════════════
 // INIT
-// ============================================================
+// ════════════════════════════════════════════
 function initApp() {
-  startAllTimerTicks();
-  initLogScreen();
+  // restore study subject tag
+  const ss=S.g('study_sub');
+  if(ss){document.querySelectorAll('.sub-tag').forEach(t=>{if(t.dataset.sub===ss)t.classList.add('active');});}
+  startTimerTicks();
+  setInterval(updateHomePills,1000);
+  initLog();
   refreshHome();
-  // restore saved subject tag
-  if (studySubject) {
-    document.querySelectorAll('.subject-tag').forEach(t => {
-      if (t.dataset.sub === studySubject) t.classList.add('active');
-    });
-  }
-  // Set live timer refresh on home
-  setInterval(refreshHomeTimers, 1000);
 }
 
-// Auto-unlock if no PIN set yet (first run)
-window.addEventListener('DOMContentLoaded', () => {
-  // Small delay to ensure fonts load
-  setTimeout(() => {
-    // Show the pin screen
-    pinBuffer = '';
-    updatePinDots();
-  }, 100);
+document.addEventListener('DOMContentLoaded',()=>{
+  pinBuf=''; renderPinDots();
 });
 </script>
 </body>
